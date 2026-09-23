@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar';
 import Placeholder from './Placeholder';
 import Profile from './Profile';
+import Community from './Community';
 
 function Dashboard({ language, zipCode, housingType, budget }) {
   const [isWide, setIsWide] = useState(window.innerWidth > 600);
@@ -127,13 +128,14 @@ function Dashboard({ language, zipCode, housingType, budget }) {
 
   if (activeTab === 'community') {
     return (
-      <>
-        <Placeholder icon="🤝" title="Community" description="Borrow and lend green tools with your neighbors. Coming soon!" />
-        <NavBar activeTab={activeTab} onTabChange={setActiveTab} language={language} />
-      </>
+      <Community
+        language={language}
+        userZip={currentZip}
+        onTabChange={setActiveTab}
+      />
     );
   }
-
+  
   if (activeTab === 'profile') {
     return (
       <Profile
