@@ -81,7 +81,7 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
     width: '100%',
     padding: '12px',
     borderRadius: '12px',
-    border: '2px solid #7A9E87',
+    border: '2px solid #4F8C6F',
     fontSize: '16px',
     backgroundColor: '#FAF7F2',
     color: '#2C2C2C',
@@ -106,7 +106,7 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
         }}>
 
           <h1 style={{
-            color: '#7A9E87',
+            color: '#4F8C6F',
             fontSize: '28px',
             marginBottom: '8px',
             marginTop: '16px',
@@ -144,7 +144,7 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
               <button
                 onClick={() => setEditing(!editing)}
                 style={{
-                  backgroundColor: editing ? 'transparent' : '#7A9E87',
+                  backgroundColor: editing ? 'transparent' : '#4F8C6F',
                   color: editing ? '#A0A0A0' : 'white',
                   border: editing ? '1px solid #E8E0D5' : 'none',
                   padding: '8px 20px',
@@ -181,7 +181,7 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
                           flex: 1,
                           padding: '12px',
                           borderRadius: '12px',
-                          border: `2px solid ${newHousing === option ? '#7A9E87' : '#E8E0D5'}`,
+                          border: `2px solid ${newHousing === option ? '#4F8C6F' : '#E8E0D5'}`,
                           backgroundColor: newHousing === option ? '#EBF3EE' : '#FAF7F2',
                           color: '#2C2C2C',
                           fontSize: '14px',
@@ -202,7 +202,7 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
                       left: '12px',
                       top: '50%',
                       transform: 'translateY(-50%)',
-                      color: '#7A9E87',
+                      color: '#4F8C6F',
                       fontSize: '16px',
                     }}>$</span>
                     <input
@@ -225,7 +225,7 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
                   }}
                   style={{
                     width: '100%',
-                    backgroundColor: saved ? '#7A9E87' : '#D4956A',
+                    backgroundColor: saved ? '#4F8C6F' : '#D4956A',
                     transition: 'all 0.3s ease',
                     color: 'white',
                     border: 'none',
@@ -240,7 +240,7 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
                 </button>
                 {saved && (
                   <p style={{
-                    color: '#7A9E87',
+                    color: '#4F8C6F',
                     fontSize: '14px',
                     textAlign: 'center',
                     marginTop: '12px',
@@ -286,7 +286,7 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
               <button
                 onClick={() => setNotifications(!notifications)}
                 style={{
-                  backgroundColor: notifications ? '#7A9E87' : '#E8E0D5',
+                  backgroundColor: notifications ? '#4F8C6F' : '#E8E0D5',
                   border: 'none',
                   borderRadius: '20px',
                   width: '52px',
