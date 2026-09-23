@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar';
 import Placeholder from './Placeholder';
+import Profile from './Profile';
 
 function Dashboard({ language, zipCode, housingType, budget }) {
   const [isWide, setIsWide] = useState(window.innerWidth > 600);
   const [activeTab, setActiveTab] = useState('home');
   const [showScrollHint, setShowScrollHint] = useState(true);
+  const [currentZip, setCurrentZip] = useState(zipCode);
+  const [currentHousing, setCurrentHousing] = useState(housingType);
+  const [currentBudget, setCurrentBudget] = useState(budget);
 
   useEffect(() => {
     const handleResize = () => setIsWide(window.innerWidth > 600);
@@ -132,10 +136,19 @@ function Dashboard({ language, zipCode, housingType, budget }) {
 
   if (activeTab === 'profile') {
     return (
-      <>
-        <Placeholder icon="👤" title="Profile" description="Manage your preferences, budget, and saved items. Coming soon!" />
-        <NavBar activeTab={activeTab} onTabChange={setActiveTab} language={language} />
-      </>
+      <Profile
+        language={language}
+        zipCode={currentZip}
+        housingType={currentHousing}
+        budget={currentBudget}
+        onTabChange={setActiveTab}
+        onUpdateProfile={({ zipCode, housingType, budget }) => {
+          setCurrentZip(zipCode);
+          setCurrentHousing(housingType);
+          setCurrentBudget(budget);
+          setActiveTab('home');
+        }}
+      />
     );
   }
 
