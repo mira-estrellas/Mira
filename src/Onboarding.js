@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Dashboard from './Dashboard';
 import HousingType from './HousingType';
 import Budget from './Budget';
 
@@ -6,6 +7,7 @@ function Onboarding({ language, onBack }) {
   const [zipCode, setZipCode] = useState('');
   const [screen, setScreen] = useState('zip');
   const [housingType, setHousingType] = useState(null);
+  const [budget, setBudget] = useState(null);
 
   const content = {
     EN: { question: 'What\'s your zip code?', placeholder: 'Enter zip code', next: 'Next', back: '← Back' },
@@ -47,12 +49,13 @@ function Onboarding({ language, onBack }) {
     return <Budget language={language}
       onBack={() => setScreen('housing')}
       onNext={(budget) => {
-        console.log({ zipCode, housingType, budget });
+        setBudget(budget);
         setScreen('loading');
       }} />;
   }
 
   if (screen === 'loading') {
+    setTimeout(() => setScreen('dashboard'), 2000);
     return (
       <div style={{
         display: 'flex',
@@ -66,6 +69,15 @@ function Onboarding({ language, onBack }) {
         <p style={{ color: '#2C2C2C', fontSize: '16px', marginTop: '16px' }}>🌱 Building your personalized plan</p>
       </div>
     );
+  }
+
+  if (screen === 'dashboard') {
+    return <Dashboard
+      language={language}
+      zipCode={zipCode}
+      housingType={housingType}
+      budget={budget}
+    />;
   }
 
   return (
