@@ -135,7 +135,7 @@ function Dashboard({ language, zipCode, housingType, budget }) {
       />
     );
   }
-  
+
   if (activeTab === 'profile') {
     return (
       <Profile
@@ -170,7 +170,7 @@ function Dashboard({ language, zipCode, housingType, budget }) {
         }}>
 
           <h1 style={{
-            color: '#7A9E87',
+            color: '#4F8C6F',
             fontSize: '28px',
             marginBottom: '8px',
             marginTop: '16px',
@@ -219,7 +219,7 @@ function Dashboard({ language, zipCode, housingType, budget }) {
                   </h3>
                   <span style={{
                     backgroundColor: '#EBF3EE',
-                    color: '#7A9E87',
+                    color: '#4F8C6F',
                     borderRadius: '20px',
                     padding: '4px 10px',
                     fontSize: '12px',
@@ -299,7 +299,7 @@ function Dashboard({ language, zipCode, housingType, budget }) {
                 gap: '8px',
               }}>
                 <span style={{
-                  color: '#7A9E87',
+                  color: '#4F8C6F',
                   fontSize: '26px',
                   fontWeight: 'bold',
                 }}>

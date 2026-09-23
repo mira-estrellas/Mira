@@ -59,7 +59,7 @@ function NavBar({ activeTab, onTabChange, language }) {
           <span style={{ fontSize: '22px' }}>{tab.icon}</span>
           <span style={{
             fontSize: '11px',
-            color: activeTab === tab.key ? '#7A9E87' : '#A0A0A0',
+            color: activeTab === tab.key ? '#4F8C6F' : '#A0A0A0',
             fontWeight: activeTab === tab.key ? 'bold' : 'normal',
           }}>
             {tab.label}
@@ -69,7 +69,7 @@ function NavBar({ activeTab, onTabChange, language }) {
               width: '4px',
               height: '4px',
               borderRadius: '50%',
-              backgroundColor: '#7A9E87',
+              backgroundColor: '#4F8C6F',
             }}/>
           )}
         </button>

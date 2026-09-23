@@ -46,14 +46,14 @@ function HousingType({ language, onNext, onBack }) {
           <div style={{
             width: '50%',
             height: '100%',
-            backgroundColor: '#7A9E87',
+            backgroundColor: '#4F8C6F',
             borderRadius: '10px',
           }}/>
         </div>
 
         <button onClick={onBack} style={{
           backgroundColor: 'transparent',
-          color: '#7A9E87',
+          color: '#4F8C6F',
           border: 'none',
           fontSize: '16px',
           cursor: 'pointer',
@@ -86,7 +86,7 @@ function HousingType({ language, onNext, onBack }) {
                 width: '100%',
                 padding: '24px',
                 borderRadius: '16px',
-                border: `2px solid ${selected === option ? '#7A9E87' : '#E8E0D5'}`,
+                border: `2px solid ${selected === option ? '#4F8C6F' : '#E8E0D5'}`,
                 backgroundColor: selected === option ? '#EBF3EE' : '#FAF7F2',
                 color: '#2C2C2C',
                 fontSize: '18px',

@@ -46,14 +46,14 @@ function Budget({ language, onNext, onBack }) {
           <div style={{
             width: '75%',
             height: '100%',
-            backgroundColor: '#7A9E87',
+            backgroundColor: '#4F8C6F',
             borderRadius: '10px',
           }}/>
         </div>
 
         <button onClick={onBack} style={{
           backgroundColor: 'transparent',
-          color: '#7A9E87',
+          color: '#4F8C6F',
           border: 'none',
           fontSize: '16px',
           cursor: 'pointer',
@@ -74,7 +74,7 @@ function Budget({ language, onNext, onBack }) {
         </h2>
 
         <p style={{
-          color: '#7A9E87',
+          color: '#4F8C6F',
           fontSize: '14px',
           textAlign: 'center',
           marginBottom: '32px',
@@ -91,7 +91,7 @@ function Budget({ language, onNext, onBack }) {
             left: '16px',
             top: '50%',
             transform: 'translateY(-50%)',
-            color: '#7A9E87',
+            color: '#4F8C6F',
             fontSize: '20px',
           }}>$</span>
           <input
@@ -103,7 +103,7 @@ function Budget({ language, onNext, onBack }) {
               width: '100%',
               padding: '16px 16px 16px 36px',
               borderRadius: '12px',
-              border: '2px solid #7A9E87',
+              border: '2px solid #4F8C6F',
               fontSize: '20px',
               backgroundColor: '#FAF7F2',
               color: '#2C2C2C',
