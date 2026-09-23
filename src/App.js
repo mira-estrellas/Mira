@@ -21,7 +21,10 @@ function App() {
   const current = languages[language];
 
   if (screen === 'onboarding') {
-    return <Onboarding language={language} />;
+    return <Onboarding 
+      language={language} 
+      onBack={() => setScreen('landing')} 
+    />;
   }
 
   return (

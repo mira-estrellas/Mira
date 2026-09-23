@@ -1,28 +1,71 @@
 import React, { useState } from 'react';
 import HousingType from './HousingType';
+import Budget from './Budget';
 
-function Onboarding({ language }) {
+function Onboarding({ language, onBack }) {
   const [zipCode, setZipCode] = useState('');
   const [screen, setScreen] = useState('zip');
+  const [housingType, setHousingType] = useState(null);
 
   const content = {
-    EN: { question: 'What\'s your zip code?', placeholder: 'Enter zip code', next: 'Next' },
-    ES: { question: '¿Cuál es tu código postal?', placeholder: 'Ingresa tu código postal', next: 'Siguiente' },
-    ZH: { question: '你的邮政编码是什么？', placeholder: '输入邮政编码', next: '下一步' },
-    AR: { question: 'ما هو الرمز البريدي؟', placeholder: 'أدخل الرمز البريدي', next: 'التالي' },
-    FR: { question: 'Quel est votre code postal?', placeholder: 'Entrez le code postal', next: 'Suivant' },
-    PT: { question: 'Qual é o seu código postal?', placeholder: 'Digite o código postal', next: 'Próximo' },
-    KO: { question: '우편번호가 무엇인가요?', placeholder: '우편번호 입력', next: '다음' },
-    VI: { question: 'Mã bưu chính của bạn là gì?', placeholder: 'Nhập mã bưu chính', next: 'Tiếp theo' },
-    TL: { question: 'Ano ang iyong zip code?', placeholder: 'Ilagay ang zip code', next: 'Susunod' },
-    RU: { question: 'Какой у вас почтовый индекс?', placeholder: 'Введите почтовый индекс', next: 'Далее' },
-    HT: { question: 'Ki kòd postal ou?', placeholder: 'Antre kòd postal', next: 'Pwochen' },
+    EN: { question: 'What\'s your zip code?', placeholder: 'Enter zip code', next: 'Next', back: '← Back' },
+    ES: { question: '¿Cuál es tu código postal?', placeholder: 'Ingresa tu código postal', next: 'Siguiente', back: '← Atrás' },
+    ZH: { question: '你的邮政编码是什么？', placeholder: '输入邮政编码', next: '下一步', back: '← 返回' },
+    AR: { question: 'ما هو الرمز البريدي؟', placeholder: 'أدخل الرمز البريدي', next: 'التالي', back: 'رجوع →' },
+    FR: { question: 'Quel est votre code postal?', placeholder: 'Entrez le code postal', next: 'Suivant', back: '← Retour' },
+    PT: { question: 'Qual é o seu código postal?', placeholder: 'Digite o código postal', next: 'Próximo', back: '← Voltar' },
+    KO: { question: '우편번호가 무엇인가요?', placeholder: '우편번호 입력', next: '다음', back: '← 뒤로' },
+    VI: { question: 'Mã bưu chính của bạn là gì?', placeholder: 'Nhập mã bưu chính', next: 'Tiếp theo', back: '← Quay lại' },
+    TL: { question: 'Ano ang iyong zip code?', placeholder: 'Ilagay ang zip code', next: 'Susunod', back: '← Bumalik' },
+    RU: { question: 'Какой у вас почтовый индекс?', placeholder: 'Введите почтовый индекс', next: 'Далее', back: '← Назад' },
+    HT: { question: 'Ki kòd postal ou?', placeholder: 'Antre kòd postal', next: 'Pwochen', back: '← Retounen' },
   };
 
   const current = content[language] || content.EN;
 
+  const backButtonStyle = {
+    backgroundColor: 'transparent',
+    color: '#7A9E87',
+    border: 'none',
+    fontSize: '16px',
+    cursor: 'pointer',
+    padding: '8px 0',
+    marginBottom: '24px',
+    alignSelf: 'flex-start',
+  };
+
   if (screen === 'housing') {
-    return <HousingType language={language} onNext={(type) => console.log(zipCode, type)} />;
+    return <HousingType language={language}
+      onBack={() => setScreen('zip')}
+      onNext={(type) => {
+        setHousingType(type);
+        setScreen('budget');
+      }} />;
+  }
+
+  if (screen === 'budget') {
+    return <Budget language={language}
+      onBack={() => setScreen('housing')}
+      onNext={(budget) => {
+        console.log({ zipCode, housingType, budget });
+        setScreen('loading');
+      }} />;
+  }
+
+  if (screen === 'loading') {
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        backgroundColor: '#FAF7F2',
+      }}>
+        <h2 style={{ color: '#7A9E87', fontSize: '24px' }}>Finding your options...</h2>
+        <p style={{ color: '#2C2C2C', fontSize: '16px', marginTop: '16px' }}>🌱 Building your personalized plan</p>
+      </div>
+    );
   }
 
   return (
@@ -39,13 +82,15 @@ function Onboarding({ language }) {
         width: '100%',
         maxWidth: '400px',
         padding: '0 24px',
+        display: 'flex',
+        flexDirection: 'column',
       }}>
         <div style={{
           width: '100%',
           height: '6px',
           backgroundColor: '#E8E0D5',
           borderRadius: '10px',
-          marginBottom: '48px',
+          marginBottom: '24px',
         }}>
           <div style={{
             width: '25%',
@@ -54,6 +99,10 @@ function Onboarding({ language }) {
             borderRadius: '10px',
           }}/>
         </div>
+
+        <button onClick={onBack} style={backButtonStyle}>
+          {current.back}
+        </button>
 
         <h2 style={{
           color: '#2C2C2C',

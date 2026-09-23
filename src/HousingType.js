@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 
-function HousingType({ language, onNext }) {
+function HousingType({ language, onNext, onBack }) {
   const [selected, setSelected] = useState(null);
 
   const content = {
-    EN: { question: 'Do you rent or own your home?', rent: '🏠 I Rent', own: '🏡 I Own', next: 'Next' },
-    ES: { question: '¿Alquilas o eres dueño de tu hogar?', rent: '🏠 Alquilo', own: '🏡 Soy Dueño', next: 'Siguiente' },
-    ZH: { question: '您是租房还是自有住房？', rent: '🏠 我租房', own: '🏡 我自有', next: '下一步' },
-    AR: { question: 'هل تستأجر أم تمتلك منزلك؟', rent: '🏠 أستأجر', own: '🏡 أمتلك', next: 'التالي' },
-    FR: { question: 'Êtes-vous locataire ou propriétaire?', rent: '🏠 Locataire', own: '🏡 Propriétaire', next: 'Suivant' },
-    PT: { question: 'Você aluga ou é dono da sua casa?', rent: '🏠 Alugo', own: '🏡 Sou Dono', next: 'Próximo' },
-    KO: { question: '집을 임대하시나요 아니면 소유하시나요?', rent: '🏠 임대', own: '🏡 소유', next: '다음' },
-    VI: { question: 'Bạn thuê hay sở hữu nhà?', rent: '🏠 Thuê', own: '🏡 Sở Hữu', next: 'Tiếp theo' },
-    TL: { question: 'Nangungupahan ka ba o may-ari?', rent: '🏠 Nangungupahan', own: '🏡 May-ari', next: 'Susunod' },
-    RU: { question: 'Вы снимаете или владеете жильём?', rent: '🏠 Снимаю', own: '🏡 Владею', next: 'Далее' },
-    HT: { question: 'Èske ou louwe oswa posede kay ou?', rent: '🏠 Mwen louwe', own: '🏡 Mwen posede', next: 'Pwochen' },
+    EN: { question: 'Do you rent or own your home?', rent: '🏠 I Rent', own: '🏡 I Own', next: 'Next', back: '← Back' },
+    ES: { question: '¿Alquilas o eres dueño de tu hogar?', rent: '🏠 Alquilo', own: '🏡 Soy Dueño', next: 'Siguiente', back: '← Atrás' },
+    ZH: { question: '您是租房还是自有住房？', rent: '🏠 我租房', own: '🏡 我自有', next: '下一步', back: '← 返回' },
+    AR: { question: 'هل تستأجر أم تمتلك منزلك؟', rent: '🏠 أستأجر', own: '🏡 أمتلك', next: 'التالي', back: 'رجوع →' },
+    FR: { question: 'Êtes-vous locataire ou propriétaire?', rent: '🏠 Locataire', own: '🏡 Propriétaire', next: 'Suivant', back: '← Retour' },
+    PT: { question: 'Você aluga ou é dono da sua casa?', rent: '🏠 Alugo', own: '🏡 Sou Dono', next: 'Próximo', back: '← Voltar' },
+    KO: { question: '집을 임대하시나요 아니면 소유하시나요?', rent: '🏠 임대', own: '🏡 소유', next: '다음', back: '← 뒤로' },
+    VI: { question: 'Bạn thuê hay sở hữu nhà?', rent: '🏠 Thuê', own: '🏡 Sở Hữu', next: 'Tiếp theo', back: '← Quay lại' },
+    TL: { question: 'Nangungupahan ka ba o may-ari?', rent: '🏠 Nangungupahan', own: '🏡 May-ari', next: 'Susunod', back: '← Bumalik' },
+    RU: { question: 'Вы снимаете или владеете жильём?', rent: '🏠 Снимаю', own: '🏡 Владею', next: 'Далее', back: '← Назад' },
+    HT: { question: 'Èske ou louwe oswa posede kay ou?', rent: '🏠 Mwen louwe', own: '🏡 Mwen posede', next: 'Pwochen', back: '← Retounen' },
   };
 
   const current = content[language] || content.EN;
@@ -33,13 +33,15 @@ function HousingType({ language, onNext }) {
         width: '100%',
         maxWidth: '400px',
         padding: '0 24px',
+        display: 'flex',
+        flexDirection: 'column',
       }}>
         <div style={{
           width: '100%',
           height: '6px',
           backgroundColor: '#E8E0D5',
           borderRadius: '10px',
-          marginBottom: '48px',
+          marginBottom: '24px',
         }}>
           <div style={{
             width: '50%',
@@ -48,6 +50,19 @@ function HousingType({ language, onNext }) {
             borderRadius: '10px',
           }}/>
         </div>
+
+        <button onClick={onBack} style={{
+          backgroundColor: 'transparent',
+          color: '#7A9E87',
+          border: 'none',
+          fontSize: '16px',
+          cursor: 'pointer',
+          padding: '8px 0',
+          marginBottom: '24px',
+          alignSelf: 'flex-start',
+        }}>
+          {current.back}
+        </button>
 
         <h2 style={{
           color: '#2C2C2C',
