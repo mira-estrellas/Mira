@@ -1,12 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import NavBar from './NavBar';
+import Placeholder from './Placeholder';
 
 function Dashboard({ language, zipCode, housingType, budget }) {
   const [isWide, setIsWide] = useState(window.innerWidth > 600);
+  const [activeTab, setActiveTab] = useState('home');
+  const [showScrollHint, setShowScrollHint] = useState(true);
 
   useEffect(() => {
     const handleResize = () => setIsWide(window.innerWidth > 600);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 200) {
+        setShowScrollHint(false);
+      } else {
+        setShowScrollHint(true);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const content = {
@@ -16,6 +32,7 @@ function Dashboard({ language, zipCode, housingType, budget }) {
       incentives: 'Incentives & Rebates',
       swaps: 'Affordable Clean Swaps',
       impact: 'Your Potential Impact',
+      scrollHint: '↓ Scroll to see all your options',
       incentiveItems: [
         { title: 'Federal Solar Tax Credit', description: 'Get 30% back on solar panel installation costs.', amount: 'Up to $7,500' },
         { title: 'Heat Pump Rebate', description: 'Federal rebate for switching to an electric heat pump.', amount: 'Up to $2,000' },
@@ -44,6 +61,7 @@ function Dashboard({ language, zipCode, housingType, budget }) {
       incentives: 'Incentivos y Reembolsos',
       swaps: 'Cambios Limpios Asequibles',
       impact: 'Tu Impacto Potencial',
+      scrollHint: '↓ Desplázate para ver todas tus opciones',
       incentiveItems: [
         { title: 'Crédito Federal Solar', description: 'Obtén el 30% de vuelta en costos de instalación solar.', amount: 'Hasta $7,500' },
         { title: 'Reembolso de Bomba de Calor', description: 'Reembolso federal por cambiar a una bomba de calor eléctrica.', amount: 'Hasta $2,000' },
@@ -94,164 +112,217 @@ function Dashboard({ language, zipCode, housingType, budget }) {
     marginBottom: '48px',
   };
 
+  if (activeTab === 'shop') {
+    return (
+      <>
+        <Placeholder icon="🛍️" title="Shop" description="Browse and buy clean energy products from trusted sellers. Coming soon!" />
+        <NavBar activeTab={activeTab} onTabChange={setActiveTab} language={language} />
+      </>
+    );
+  }
+
+  if (activeTab === 'community') {
+    return (
+      <>
+        <Placeholder icon="🤝" title="Community" description="Borrow and lend green tools with your neighbors. Coming soon!" />
+        <NavBar activeTab={activeTab} onTabChange={setActiveTab} language={language} />
+      </>
+    );
+  }
+
+  if (activeTab === 'profile') {
+    return (
+      <>
+        <Placeholder icon="👤" title="Profile" description="Manage your preferences, budget, and saved items. Coming soon!" />
+        <NavBar activeTab={activeTab} onTabChange={setActiveTab} language={language} />
+      </>
+    );
+  }
+
   return (
-    <div style={{
-      backgroundColor: '#F0EBE3',
-      minHeight: '100vh',
-      display: 'flex',
-      justifyContent: 'center',
-      padding: '24px',
-    }}>
+    <>
       <div style={{
-        width: '100%',
-        maxWidth: '900px',
+        backgroundColor: '#F0EBE3',
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '24px',
       }}>
-
-        <h1 style={{
-          color: '#7A9E87',
-          fontSize: '28px',
-          marginBottom: '8px',
-          marginTop: '16px',
-        }}>
-          {current.greeting}
-        </h1>
-        <p style={{
-          color: '#2C2C2C',
-          fontSize: '14px',
-          marginBottom: '32px',
-        }}>
-          {current.subtitle}
-        </p>
-
         <div style={{
-          backgroundColor: '#EBF3EE',
-          borderRadius: '16px',
-          padding: '16px',
-          marginBottom: '8px',
-          fontSize: '13px',
-          color: '#2C2C2C',
+          width: '100%',
+          maxWidth: '900px',
+          paddingBottom: '80px',
         }}>
-          📍 Zip: {zipCode} &nbsp;|&nbsp; 🏠 {housingType === 'rent' ? 'Renter' : 'Homeowner'} &nbsp;|&nbsp; 💰 {budget ? `$${budget}/mo` : 'Budget flexible'}
-        </div>
 
-        <h2 style={{
-          color: '#2C2C2C',
-          fontSize: '18px',
-          marginTop: '32px',
-          marginBottom: '16px',
-        }}>
-          🎁 {current.incentives}
-        </h2>
+          <h1 style={{
+            color: '#7A9E87',
+            fontSize: '28px',
+            marginBottom: '8px',
+            marginTop: '16px',
+          }}>
+            {current.greeting}
+          </h1>
+          <p style={{
+            color: '#2C2C2C',
+            fontSize: '14px',
+            marginBottom: '32px',
+          }}>
+            {current.subtitle}
+          </p>
 
-        <div style={gridStyle}>
-          {current.incentiveItems.map((item, index) => (
-            <div key={index} style={cardStyle}>
-              <div style={{
+          <div style={{
+            backgroundColor: '#EBF3EE',
+            borderRadius: '16px',
+            padding: '16px',
+            marginBottom: '8px',
+            fontSize: '13px',
+            color: '#2C2C2C',
+          }}>
+            📍 Zip: {zipCode} &nbsp;|&nbsp; 🏠 {housingType === 'rent' ? 'Renter' : 'Homeowner'} &nbsp;|&nbsp; 💰 {budget ? `$${budget}/mo` : 'Budget flexible'}
+          </div>
+
+          <h2 style={{
+            color: '#2C2C2C',
+            fontSize: '18px',
+            marginTop: '32px',
+            marginBottom: '16px',
+          }}>
+            🎁 {current.incentives}
+          </h2>
+
+          <div style={gridStyle}>
+            {current.incentiveItems.map((item, index) => (
+              <div key={index} style={cardStyle}>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                  marginBottom: '6px',
+                }}>
+                  <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: 0, flex: 1 }}>
+                    {item.title}
+                  </h3>
+                  <span style={{
+                    backgroundColor: '#EBF3EE',
+                    color: '#7A9E87',
+                    borderRadius: '20px',
+                    padding: '4px 10px',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    marginLeft: '8px',
+                    whiteSpace: 'nowrap',
+                  }}>
+                    {item.amount}
+                  </span>
+                </div>
+                <p style={{ color: '#666', fontSize: '13px', margin: 0 }}>
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <h2 style={{
+            color: '#2C2C2C',
+            fontSize: '18px',
+            marginTop: '32px',
+            marginBottom: '16px',
+          }}>
+            ♻️ {current.swaps}
+          </h2>
+
+          <div style={gridStyle}>
+            {current.swapItems.map((item, index) => (
+              <div key={index} style={cardStyle}>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                  marginBottom: '6px',
+                }}>
+                  <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: 0, flex: 1 }}>
+                    {item.title}
+                  </h3>
+                  <span style={{
+                    backgroundColor: '#FDF0E8',
+                    color: '#D4956A',
+                    borderRadius: '20px',
+                    padding: '4px 10px',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    marginLeft: '8px',
+                    whiteSpace: 'nowrap',
+                  }}>
+                    {item.cost}
+                  </span>
+                </div>
+                <p style={{ color: '#666', fontSize: '13px', margin: 0 }}>
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <h2 style={{
+            color: '#2C2C2C',
+            fontSize: '18px',
+            marginTop: '32px',
+            marginBottom: '16px',
+          }}>
+            🌍 {current.impact}
+          </h2>
+
+          <div style={impactGridStyle}>
+            {current.impactStats.map((item, index) => (
+              <div key={index} style={{
+                backgroundColor: 'white',
+                borderRadius: '16px',
+                padding: '20px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
                 display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                marginBottom: '6px',
+                flexDirection: 'column',
+                gap: '8px',
               }}>
-                <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: 0, flex: 1 }}>
-                  {item.title}
-                </h3>
                 <span style={{
-                  backgroundColor: '#EBF3EE',
                   color: '#7A9E87',
-                  borderRadius: '20px',
-                  padding: '4px 10px',
-                  fontSize: '12px',
+                  fontSize: '26px',
                   fontWeight: 'bold',
-                  marginLeft: '8px',
-                  whiteSpace: 'nowrap',
                 }}>
-                  {item.amount}
+                  {item.stat}
+                </span>
+                <span style={{ color: '#666', fontSize: '13px' }}>
+                  {item.description}
                 </span>
               </div>
-              <p style={{ color: '#666', fontSize: '13px', margin: 0 }}>
-                {item.description}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
+
         </div>
-
-        <h2 style={{
-          color: '#2C2C2C',
-          fontSize: '18px',
-          marginTop: '32px',
-          marginBottom: '16px',
-        }}>
-          ♻️ {current.swaps}
-        </h2>
-
-        <div style={gridStyle}>
-          {current.swapItems.map((item, index) => (
-            <div key={index} style={cardStyle}>
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                marginBottom: '6px',
-              }}>
-                <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: 0, flex: 1 }}>
-                  {item.title}
-                </h3>
-                <span style={{
-                  backgroundColor: '#FDF0E8',
-                  color: '#D4956A',
-                  borderRadius: '20px',
-                  padding: '4px 10px',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  marginLeft: '8px',
-                  whiteSpace: 'nowrap',
-                }}>
-                  {item.cost}
-                </span>
-              </div>
-              <p style={{ color: '#666', fontSize: '13px', margin: 0 }}>
-                {item.description}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <h2 style={{
-          color: '#2C2C2C',
-          fontSize: '18px',
-          marginTop: '32px',
-          marginBottom: '16px',
-        }}>
-          🌍 {current.impact}
-        </h2>
-
-        <div style={impactGridStyle}>
-          {current.impactStats.map((item, index) => (
-            <div key={index} style={{
-              backgroundColor: 'white',
-              borderRadius: '16px',
-              padding: '20px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-            }}>
-              <span style={{
-                color: '#7A9E87',
-                fontSize: '26px',
-                fontWeight: 'bold',
-              }}>
-                {item.stat}
-              </span>
-              <span style={{ color: '#666', fontSize: '13px' }}>
-                {item.description}
-              </span>
-            </div>
-          ))}
-        </div>
-
       </div>
-    </div>
+
+      {showScrollHint && (
+        <div style={{
+          position: 'fixed',
+          bottom: '90px',
+          zIndex: 999,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          backgroundColor: 'rgba(122, 158, 135, 0.9)',
+          color: 'white',
+          padding: '8px 20px',
+          borderRadius: '20px',
+          fontSize: '16px',
+          pointerEvents: 'none',
+          whiteSpace: 'nowrap',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                    animation: 'bounce 1.5s infinite',
+        }}>
+          {current.scrollHint}
+        </div>
+      )}
+
+      <NavBar activeTab={activeTab} onTabChange={setActiveTab} language={language} />
+    </>
   );
 }
 
