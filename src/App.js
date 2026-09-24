@@ -239,10 +239,9 @@ function App() {
           <p style={{
             color: '#4F8C6F',
             fontSize: '24px',
-            fontWeight: '600',
+            fontWeight: '650',
             marginBottom: '32px',
             letterSpacing: '-0.5px',
-            textDecoration: 'underline',
             ...fadeIn(1.0),
           }}>
             {current.missing}
