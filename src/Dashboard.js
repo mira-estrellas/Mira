@@ -3,6 +3,7 @@ import NavBar from './NavBar';
 import Placeholder from './Placeholder';
 import Profile from './Profile';
 import Community from './Community';
+import Shop from './Shop';
 
 function Dashboard({ language, zipCode, housingType, budget }) {
   const [isWide, setIsWide] = useState(window.innerWidth > 600);
@@ -119,10 +120,10 @@ function Dashboard({ language, zipCode, housingType, budget }) {
 
   if (activeTab === 'shop') {
     return (
-      <>
-        <Placeholder icon="🛍️" title="Shop" description="Browse and buy clean energy products from trusted sellers. Coming soon!" />
-        <NavBar activeTab={activeTab} onTabChange={setActiveTab} language={language} />
-      </>
+      <Shop
+        language={language}
+        onTabChange={setActiveTab}
+      />
     );
   }
 
