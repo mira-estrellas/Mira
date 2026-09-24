@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import Dashboard from './Dashboard';
 import HousingType from './HousingType';
 import Budget from './Budget';
+import HouseholdSize from './HouseholdSize';
+import HouseholdIncome from './HouseholdIncome';
 
 function Onboarding({ language, onBack }) {
   const [zipCode, setZipCode] = useState('');
   const [screen, setScreen] = useState('zip');
   const [housingType, setHousingType] = useState(null);
   const [budget, setBudget] = useState(null);
+  const [householdSize, setHouseholdSize] = useState(null);
+  const [householdIncome, setHouseholdIncome] = useState(null);
 
   const content = {
     EN: {
@@ -118,13 +122,31 @@ function Onboarding({ language, onBack }) {
       onBack={() => setScreen('zip')}
       onNext={(type) => {
         setHousingType(type);
+        setScreen('size');
+      }} />;
+  }
+
+  if (screen === 'size') {
+    return <HouseholdSize language={language}
+      onBack={() => setScreen('housing')}
+      onNext={(size) => {
+        setHouseholdSize(size);
+        setScreen('income');
+      }} />;
+  }
+
+  if (screen === 'income') {
+    return <HouseholdIncome language={language}
+      onBack={() => setScreen('size')}
+      onNext={(income) => {
+        setHouseholdIncome(income);
         setScreen('budget');
       }} />;
   }
 
   if (screen === 'budget') {
     return <Budget language={language}
-      onBack={() => setScreen('housing')}
+      onBack={() => setScreen('income')}
       onNext={(budget) => {
         setBudget(budget);
         setScreen('loading');
@@ -154,6 +176,8 @@ function Onboarding({ language, onBack }) {
       zipCode={zipCode}
       housingType={housingType}
       budget={budget}
+      householdSize={householdSize}
+      householdIncome={householdIncome}
     />;
   }
 
@@ -182,7 +206,7 @@ function Onboarding({ language, onBack }) {
           marginBottom: '24px',
         }}>
           <div style={{
-            width: '25%',
+            width: '17%',
             height: '100%',
             backgroundColor: '#4F8C6F',
             borderRadius: '10px',

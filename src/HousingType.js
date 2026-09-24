@@ -4,17 +4,17 @@ function HousingType({ language, onNext, onBack }) {
   const [selected, setSelected] = useState(null);
 
   const content = {
-    EN: { question: 'Do you rent or own your home?', rent: '🏠 I Rent', own: '🏡 I Own', next: 'Next', back: '← Back' },
-    ES: { question: '¿Alquilas o eres dueño de tu hogar?', rent: '🏠 Alquilo', own: '🏡 Soy Dueño', next: 'Siguiente', back: '← Atrás' },
-    ZH: { question: '您是租房还是自有住房？', rent: '🏠 我租房', own: '🏡 我自有', next: '下一步', back: '← 返回' },
-    AR: { question: 'هل تستأجر أم تمتلك منزلك؟', rent: '🏠 أستأجر', own: '🏡 أمتلك', next: 'التالي', back: 'رجوع →' },
-    FR: { question: 'Êtes-vous locataire ou propriétaire?', rent: '🏠 Locataire', own: '🏡 Propriétaire', next: 'Suivant', back: '← Retour' },
-    PT: { question: 'Você aluga ou é dono da sua casa?', rent: '🏠 Alugo', own: '🏡 Sou Dono', next: 'Próximo', back: '← Voltar' },
-    KO: { question: '집을 임대하시나요 아니면 소유하시나요?', rent: '🏠 임대', own: '🏡 소유', next: '다음', back: '← 뒤로' },
-    VI: { question: 'Bạn thuê hay sở hữu nhà?', rent: '🏠 Thuê', own: '🏡 Sở Hữu', next: 'Tiếp theo', back: '← Quay lại' },
-    TL: { question: 'Nangungupahan ka ba o may-ari?', rent: '🏠 Nangungupahan', own: '🏡 May-ari', next: 'Susunod', back: '← Bumalik' },
-    RU: { question: 'Вы снимаете или владеете жильём?', rent: '🏠 Снимаю', own: '🏡 Владею', next: 'Далее', back: '← Назад' },
-    HT: { question: 'Èske ou louwe oswa posede kay ou?', rent: '🏠 Mwen louwe', own: '🏡 Mwen posede', next: 'Pwochen', back: '← Retounen' },
+    EN: { question: 'What best describes your living situation?', rent: '🏠 I Rent', own: '🏡 I Own', guest: '👨‍👩‍👧 I live with family or others', next: 'Next', back: '← Back' },
+    ES: { question: '¿Qué describe mejor tu situación de vivienda?', rent: '🏠 Alquilo', own: '🏡 Soy Dueño', guest: '👨‍👩‍👧 Vivo con familia u otros', next: 'Siguiente', back: '← Atrás' },
+    ZH: { question: '您的居住情况是什么？', rent: '🏠 我租房', own: '🏡 我自有', guest: '👨‍👩‍👧 我与家人或他人同住', next: '下一步', back: '← 返回' },
+    AR: { question: 'ما الذي يصف وضع سكنك بشكل أفضل؟', rent: '🏠 أستأجر', own: '🏡 أمتلك', guest: '👨‍👩‍👧 أسكن مع العائلة أو آخرين', next: 'التالي', back: 'رجوع →' },
+    FR: { question: 'Quelle est votre situation de logement?', rent: '🏠 Locataire', own: '🏡 Propriétaire', guest: '👨‍👩‍👧 Je vis avec ma famille ou d\'autres', next: 'Suivant', back: '← Retour' },
+    PT: { question: 'O que melhor descreve sua situação de moradia?', rent: '🏠 Alugo', own: '🏡 Sou Dono', guest: '👨‍👩‍👧 Moro com família ou outros', next: 'Próximo', back: '← Voltar' },
+    KO: { question: '거주 상황을 가장 잘 설명하는 것은?', rent: '🏠 임대', own: '🏡 소유', guest: '👨‍👩‍👧 가족 또는 다른 사람과 함께 거주', next: '다음', back: '← 뒤로' },
+    VI: { question: 'Điều gì mô tả tốt nhất tình trạng nhà ở của bạn?', rent: '🏠 Thuê', own: '🏡 Sở Hữu', guest: '👨‍👩‍👧 Tôi sống với gia đình hoặc người khác', next: 'Tiếp theo', back: '← Quay lại' },
+    TL: { question: 'Ano ang pinakamailarawan sa iyong sitwasyon sa pamumuhay?', rent: '🏠 Nangungupahan', own: '🏡 May-ari', guest: '👨‍👩‍👧 Nakatira ako sa pamilya o iba pa', next: 'Susunod', back: '← Bumalik' },
+    RU: { question: 'Что лучше всего описывает вашу жилищную ситуацию?', rent: '🏠 Снимаю', own: '🏡 Владею', guest: '👨‍👩‍👧 Живу с семьёй или другими', next: 'Далее', back: '← Назад' },
+    HT: { question: 'Ki sa ki pi byen dekri sitiyasyon lojman ou?', rent: '🏠 Mwen louwe', own: '🏡 Mwen posede', guest: '👨‍👩‍👧 Mwen rete ak fanmi oswa lòt moun', next: 'Pwochen', back: '← Retounen' },
   };
 
   const current = content[language] || content.EN;
@@ -44,7 +44,7 @@ function HousingType({ language, onNext, onBack }) {
           marginBottom: '24px',
         }}>
           <div style={{
-            width: '50%',
+            width: '33%',
             height: '100%',
             backgroundColor: '#4F8C6F',
             borderRadius: '10px',
@@ -78,18 +78,18 @@ function HousingType({ language, onNext, onBack }) {
           flexDirection: 'column',
           gap: '16px',
         }}>
-          {['rent', 'own'].map((option) => (
+          {['rent', 'own', 'guest'].map((option) => (
             <button
               key={option}
               onClick={() => setSelected(option)}
               style={{
                 width: '100%',
-                padding: '24px',
+                padding: '20px',
                 borderRadius: '16px',
                 border: `2px solid ${selected === option ? '#4F8C6F' : '#E8E0D5'}`,
                 backgroundColor: selected === option ? '#EBF3EE' : '#FAF7F2',
                 color: '#2C2C2C',
-                fontSize: '18px',
+                fontSize: '17px',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 textAlign: 'center',

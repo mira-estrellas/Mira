@@ -5,14 +5,16 @@ import Community from './Community';
 import Shop from './Shop';
 import useIncentives from './useIncentives';
 
-function Dashboard({ language, zipCode, housingType, budget }) {
+function Dashboard({ language, zipCode, housingType, budget, householdSize, householdIncome }) {
   const [isWide, setIsWide] = useState(window.innerWidth > 600);
   const [activeTab, setActiveTab] = useState('home');
   const [showScrollHint, setShowScrollHint] = useState(true);
   const [currentZip, setCurrentZip] = useState(zipCode);
   const [currentHousing, setCurrentHousing] = useState(housingType);
   const [currentBudget, setCurrentBudget] = useState(budget);
-  const { incentives, loading, error } = useIncentives(currentZip, currentHousing);
+  const [currentSize, setCurrentSize] = useState(householdSize || 2);
+  const [currentIncome, setCurrentIncome] = useState(householdIncome || 80000);
+  const { incentives, loading, error } = useIncentives(currentZip, currentHousing, currentSize, currentIncome);
 
   useEffect(() => {
     const handleResize = () => setIsWide(window.innerWidth > 600);
