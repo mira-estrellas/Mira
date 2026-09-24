@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function useIncentives(zipCode) {
+function useIncentives(zipCode, ownerStatus) {
   const [incentives, setIncentives] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -13,7 +13,10 @@ function useIncentives(zipCode) {
       setError(null);
 
       try {
-        const response = await fetch(`/api/incentives?zip=${zipCode}`);
+        const owner = ownerStatus === 'rent' ? 'renter' : 'homeowner';
+        const response = await fetch(
+          `/api/incentives?zip=${zipCode}&owner_status=${owner}&household_income=80000&household_size=2`
+        );
 
         if (!response.ok) {
           throw new Error(`API error: ${response.status}`);
@@ -30,7 +33,7 @@ function useIncentives(zipCode) {
     };
 
     fetchIncentives();
-  }, [zipCode]);
+  }, [zipCode, ownerStatus]);
 
   return { incentives, loading, error };
 }

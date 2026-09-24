@@ -12,8 +12,7 @@ function Dashboard({ language, zipCode, housingType, budget }) {
   const [currentZip, setCurrentZip] = useState(zipCode);
   const [currentHousing, setCurrentHousing] = useState(housingType);
   const [currentBudget, setCurrentBudget] = useState(budget);
-  const { incentives, loading, error } = useIncentives(currentZip);
-
+  const { incentives, loading, error } = useIncentives(currentZip, currentHousing);
   useEffect(() => {
     const handleResize = () => setIsWide(window.innerWidth > 600);
     window.addEventListener('resize', handleResize);
