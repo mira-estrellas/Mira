@@ -13,6 +13,7 @@ function Dashboard({ language, zipCode, housingType, budget }) {
   const [currentHousing, setCurrentHousing] = useState(housingType);
   const [currentBudget, setCurrentBudget] = useState(budget);
   const { incentives, loading, error } = useIncentives(currentZip, currentHousing);
+
   useEffect(() => {
     const handleResize = () => setIsWide(window.innerWidth > 600);
     window.addEventListener('resize', handleResize);
@@ -197,7 +198,6 @@ function Dashboard({ language, zipCode, housingType, budget }) {
             📍 Zip: {currentZip} &nbsp;|&nbsp; 🏠 {currentHousing === 'rent' ? 'Renter' : 'Homeowner'} &nbsp;|&nbsp; 💰 {currentBudget ? `$${currentBudget}/mo` : 'Budget flexible'}
           </div>
 
-          {/* API Status */}
           {loading && (
             <p style={{ color: '#4F8C6F', fontSize: '14px', marginBottom: '16px', marginTop: '12px' }}>
               🌱 Loading real incentives for your area...
@@ -233,37 +233,130 @@ function Dashboard({ language, zipCode, housingType, budget }) {
             🎁 {current.incentives}
           </h2>
 
-          <div style={gridStyle}>
-            {current.incentiveItems.map((item, index) => (
-              <div key={index} style={cardStyle}>
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-start',
-                  marginBottom: '6px',
-                }}>
-                  <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: 0, flex: 1 }}>
-                    {item.title}
-                  </h3>
-                  <span style={{
-                    backgroundColor: '#EBF3EE',
-                    color: '#4F8C6F',
-                    borderRadius: '20px',
-                    padding: '4px 10px',
-                    fontSize: '12px',
-                    fontWeight: 'bold',
-                    marginLeft: '8px',
-                    whiteSpace: 'nowrap',
-                  }}>
-                    {item.amount}
-                  </span>
-                </div>
-                <p style={{ color: '#666', fontSize: '13px', margin: 0 }}>
-                  {item.description}
-                </p>
+          {incentives.length > 0 ? (
+            <div style={gridStyle}>
+              {incentives
+                .filter(item => !item.paused)
+                .map((item, index) => (
+                  <div key={index} style={cardStyle}>
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                      marginBottom: '6px',
+                    }}>
+                      <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: 0, flex: 1 }}>
+                        {item.program}
+                      </h3>
+                      <span style={{
+                        backgroundColor: '#EBF3EE',
+                        color: '#4F8C6F',
+                        borderRadius: '20px',
+                        padding: '4px 10px',
+                        fontSize: '12px',
+                        fontWeight: 'bold',
+                        marginLeft: '8px',
+                        whiteSpace: 'nowrap',
+                      }}>
+                        {item.amount.type === 'dollar_amount'
+                          ? `$${item.amount.number.toLocaleString()}`
+                          : item.amount.type === 'percent'
+                          ? `${item.amount.number}%`
+                          : 'Varies'}
+                      </span>
+                    </div>
+                    <p style={{ color: '#666', fontSize: '13px', margin: '0 0 8px 0' }}>
+                      {item.short_description}
+                    </p>
+                    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '8px' }}>
+                      <span style={{
+                        backgroundColor: '#F0EBE3',
+                        color: '#2C2C2C',
+                        borderRadius: '8px',
+                        padding: '2px 8px',
+                        fontSize: '11px',
+                      }}>
+                        {item.authority_type === 'federal' ? '🏛️ Federal' :
+                         item.authority_type === 'state' ? '🏢 State' :
+                         item.authority_type === 'utility' ? '⚡ Utility' : '🏠 Local'}
+                      </span>
+                      <span style={{
+                        backgroundColor: '#F0EBE3',
+                        color: '#2C2C2C',
+                        borderRadius: '8px',
+                        padding: '2px 8px',
+                        fontSize: '11px',
+                      }}>
+                        {item.payment_methods[0] === 'tax_credit' ? '💳 Tax Credit' :
+                         item.payment_methods[0] === 'pos_rebate' ? '💰 Instant Rebate' :
+                         item.payment_methods[0] === 'rebate' ? '💰 Rebate' : '💵 Discount'}
+                      </span>
+                    </div>
+                    {item.program_url && (
+                      <button
+                        onClick={() => window.open(item.program_url, '_blank')}
+                        style={{
+                          backgroundColor: '#4F8C6F',
+                          color: 'white',
+                          border: 'none',
+                          padding: '8px 16px',
+                          borderRadius: '20px',
+                          fontSize: '12px',
+                          cursor: 'pointer',
+                          marginTop: 'auto',
+                        }}
+                      >
+                        Learn More
+                      </button>
+                    )}
+                  </div>
+                ))}
+            </div>
+          ) : (
+            <div>
+              <div style={{
+                backgroundColor: '#FDF0E8',
+                borderRadius: '12px',
+                padding: '12px 16px',
+                marginBottom: '16px',
+                fontSize: '13px',
+                color: '#D4956A',
+              }}>
+                🌱 Showing general federal incentives. Personalized data for your state coming soon.
               </div>
-            ))}
-          </div>
+              <div style={gridStyle}>
+                {current.incentiveItems.map((item, index) => (
+                  <div key={index} style={cardStyle}>
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                      marginBottom: '6px',
+                    }}>
+                      <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: 0, flex: 1 }}>
+                        {item.title}
+                      </h3>
+                      <span style={{
+                        backgroundColor: '#EBF3EE',
+                        color: '#4F8C6F',
+                        borderRadius: '20px',
+                        padding: '4px 10px',
+                        fontSize: '12px',
+                        fontWeight: 'bold',
+                        marginLeft: '8px',
+                        whiteSpace: 'nowrap',
+                      }}>
+                        {item.amount}
+                      </span>
+                    </div>
+                    <p style={{ color: '#666', fontSize: '13px', margin: 0 }}>
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           <h2 style={{
             color: '#2C2C2C',
