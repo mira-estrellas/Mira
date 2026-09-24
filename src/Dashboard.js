@@ -210,20 +210,6 @@ function Dashboard({ language, zipCode, housingType, budget }) {
             </p>
           )}
 
-          {incentives.length > 0 && (
-            <div style={{
-              backgroundColor: '#EBF3EE',
-              borderRadius: '16px',
-              padding: '16px',
-              marginBottom: '16px',
-              marginTop: '12px',
-              fontSize: '13px',
-              color: '#4F8C6F',
-            }}>
-              ✓ Loaded {incentives.length} real incentives for zip {currentZip}
-            </div>
-          )}
-
           <h2 style={{
             color: '#2C2C2C',
             fontSize: '18px',
