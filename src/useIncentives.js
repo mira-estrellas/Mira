@@ -12,18 +12,24 @@ function useIncentives(zipCode, ownerStatus) {
       setLoading(true);
       setError(null);
 
+      const owner = ownerStatus === 'rent' ? 'renter' : 'homeowner';
+      const url = `/api/incentives?zip=${zipCode}&owner_status=${owner}&household_income=80000&household_size=2`;
+      
+      console.log('Fetching:', url);
+
       try {
-        const owner = ownerStatus === 'rent' ? 'renter' : 'homeowner';
-        const response = await fetch(
-          `/api/incentives?zip=${zipCode}&owner_status=${owner}&household_income=80000&household_size=2`
-        );
+        const response = await fetch(url);
+        console.log('Response status:', response.status);
+        
+        const text = await response.text();
+        console.log('Response preview:', text.substring(0, 300));
 
         if (!response.ok) {
           throw new Error(`API error: ${response.status}`);
         }
 
-        const data = await response.json();
-        setIncentives(data.incentives || []);
+        const parsed = JSON.parse(text);
+        setIncentives(parsed.incentives || []);
       } catch (err) {
         setError(err.message);
         console.error('Rewiring America API error:', err);
