@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar';
-import Placeholder from './Placeholder';
 import Profile from './Profile';
 import Community from './Community';
 import Shop from './Shop';
