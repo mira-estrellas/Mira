@@ -120,6 +120,7 @@ function App() {
   const [screen, setScreen] = useState('landing');
   const [visible, setVisible] = useState(false);
   const current = languages[language];
+  const isPreview = new URLSearchParams(window.location.search).get('preview') === 'true';
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 100);
@@ -133,7 +134,7 @@ function App() {
   });
 
   if (screen === 'onboarding') {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' || isPreview) {
       return <Onboarding language={language} onBack={() => setScreen('landing')} />;
     }
     return <ComingSoon language={language} onBack={() => setScreen('landing')} />;
