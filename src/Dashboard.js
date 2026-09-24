@@ -3,6 +3,7 @@ import NavBar from './NavBar';
 import Profile from './Profile';
 import Community from './Community';
 import Shop from './Shop';
+import useIncentives from './useIncentives';
 
 function Dashboard({ language, zipCode, housingType, budget }) {
   const [isWide, setIsWide] = useState(window.innerWidth > 600);
@@ -11,6 +12,7 @@ function Dashboard({ language, zipCode, housingType, budget }) {
   const [currentZip, setCurrentZip] = useState(zipCode);
   const [currentHousing, setCurrentHousing] = useState(housingType);
   const [currentBudget, setCurrentBudget] = useState(budget);
+  const { incentives, loading, error } = useIncentives(currentZip);
 
   useEffect(() => {
     const handleResize = () => setIsWide(window.innerWidth > 600);
@@ -193,8 +195,35 @@ function Dashboard({ language, zipCode, housingType, budget }) {
             fontSize: '13px',
             color: '#2C2C2C',
           }}>
-            📍 Zip: {zipCode} &nbsp;|&nbsp; 🏠 {housingType === 'rent' ? 'Renter' : 'Homeowner'} &nbsp;|&nbsp; 💰 {budget ? `$${budget}/mo` : 'Budget flexible'}
+            📍 Zip: {currentZip} &nbsp;|&nbsp; 🏠 {currentHousing === 'rent' ? 'Renter' : 'Homeowner'} &nbsp;|&nbsp; 💰 {currentBudget ? `$${currentBudget}/mo` : 'Budget flexible'}
           </div>
+
+          {/* API Status */}
+          {loading && (
+            <p style={{ color: '#4F8C6F', fontSize: '14px', marginBottom: '16px', marginTop: '12px' }}>
+              🌱 Loading real incentives for your area...
+            </p>
+          )}
+
+          {error && (
+            <p style={{ color: '#D4956A', fontSize: '14px', marginBottom: '16px', marginTop: '12px' }}>
+              ⚠️ API error: {error}
+            </p>
+          )}
+
+          {incentives.length > 0 && (
+            <div style={{
+              backgroundColor: '#EBF3EE',
+              borderRadius: '16px',
+              padding: '16px',
+              marginBottom: '16px',
+              marginTop: '12px',
+              fontSize: '13px',
+              color: '#4F8C6F',
+            }}>
+              ✓ Loaded {incentives.length} real incentives for zip {currentZip}
+            </div>
+          )}
 
           <h2 style={{
             color: '#2C2C2C',
@@ -330,7 +359,7 @@ function Dashboard({ language, zipCode, housingType, budget }) {
           pointerEvents: 'none',
           whiteSpace: 'nowrap',
           boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-                    animation: 'bounce 1.5s infinite',
+          animation: 'bounce 1.5s infinite',
         }}>
           {current.scrollHint}
         </div>

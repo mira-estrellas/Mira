@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ComingSoon from './ComingSoon';
+import Onboarding from './Onboarding';
 
 const languages = {
   EN: {
@@ -132,6 +133,9 @@ function App() {
   });
 
   if (screen === 'onboarding') {
+    if (process.env.NODE_ENV === 'development') {
+      return <Onboarding language={language} onBack={() => setScreen('landing')} />;
+    }
     return <ComingSoon language={language} onBack={() => setScreen('landing')} />;
   }
 
