@@ -12,8 +12,8 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
   const [currentZip, setCurrentZip] = useState(zipCode);
   const [currentHousing, setCurrentHousing] = useState(housingType);
   const [currentBudget, setCurrentBudget] = useState(budget);
-  const [currentSize, setCurrentSize] = useState(householdSize || 2);
-  const [currentIncome, setCurrentIncome] = useState(householdIncome || 80000);
+  const currentSize = householdSize || 2;
+  const currentIncome = householdIncome || 80000;
   const { incentives, loading, error } = useIncentives(currentZip, currentHousing, currentSize, currentIncome);
 
   useEffect(() => {
