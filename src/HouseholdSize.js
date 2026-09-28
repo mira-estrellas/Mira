@@ -88,7 +88,7 @@ function HouseholdSize({ language, onNext, onBack }) {
           gap: '12px',
           marginBottom: '12px',
         }}>
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+          {[1, 2, 3, 4, 5, 6, 7, '8+'].map((num) => (
             <button
               key={num}
               onClick={() => setSelected(num)}
@@ -117,7 +117,7 @@ function HouseholdSize({ language, onNext, onBack }) {
             textAlign: 'center',
             marginBottom: '8px',
           }}>
-            {selected} {selected === 1 ? current.person : current.people}
+            {selected === '8+' ? `8+ ${current.people}` : selected === 1 ? `1 ${current.person}` : `${selected} ${current.people}`}
           </p>
         )}
 

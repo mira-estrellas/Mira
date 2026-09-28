@@ -130,7 +130,7 @@ function Onboarding({ language, onBack }) {
     return <HouseholdSize language={language}
       onBack={() => setScreen('housing')}
       onNext={(size) => {
-        setHouseholdSize(size);
+        setHouseholdSize(size === '8+' ? 8 : size);
         setScreen('income');
       }} />;
   }
