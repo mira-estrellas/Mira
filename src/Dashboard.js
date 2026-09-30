@@ -36,6 +36,72 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const budgetNum = parseFloat(currentBudget) || null;
+
+  const allSwapItems = {
+    renter: {
+      EN: [
+        { title: '💡 LED Bulbs', description: 'Simple swap, immediate savings on your electric bill.', cost: '~$15', costNum: 15 },
+        { title: '🪟 Window Insulation Kit', description: 'Keep heat in during winter, reduce heating costs.', cost: '~$20', costNum: 20 },
+        { title: '🌡️ Smart Power Strips', description: 'Eliminate phantom energy drain from electronics.', cost: '~$25', costNum: 25 },
+        { title: '🚿 Low-Flow Showerhead', description: 'Reduce water and water heating costs.', cost: '~$30', costNum: 30 },
+        { title: '🌡️ Smart Thermostat', description: 'Automatically optimizes heating and cooling.', cost: '~$130', costNum: 130 },
+        { title: '⚡ Portable Solar Generator', description: 'Generate your own clean electricity anywhere. No installation needed.', cost: '~$200', costNum: 200 },
+      ],
+      ES: [
+        { title: '💡 Bombillas LED', description: 'Cambio simple, ahorros inmediatos en tu factura eléctrica.', cost: '~$15', costNum: 15 },
+        { title: '🪟 Kit de Aislamiento de Ventanas', description: 'Mantén el calor en invierno, reduce costos de calefacción.', cost: '~$20', costNum: 20 },
+        { title: '🌡️ Regletas Inteligentes', description: 'Elimina el consumo fantasma de electrónicos.', cost: '~$25', costNum: 25 },
+        { title: '🚿 Cabezal de Ducha de Bajo Flujo', description: 'Reduce el agua y los costos de calentamiento de agua.', cost: '~$30', costNum: 30 },
+        { title: '🌡️ Termostato Inteligente', description: 'Optimiza automáticamente la calefacción y el enfriamiento.', cost: '~$130', costNum: 130 },
+        { title: '⚡ Generador Solar Portátil', description: 'Genera tu propia electricidad limpia en cualquier lugar. Sin instalación.', cost: '~$200', costNum: 200 },
+      ],
+    },
+    owner: {
+      EN: [
+        { title: '💡 LED Bulbs', description: 'Simple swap, immediate savings on your electric bill.', cost: '~$15', costNum: 15 },
+        { title: '🪟 Window Insulation Kit', description: 'Keep heat in during winter, reduce heating costs.', cost: '~$20', costNum: 20 },
+        { title: '🌡️ Smart Power Strips', description: 'Eliminate phantom energy drain from electronics.', cost: '~$25', costNum: 25 },
+        { title: '🌡️ Smart Thermostat', description: 'Automatically optimizes heating and cooling.', cost: '~$130', costNum: 130 },
+        { title: '🚗 EV Charger', description: 'Home charging station for electric vehicles.', cost: '~$400 after rebates', costNum: 400 },
+        { title: '💧 Heat Pump Water Heater', description: 'Uses 70% less energy than traditional water heaters.', cost: '~$500 after rebates', costNum: 500 },
+        { title: '☀️ Solar Panels', description: 'Generate your own clean electricity.', cost: 'From $0 with financing', costNum: 0 },
+      ],
+      ES: [
+        { title: '💡 Bombillas LED', description: 'Cambio simple, ahorros inmediatos en tu factura eléctrica.', cost: '~$15', costNum: 15 },
+        { title: '🪟 Kit de Aislamiento de Ventanas', description: 'Mantén el calor en invierno, reduce costos de calefacción.', cost: '~$20', costNum: 20 },
+        { title: '🌡️ Regletas Inteligentes', description: 'Elimina el consumo fantasma de electrónicos.', cost: '~$25', costNum: 25 },
+        { title: '🌡️ Termostato Inteligente', description: 'Optimiza automáticamente la calefacción y el enfriamiento.', cost: '~$130', costNum: 130 },
+        { title: '🚗 Cargador de VE', description: 'Estación de carga doméstica para vehículos eléctricos.', cost: '~$400 después de reembolsos', costNum: 400 },
+        { title: '💧 Calentador de Agua con Bomba de Calor', description: 'Usa 70% menos energía que los calentadores tradicionales.', cost: '~$500 después de reembolsos', costNum: 500 },
+        { title: '☀️ Paneles Solares', description: 'Genera tu propia electricidad limpia.', cost: 'Desde $0 con financiamiento', costNum: 0 },
+      ],
+    },
+  };
+
+  const getSwapItems = () => {
+    const isRenter = currentHousing === 'rent' || currentHousing === 'guest';
+    const lang = language === 'ES' ? 'ES' : 'EN';
+    const items = isRenter ? allSwapItems.renter[lang] : allSwapItems.owner[lang];
+
+    if (!budgetNum) return items;
+
+    // Filter and sort by what's affordable
+    // Solar panels with $0 financing always show for owners
+    const affordable = items.filter(item =>
+      item.costNum === 0 || item.costNum <= budgetNum
+    );
+
+    // If nothing is affordable show the cheapest 2 options
+    if (affordable.length === 0) {
+      return [...items].sort((a, b) => a.costNum - b.costNum).slice(0, 2);
+    }
+
+    return affordable.sort((a, b) => a.costNum - b.costNum);
+  };
+
+  const swapItems = getSwapItems();
+
   const content = {
     EN: {
       greeting: 'Here\'s your personalized plan',
@@ -44,21 +110,11 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
       swaps: 'Affordable Clean Swaps',
       impact: 'Your Potential Impact',
       scrollHint: '↓ Scroll to see all your options',
+      budgetNote: budgetNum ? `Showing swaps within your $${budgetNum}/mo budget` : 'Showing all available swaps',
       incentiveItems: [
         { title: 'Federal Solar Tax Credit', description: 'Get 30% back on solar panel installation costs.', amount: 'Up to $7,500' },
         { title: 'Heat Pump Rebate', description: 'Federal rebate for switching to an electric heat pump.', amount: 'Up to $2,000' },
         { title: 'EV Tax Credit', description: 'Credit for purchasing a new electric vehicle.', amount: 'Up to $7,500' },
-      ],
-      swapItems: housingType === 'rent' || housingType === 'guest' ? [
-        { title: '💡 LED Bulbs', description: 'Simple swap, immediate savings on your electric bill.', cost: '~$15' },
-        { title: '🌡️ Smart Power Strips', description: 'Eliminate phantom energy drain from electronics.', cost: '~$25' },
-        { title: '🚿 Low-Flow Showerhead', description: 'Reduce water and water heating costs.', cost: '~$30' },
-        { title: '🪟 Window Insulation Kit', description: 'Keep heat in during winter, reduce heating costs.', cost: '~$20' },
-      ] : [
-        { title: '🌡️ Smart Thermostat', description: 'Automatically optimizes heating and cooling.', cost: '~$130' },
-        { title: '💧 Heat Pump Water Heater', description: 'Uses 70% less energy than traditional water heaters.', cost: '~$500 after rebates' },
-        { title: '☀️ Solar Panels', description: 'Generate your own clean electricity.', cost: 'From $0 with financing' },
-        { title: '🚗 EV Charger', description: 'Home charging station for electric vehicles.', cost: '~$400 after rebates' },
       ],
     },
     ES: {
@@ -68,21 +124,11 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
       swaps: 'Cambios Limpios Asequibles',
       impact: 'Tu Impacto Potencial',
       scrollHint: '↓ Desplázate para ver todas tus opciones',
+      budgetNote: budgetNum ? `Mostrando cambios dentro de tu presupuesto de $${budgetNum}/mes` : 'Mostrando todos los cambios disponibles',
       incentiveItems: [
         { title: 'Crédito Federal Solar', description: 'Obtén el 30% de vuelta en costos de instalación solar.', amount: 'Hasta $7,500' },
         { title: 'Reembolso de Bomba de Calor', description: 'Reembolso federal por cambiar a una bomba de calor eléctrica.', amount: 'Hasta $2,000' },
         { title: 'Crédito Fiscal para VE', description: 'Crédito por comprar un vehículo eléctrico nuevo.', amount: 'Hasta $7,500' },
-      ],
-      swapItems: housingType === 'rent' || housingType === 'guest' ? [
-        { title: '💡 Bombillas LED', description: 'Cambio simple, ahorros inmediatos en tu factura eléctrica.', cost: '~$15' },
-        { title: '🌡️ Regletas Inteligentes', description: 'Elimina el consumo fantasma de electrónicos.', cost: '~$25' },
-        { title: '🚿 Cabezal de Ducha de Bajo Flujo', description: 'Reduce el agua y los costos de calentamiento de agua.', cost: '~$30' },
-        { title: '🪟 Kit de Aislamiento de Ventanas', description: 'Mantén el calor en invierno, reduce costos de calefacción.', cost: '~$20' },
-      ] : [
-        { title: '🌡️ Termostato Inteligente', description: 'Optimiza automáticamente la calefacción y el enfriamiento.', cost: '~$130' },
-        { title: '💧 Calentador de Agua con Bomba de Calor', description: 'Usa 70% menos energía que los calentadores tradicionales.', cost: '~$500 después de reembolsos' },
-        { title: '☀️ Paneles Solares', description: 'Genera tu propia electricidad limpia.', cost: 'Desde $0 con financiamiento' },
-        { title: '🚗 Cargador de VE', description: 'Estación de carga doméstica para vehículos eléctricos.', cost: '~$400 después de reembolsos' },
       ],
     },
   };
@@ -193,7 +239,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
             fontSize: '13px',
             color: '#2C2C2C',
           }}>
-            📍 Zip: {currentZip} &nbsp;|&nbsp; 🏠 {currentHousing === 'rent' ? 'Renter' : 'Homeowner'} &nbsp;|&nbsp; 💰 {currentBudget ? `$${currentBudget}/mo` : 'Budget flexible'}
+            📍 Zip: {currentZip} &nbsp;|&nbsp; 🏠 {currentHousing === 'rent' ? 'Renter' : currentHousing === 'guest' ? 'Living with Family' : 'Homeowner'} &nbsp;|&nbsp; 💰 {currentBudget ? `$${currentBudget}/mo` : 'Budget flexible'}
           </div>
 
           {loading && (
@@ -346,13 +392,21 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
             color: '#2C2C2C',
             fontSize: '18px',
             marginTop: '32px',
-            marginBottom: '16px',
+            marginBottom: '8px',
           }}>
             ♻️ {current.swaps}
           </h2>
 
+          <p style={{
+            color: '#4F8C6F',
+            fontSize: '13px',
+            marginBottom: '16px',
+          }}>
+            {current.budgetNote}
+          </p>
+
           <div style={gridStyle}>
-            {current.swapItems.map((item, index) => (
+            {swapItems.map((item, index) => (
               <div key={index} style={cardStyle}>
                 <div style={{
                   display: 'flex',
