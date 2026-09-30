@@ -266,50 +266,48 @@ function GoFurther({ language, onTabChange }) {
       }}>
         <div style={{ width: '100%', maxWidth: '900px', position: 'relative' }}>
 
-          {/* Sticky side nav */}
+          {/* Sticky top nav */}
           <div style={{
-            position: 'fixed',
-            right: '8px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '6px',
+            position: 'sticky',
+            top: 0,
             zIndex: 100,
+            backgroundColor: '#F0EBE3',
+            paddingBottom: '12px',
+            marginBottom: '8px',
           }}>
-            {navSections.map((section) => (
-              <button
-                key={section}
-                onClick={() => scrollToSection(section)}
-                style={{
-                  width: '72px',
-                  padding: '10px 6px',
-                  borderRadius: '12px',
-                  border: 'none',
-                  backgroundColor: activeSection === section ? '#4F8C6F' : 'white',
-                  color: activeSection === section ? 'white' : '#A0A0A0',
-                  fontSize: '20px',
-                  cursor: 'pointer',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
-                  transition: 'all 0.2s ease',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '2px',
-                }}
-              >
-                <span style={{ fontSize: '18px' }}>{current.sections[section].icon}</span>
-                <span style={{
-                  fontSize: '11px',
-                  fontFamily: 'Poppins, sans-serif',
-                  fontWeight: activeSection === section ? '600' : '400',
-                  lineHeight: '1.2',
-                  textAlign: 'center',
-                }}>
-                  {current.sections[section].label}
-                </span>
-              </button>
-            ))}
+            <div style={{
+              display: 'flex',
+              gap: '8px',
+              overflowX: 'auto',
+              paddingBottom: '4px',
+            }}>
+              {navSections.map((section) => (
+                <button
+                  key={section}
+                  onClick={() => scrollToSection(section)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '10px 16px',
+                    borderRadius: '20px',
+                    border: 'none',
+                    backgroundColor: activeSection === section ? '#4F8C6F' : 'white',
+                    color: activeSection === section ? 'white' : '#A0A0A0',
+                    fontSize: '13px',
+                    fontWeight: activeSection === section ? '600' : '400',
+                    cursor: 'pointer',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                    transition: 'all 0.2s ease',
+                    whiteSpace: 'nowrap',
+                    fontFamily: 'Poppins, sans-serif',
+                  }}
+                >
+                  <span>{current.sections[section].icon}</span>
+                  <span>{current.sections[section].label}</span>
+                </button>
+              ))}
+            </div>
           </div>
 
           <h1 style={{ color: '#4F8C6F', fontSize: '28px', marginBottom: '8px', marginTop: '16px' }}>
