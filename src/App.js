@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ComingSoon from './ComingSoon';
 import Onboarding from './Onboarding';
+import ComingSoon from './ComingSoon';
+import Dashboard from './Dashboard';
 
 const languages = {
   EN: {
@@ -119,12 +120,24 @@ function App() {
   const [language, setLanguage] = useState('EN');
   const [screen, setScreen] = useState('landing');
   const [visible, setVisible] = useState(false);
+  const [savedProfile, setSavedProfile] = useState(null);
   const current = languages[language];
   const isPreview = new URLSearchParams(window.location.search).get('preview') === 'true';
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 100);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    try {
+      const profile = localStorage.getItem('mira_profile');
+      if (profile) {
+        setSavedProfile(JSON.parse(profile));
+      }
+    } catch {
+      console.log('localStorage not available');
+    }
   }, []);
 
   const fadeIn = (delay) => ({
@@ -138,6 +151,20 @@ function App() {
       return <Onboarding language={language} onBack={() => setScreen('landing')} />;
     }
     return <ComingSoon language={language} onBack={() => setScreen('landing')} />;
+  }
+
+  // If returning user has saved profile go straight to dashboard
+  if (screen === 'landing' && savedProfile && (process.env.NODE_ENV === 'development' || isPreview)) {
+    return (
+      <Dashboard
+        language={savedProfile.language || language}
+        zipCode={savedProfile.zipCode}
+        housingType={savedProfile.housingType}
+        budget={savedProfile.budget}
+        householdSize={savedProfile.householdSize}
+        householdIncome={savedProfile.householdIncome}
+      />
+    );
   }
 
   return (
@@ -174,7 +201,7 @@ function App() {
               border: '1px solid #4F8C6F',
               backgroundColor: '#FAF7F2',
               color: '#2C2C2C',
-              fontSize: '16px',
+              fontSize: '14px',
               cursor: 'pointer',
               fontFamily: 'Poppins, sans-serif',
             }}
@@ -192,30 +219,28 @@ function App() {
           alignItems: 'center',
           justifyContent: 'center',
           textAlign: 'center',
-          padding: '20px 24px 50px',
+          padding: '20px 24px 60px',
           maxWidth: '860px',
           flex: 1,
         }}>
 
-          {/* Mira */}
           <h1 style={{
             color: '#2D6A4F',
-            fontSize: '80px',
-            margin: '0 0 30px 0',
-            fontFamily: 'Klee One, sans-serif',
-            fontWeight: '700',
+            fontSize: '64px',
+            margin: '0 0 32px 0',
+            fontFamily: 'Klee One, cursive',
+            fontWeight: '400',
             letterSpacing: '-1px',
             ...fadeIn(0.2),
           }}>
             Mira
           </h1>
 
-          {/* Urgency */}
           <p style={{
             color: '#2C2C2C',
-            fontSize: '18px',
+            fontSize: '15px',
             lineHeight: '1.8',
-            marginBottom: '24px',
+            marginBottom: '32px',
             maxWidth: '700px',
             fontWeight: '400',
             ...fadeIn(0.6),
@@ -228,31 +253,29 @@ function App() {
             ))}
           </p>
 
-          {/* Mission */}
           <p style={{
             color: '#2C2C2C',
             fontSize: '20px',
             lineHeight: '1.6',
-            marginBottom: '10px',
+            marginBottom: '8px',
             fontWeight: '500',
             ...fadeIn(0.8),
           }}>
             {current.mission}
           </p>
 
-          {/* Missing piece */}
           <p style={{
             color: '#4F8C6F',
             fontSize: '24px',
-            fontWeight: '650',
+            fontWeight: '600',
             marginBottom: '32px',
             letterSpacing: '-0.5px',
+            textDecoration: 'underline',
             ...fadeIn(1.0),
           }}>
             {current.missing}
           </p>
 
-          {/* Stat number */}
           <p style={{
             color: '#2C2C2C',
             fontSize: '60px',
@@ -265,11 +288,10 @@ function App() {
             {current.stat}
           </p>
 
-          {/* Stat description */}
           <p style={{
             color: '#2C2C2C',
             fontSize: '18px',
-            marginBottom: '24px',
+            marginBottom: '32px',
             maxWidth: '580px',
             lineHeight: '1.6',
             fontWeight: '400',
@@ -281,18 +303,16 @@ function App() {
             }
           </p>
 
-          {/* CTA text */}
           <p style={{
             color: '#2C2C2C',
-            fontSize: '18px',
-            marginBottom: '28px',
+            fontSize: '15px',
+            marginBottom: '32px',
             fontWeight: '400',
             ...fadeIn(1.6),
           }}>
             {current.cta}
           </p>
 
-          {/* Button */}
           <div style={fadeIn(1.8)}>
             <button
               onClick={() => setScreen('onboarding')}

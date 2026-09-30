@@ -49,6 +49,7 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
       notifDesc: 'Get updates when new incentives become available in your area.',
       person: 'person',
       people: 'people',
+      reset: '🔄 Reset and redo onboarding',
     },
     ES: {
       title: 'Mi Perfil',
@@ -71,6 +72,7 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
       notifDesc: 'Recibe actualizaciones cuando haya nuevos incentivos disponibles en tu área.',
       person: 'persona',
       people: 'personas',
+      reset: '🔄 Restablecer y rehacer el proceso',
     },
   };
 
@@ -123,6 +125,13 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
     boxSizing: 'border-box',
     outline: 'none',
     marginTop: '4px',
+  };
+
+  const handleReset = () => {
+    try {
+      localStorage.removeItem('mira_profile');
+    } catch {}
+    window.location.reload();
   };
 
   return (
@@ -383,6 +392,23 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
                 </div>
               </div>
             )}
+
+            {/* Reset button — always visible at bottom */}
+            <button
+              onClick={handleReset}
+              style={{
+                width: '100%',
+                backgroundColor: 'transparent',
+                color: '#A0A0A0',
+                border: 'none',
+                padding: '12px',
+                fontSize: '13px',
+                cursor: 'pointer',
+                marginTop: '16px',
+              }}
+            >
+              {current.reset}
+            </button>
           </div>
 
           {/* Notifications Section */}

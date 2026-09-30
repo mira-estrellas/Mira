@@ -171,6 +171,18 @@ function Onboarding({ language, onBack }) {
   }
 
   if (screen === 'dashboard') {
+    try {
+      localStorage.setItem('mira_profile', JSON.stringify({
+        language,
+        zipCode,
+        housingType,
+        budget,
+        householdSize,
+        householdIncome,
+      }));
+    } catch {
+      console.log('localStorage not available');
+    }
     return <Dashboard
       language={language}
       zipCode={zipCode}
