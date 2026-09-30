@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { calculateImpact } from './impactCalculator';
 import NavBar from './NavBar';
 import Profile from './Profile';
 import Community from './Community';
@@ -15,6 +16,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
   const [currentSize, setCurrentSize] = useState(householdSize || 2);
   const [currentIncome, setCurrentIncome] = useState(householdIncome || 80000);
   const { incentives, loading, error } = useIncentives(currentZip, currentHousing, currentSize, currentIncome);
+  const impactStats = calculateImpact(currentZip, currentHousing, currentSize, language);
 
   useEffect(() => {
     const handleResize = () => setIsWide(window.innerWidth > 600);
@@ -58,11 +60,6 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
         { title: '☀️ Solar Panels', description: 'Generate your own clean electricity.', cost: 'From $0 with financing' },
         { title: '🚗 EV Charger', description: 'Home charging station for electric vehicles.', cost: '~$400 after rebates' },
       ],
-      impactStats: [
-        { stat: '4.2 tons', description: 'of CO₂ saved per year with clean swaps' },
-        { stat: '$1,400', description: 'average annual energy savings' },
-        { stat: '🌳 210', description: 'trees worth of carbon absorbed' },
-      ],
     },
     ES: {
       greeting: 'Aquí está tu plan personalizado',
@@ -86,11 +83,6 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
         { title: '💧 Calentador de Agua con Bomba de Calor', description: 'Usa 70% menos energía que los calentadores tradicionales.', cost: '~$500 después de reembolsos' },
         { title: '☀️ Paneles Solares', description: 'Genera tu propia electricidad limpia.', cost: 'Desde $0 con financiamiento' },
         { title: '🚗 Cargador de VE', description: 'Estación de carga doméstica para vehículos eléctricos.', cost: '~$400 después de reembolsos' },
-      ],
-      impactStats: [
-        { stat: '4.2 toneladas', description: 'de CO₂ ahorradas por año con cambios limpios' },
-        { stat: '$1,400', description: 'ahorros promedio anuales de energía' },
-        { stat: '🌳 210', description: 'árboles equivalentes de carbono absorbido' },
       ],
     },
   };
@@ -401,7 +393,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
           </h2>
 
           <div style={impactGridStyle}>
-            {current.impactStats.map((item, index) => (
+            {impactStats.map((item, index) => (
               <div key={index} style={{
                 backgroundColor: 'white',
                 borderRadius: '16px',
