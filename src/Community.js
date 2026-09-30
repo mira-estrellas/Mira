@@ -78,6 +78,69 @@ function Community({ language, userZip, onTabChange }) {
   const categories = ['All', '🔧 Home & Repair', '⚡ Energy & Solar', '🌱 Garden & Outdoor', '🚗 EV & Transport', '📦 General'];
   const conditions = ['Like New', 'Excellent', 'Good', 'Fair'];
 
+  const recycleCategories = [
+    {
+      icon: '📱',
+      title: 'Electronics',
+      tips: 'Old phones, laptops, TVs and cables. Never throw in regular trash — they contain toxic materials.',
+      earth911Material: 'Electronics',
+    },
+    {
+      icon: '🔋',
+      title: 'Batteries',
+      tips: 'Car batteries, AA/AAA, lithium-ion. Many hardware stores accept them for free.',
+      earth911Material: 'Batteries',
+    },
+    {
+      icon: '🪟',
+      title: 'Glass',
+      tips: 'Bottles and jars are widely accepted. Window glass and mirrors usually require special drop-off.',
+      earth911Material: 'Glass',
+    },
+    {
+      icon: '📦',
+      title: 'Cardboard',
+      tips: 'Break down boxes and keep dry. Greasy pizza boxes go in compost, not recycling.',
+      earth911Material: 'Cardboard',
+    },
+    {
+      icon: '🥤',
+      title: 'Plastic',
+      tips: 'Check the number on the bottom. #1 and #2 are most widely accepted. Plastic bags need special drop-off.',
+      earth911Material: 'Plastic Bags',
+    },
+    {
+      icon: '💡',
+      title: 'Light Bulbs',
+      tips: 'LED and CFL bulbs need special recycling. Many hardware stores accept them.',
+      earth911Material: 'Light Bulbs',
+    },
+    {
+      icon: '🛋️',
+      title: 'Furniture',
+      tips: 'Donate usable furniture first. For broken items check local bulk pickup or habitat for humanity.',
+      earth911Material: 'Furniture',
+    },
+    {
+      icon: '👕',
+      title: 'Clothing',
+      tips: 'Donate wearable clothes. Worn out textiles can go to H&M, Patagonia or TerraCycle.',
+      earth911Material: 'Clothing',
+    },
+    {
+      icon: '🚗',
+      title: 'Motor Oil',
+      tips: 'Never pour down the drain. Most auto parts stores accept used motor oil for free.',
+      earth911Material: 'Motor Oil',
+    },
+    {
+      icon: '💊',
+      title: 'Medications',
+      tips: 'Never flush medications. Use DEA drug take-back programs or approved disposal bags.',
+      earth911Material: 'Medications',
+    },
+  ];
+
   const content = {
     EN: {
       title: 'Community',
@@ -86,6 +149,7 @@ function Community({ language, userZip, onTabChange }) {
       post: 'Post a Tool',
       saved: 'Saved',
       safety: 'Safety Tips',
+      recycle: '♻️ Recycle',
       interested: 'Interested',
       alreadyInterested: 'Interest Sent ✓',
       save: '☆ Save',
@@ -104,6 +168,12 @@ function Community({ language, userZip, onTabChange }) {
       miles: 'miles',
       noListings: 'No listings found within this distance. Try increasing the range.',
       noSaved: 'No saved listings yet. Browse and save tools you\'re interested in!',
+      recycleTitle: 'What can I recycle?',
+      recycleSubtitle: 'Tap any category to find recycling locations near you.',
+      findRecycling: '🗺️ Find Recycling Near You',
+      findWater: '💧 Find Free Water Refill Stations',
+      earth911Note: 'Opens Earth911 — the largest recycling directory in the US.',
+      tapNote: 'Opens Tap — a worldwide map of free water refill stations.',
       safetyTips: [
         { icon: '📍', tip: 'Meet in a public place or your building lobby for exchanges.' },
         { icon: '👥', tip: 'Bring a friend or let someone know where you\'re going.' },
@@ -121,6 +191,7 @@ function Community({ language, userZip, onTabChange }) {
       post: 'Publicar Herramienta',
       saved: 'Guardados',
       safety: 'Consejos de Seguridad',
+      recycle: '♻️ Reciclar',
       interested: 'Interesado',
       alreadyInterested: 'Interés Enviado ✓',
       save: '☆ Guardar',
@@ -139,6 +210,12 @@ function Community({ language, userZip, onTabChange }) {
       miles: 'millas',
       noListings: 'No se encontraron listados en esta distancia. Intenta aumentar el rango.',
       noSaved: '¡Aún no hay listados guardados. Explora y guarda herramientas que te interesen!',
+      recycleTitle: '¿Qué puedo reciclar?',
+      recycleSubtitle: 'Toca cualquier categoría para encontrar lugares de reciclaje cerca de ti.',
+      findRecycling: '🗺️ Encuentra Reciclaje Cerca de Ti',
+      findWater: '💧 Encuentra Estaciones de Agua Gratis',
+      earth911Note: 'Abre Earth911 — el directorio de reciclaje más grande de EE.UU.',
+      tapNote: 'Abre Tap — un mapa mundial de estaciones de agua gratuitas.',
       safetyTips: [
         { icon: '📍', tip: 'Reúnete en un lugar público para los intercambios.' },
         { icon: '👥', tip: 'Lleva a un amigo o avisa a alguien adónde vas.' },
@@ -199,6 +276,11 @@ function Community({ language, userZip, onTabChange }) {
     setTimeout(() => setSuccessMessage(''), 3000);
   };
 
+  const handleEarth911 = (material) => {
+    const zip = userZip || '';
+    window.open(`https://search.earth911.com/?what=${encodeURIComponent(material)}&where=${zip}&radius=25`, '_blank');
+  };
+
   const sectionStyle = {
     backgroundColor: 'white',
     borderRadius: '16px',
@@ -227,7 +309,7 @@ function Community({ language, userZip, onTabChange }) {
     color: active ? 'white' : '#A0A0A0',
     border: 'none',
     borderRadius: '12px',
-    fontSize: '13px',
+    fontSize: '12px',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
     fontWeight: active ? 'bold' : 'normal',
@@ -277,7 +359,7 @@ function Community({ language, userZip, onTabChange }) {
             boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
             gap: '4px',
           }}>
-            {['browse', 'post', 'saved', 'safety'].map((section) => (
+            {['browse', 'post', 'saved', 'recycle', 'safety'].map((section) => (
               <button
                 key={section}
                 onClick={() => setActiveSection(section)}
@@ -286,6 +368,7 @@ function Community({ language, userZip, onTabChange }) {
                 {section === 'browse' ? current.browse :
                  section === 'post' ? current.post :
                  section === 'saved' ? current.saved :
+                 section === 'recycle' ? current.recycle :
                  current.safety}
               </button>
             ))}
@@ -294,7 +377,6 @@ function Community({ language, userZip, onTabChange }) {
           {/* Browse Section */}
           {activeSection === 'browse' && (
             <>
-              {/* Miles Slider */}
               <div style={{
                 backgroundColor: 'white',
                 borderRadius: '16px',
@@ -344,7 +426,6 @@ function Community({ language, userZip, onTabChange }) {
                 </div>
               </div>
 
-              {/* Category Filter */}
               <div style={{
                 display: 'flex',
                 gap: '8px',
@@ -602,6 +683,107 @@ function Community({ language, userZip, onTabChange }) {
                   </div>
                 ))
               )}
+            </>
+          )}
+
+          {/* Recycle Section */}
+          {activeSection === 'recycle' && (
+            <>
+              <h2 style={{ color: '#2C2C2C', fontSize: '20px', marginBottom: '8px' }}>
+                {current.recycleTitle}
+              </h2>
+              <p style={{ color: '#666', fontSize: '14px', marginBottom: '24px' }}>
+                {current.recycleSubtitle}
+              </p>
+
+              {/* Find Recycling Button */}
+              <div style={{ ...sectionStyle, textAlign: 'center' }}>
+                <button
+                  onClick={() => handleEarth911('Recycling')}
+                  style={{
+                    width: '100%',
+                    backgroundColor: '#4F8C6F',
+                    color: 'white',
+                    border: 'none',
+                    padding: '16px',
+                    borderRadius: '16px',
+                    fontSize: '16px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    marginBottom: '8px',
+                  }}
+                >
+                  {current.findRecycling}
+                </button>
+                <p style={{ color: '#A0A0A0', fontSize: '12px', margin: 0 }}>
+                  {current.earth911Note}
+                </p>
+              </div>
+
+              {/* Find Water Button */}
+              <div style={{ ...sectionStyle, textAlign: 'center' }}>
+                <button
+                  onClick={() => window.open('https://www.findtap.com', '_blank')}
+                  style={{
+                    width: '100%',
+                    backgroundColor: '#4F8C6F',
+                    color: 'white',
+                    border: 'none',
+                    padding: '16px',
+                    borderRadius: '16px',
+                    fontSize: '16px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    marginBottom: '8px',
+                  }}
+                >
+                  {current.findWater}
+                </button>
+                <p style={{ color: '#A0A0A0', fontSize: '12px', margin: 0 }}>
+                  {current.tapNote}
+                </p>
+              </div>
+
+              {/* Recycle Categories Grid */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+                gap: '12px',
+                marginTop: '8px',
+              }}>
+                {recycleCategories.map((cat, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleEarth911(cat.earth911Material)}
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: '16px',
+                      padding: '16px',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      border: '2px solid transparent',
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.borderColor = '#4F8C6F'}
+                    onMouseLeave={(e) => e.currentTarget.style.borderColor = 'transparent'}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+                      <span style={{ fontSize: '28px' }}>{cat.icon}</span>
+                      <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: 0 }}>{cat.title}</h3>
+                    </div>
+                    <p style={{ color: '#666', fontSize: '13px', margin: '0 0 8px 0', lineHeight: '1.5' }}>
+                      {cat.tips}
+                    </p>
+                    <span style={{
+                      color: '#4F8C6F',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                    }}>
+                      Find locations →
+                    </span>
+                  </div>
+                ))}
+              </div>
             </>
           )}
 
