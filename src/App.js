@@ -153,7 +153,6 @@ function App() {
     return <ComingSoon language={language} onBack={() => setScreen('landing')} />;
   }
 
-  // If returning user has saved profile go straight to dashboard
   if (screen === 'landing' && savedProfile && (process.env.NODE_ENV === 'development' || isPreview)) {
     return (
       <Dashboard
@@ -219,28 +218,30 @@ function App() {
           alignItems: 'center',
           justifyContent: 'center',
           textAlign: 'center',
-          padding: '20px 24px 60px',
+          padding: '20px 24px 50px',
           maxWidth: '860px',
           flex: 1,
         }}>
 
+          {/* Mira logo */}
           <h1 style={{
             color: '#2D6A4F',
-            fontSize: '64px',
-            margin: '0 0 32px 0',
-            fontFamily: 'Klee One, cursive',
-            fontWeight: '400',
+            fontSize: '80px',
+            margin: '0 0 30px 0',
+            fontFamily: 'Klee One, sans-serif',
+            fontWeight: '700',
             letterSpacing: '-1px',
             ...fadeIn(0.2),
           }}>
             Mira
           </h1>
 
+          {/* Urgency */}
           <p style={{
             color: '#2C2C2C',
-            fontSize: '15px',
+            fontSize: '18px',
             lineHeight: '1.8',
-            marginBottom: '32px',
+            marginBottom: '24px',
             maxWidth: '700px',
             fontWeight: '400',
             ...fadeIn(0.6),
@@ -253,29 +254,31 @@ function App() {
             ))}
           </p>
 
+          {/* Mission */}
           <p style={{
             color: '#2C2C2C',
             fontSize: '20px',
             lineHeight: '1.6',
-            marginBottom: '8px',
+            marginBottom: '10px',
             fontWeight: '500',
             ...fadeIn(0.8),
           }}>
             {current.mission}
           </p>
 
+          {/* Missing piece */}
           <p style={{
             color: '#4F8C6F',
             fontSize: '24px',
-            fontWeight: '600',
+            fontWeight: '650',
             marginBottom: '32px',
             letterSpacing: '-0.5px',
-            textDecoration: 'underline',
             ...fadeIn(1.0),
           }}>
             {current.missing}
           </p>
 
+          {/* Stat number */}
           <p style={{
             color: '#2C2C2C',
             fontSize: '60px',
@@ -288,10 +291,11 @@ function App() {
             {current.stat}
           </p>
 
+          {/* Stat description */}
           <p style={{
             color: '#2C2C2C',
             fontSize: '18px',
-            marginBottom: '32px',
+            marginBottom: '24px',
             maxWidth: '580px',
             lineHeight: '1.6',
             fontWeight: '400',
@@ -303,16 +307,18 @@ function App() {
             }
           </p>
 
+          {/* CTA text */}
           <p style={{
             color: '#2C2C2C',
-            fontSize: '15px',
-            marginBottom: '32px',
+            fontSize: '18px',
+            marginBottom: '28px',
             fontWeight: '400',
             ...fadeIn(1.6),
           }}>
             {current.cta}
           </p>
 
+          {/* Button */}
           <div style={fadeIn(1.8)}>
             <button
               onClick={() => setScreen('onboarding')}
