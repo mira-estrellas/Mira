@@ -266,25 +266,24 @@ function GoFurther({ language, onTabChange }) {
       }}>
         <div style={{ width: '100%', maxWidth: '900px', position: 'relative' }}>
 
-          {/* Sticky side nav — right side on mobile, left on wide */}
+          {/* Sticky side nav */}
           <div style={{
             position: 'fixed',
-            right: '12px',
+            right: '8px',
             top: '50%',
             transform: 'translateY(-50%)',
             display: 'flex',
             flexDirection: 'column',
-            gap: '8px',
+            gap: '6px',
             zIndex: 100,
           }}>
             {navSections.map((section) => (
               <button
                 key={section}
                 onClick={() => scrollToSection(section)}
-                title={current.sections[section].label}
                 style={{
-                  width: '44px',
-                  height: '44px',
+                  width: '64px',
+                  padding: '8px 4px',
                   borderRadius: '12px',
                   border: 'none',
                   backgroundColor: activeSection === section ? '#4F8C6F' : 'white',
@@ -294,11 +293,21 @@ function GoFurther({ language, onTabChange }) {
                   boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
                   transition: 'all 0.2s ease',
                   display: 'flex',
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  gap: '2px',
                 }}
               >
-                {current.sections[section].icon}
+                <span style={{ fontSize: '18px' }}>{current.sections[section].icon}</span>
+                <span style={{
+                  fontSize: '9px',
+                  fontFamily: 'Poppins, sans-serif',
+                  fontWeight: activeSection === section ? '600' : '400',
+                  lineHeight: '1.2',
+                  textAlign: 'center',
+                }}>
+                  {current.sections[section].label}
+                </span>
               </button>
             ))}
           </div>
