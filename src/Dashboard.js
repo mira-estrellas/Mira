@@ -47,7 +47,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
         { title: 'Heat Pump Rebate', description: 'Federal rebate for switching to an electric heat pump.', amount: 'Up to $2,000' },
         { title: 'EV Tax Credit', description: 'Credit for purchasing a new electric vehicle.', amount: 'Up to $7,500' },
       ],
-      swapItems: housingType === 'rent' ? [
+      swapItems: housingType === 'rent' || housingType === 'guest' ? [
         { title: '💡 LED Bulbs', description: 'Simple swap, immediate savings on your electric bill.', cost: '~$15' },
         { title: '🌡️ Smart Power Strips', description: 'Eliminate phantom energy drain from electronics.', cost: '~$25' },
         { title: '🚿 Low-Flow Showerhead', description: 'Reduce water and water heating costs.', cost: '~$30' },
@@ -76,7 +76,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
         { title: 'Reembolso de Bomba de Calor', description: 'Reembolso federal por cambiar a una bomba de calor eléctrica.', amount: 'Hasta $2,000' },
         { title: 'Crédito Fiscal para VE', description: 'Crédito por comprar un vehículo eléctrico nuevo.', amount: 'Hasta $7,500' },
       ],
-      swapItems: housingType === 'rent' ? [
+      swapItems: housingType === 'rent' || housingType === 'guest' ? [
         { title: '💡 Bombillas LED', description: 'Cambio simple, ahorros inmediatos en tu factura eléctrica.', cost: '~$15' },
         { title: '🌡️ Regletas Inteligentes', description: 'Elimina el consumo fantasma de electrónicos.', cost: '~$25' },
         { title: '🚿 Cabezal de Ducha de Bajo Flujo', description: 'Reduce el agua y los costos de calentamiento de agua.', cost: '~$30' },
