@@ -7,6 +7,7 @@ import Shop from './Shop';
 import useIncentives from './useIncentives';
 import CarbonTracker from './CarbonTracker';
 import WaterTracker from './WaterTracker';
+import GoFurther from './GoFurther';
 
 function Dashboard({ language, zipCode, housingType, budget, householdSize, householdIncome }) {
   const [isWide, setIsWide] = useState(window.innerWidth > 600);
@@ -193,6 +194,10 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
 
   if (activeTab === 'shop') {
     return <Shop language={language} onTabChange={setActiveTab} />;
+  }
+
+  if (activeTab === 'goFurther') {
+    return <GoFurther language={language} onTabChange={setActiveTab} />;
   }
 
   if (activeTab === 'community') {
