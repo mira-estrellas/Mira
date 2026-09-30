@@ -48,7 +48,7 @@ function GoFurther({ language, onTabChange }) {
       both: '✅ Renters & Owners',
       renterFriendly: '🏠 Works for Renters',
       ownerOnly: '🏡 Homeowners',
-      us: '🇺🇸 US',
+      us: '🇺🇸 U.S.',
       international: '🌍 International',
       visitSite: 'Visit Site →',
       note: 'Mira has no affiliation with any of these services. We list them equally because they share our mission.',
