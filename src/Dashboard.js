@@ -6,6 +6,7 @@ import Community from './Community';
 import Shop from './Shop';
 import useIncentives from './useIncentives';
 import CarbonTracker from './CarbonTracker';
+import WaterTracker from './WaterTracker';
 
 function Dashboard({ language, zipCode, housingType, budget, householdSize, householdIncome }) {
   const [isWide, setIsWide] = useState(window.innerWidth > 600);
@@ -473,6 +474,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
           </div>
           
           <CarbonTracker language={language} />
+          <WaterTracker language={language} />
 
         </div>
       </div>
