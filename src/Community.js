@@ -172,7 +172,7 @@ function Community({ language, userZip, onTabChange }) {
       recycleSubtitle: 'Tap any category to find recycling locations near you.',
       findRecycling: '🗺️ Find Recycling Near You',
       findWater: '💧 Find Free Water Refill Stations',
-      earth911Note: 'Opens Earth911 — the largest recycling directory in the US.',
+      earth911Note: 'Opens Earth911 with your zip code pre-filled. Just hit Search to see results!',
       tapNote: 'Opens Tap — a worldwide map of free water refill stations.',
       safetyTips: [
         { icon: '📍', tip: 'Meet in a public place or your building lobby for exchanges.' },
@@ -214,7 +214,7 @@ function Community({ language, userZip, onTabChange }) {
       recycleSubtitle: 'Toca cualquier categoría para encontrar lugares de reciclaje cerca de ti.',
       findRecycling: '🗺️ Encuentra Reciclaje Cerca de Ti',
       findWater: '💧 Encuentra Estaciones de Agua Gratis',
-      earth911Note: 'Abre Earth911 — el directorio de reciclaje más grande de EE.UU.',
+      earth911Note: 'Abre Earth911 con tu código postal prellenado. ¡Solo presiona Buscar para ver resultados!',
       tapNote: 'Abre Tap — un mapa mundial de estaciones de agua gratuitas.',
       safetyTips: [
         { icon: '📍', tip: 'Reúnete en un lugar público para los intercambios.' },
