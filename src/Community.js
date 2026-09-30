@@ -278,7 +278,7 @@ function Community({ language, userZip, onTabChange }) {
 
   const handleEarth911 = (material) => {
     const zip = userZip || '';
-    window.open(`https://search.earth911.com/?what=${encodeURIComponent(material)}&where=${zip}&radius=25`, '_blank');
+    window.open(`https://search.earth911.com/?what=${encodeURIComponent(material)}&where=${zip}&radius=25&utm_source=mira`, '_blank');
   };
 
   const sectionStyle = {
@@ -699,7 +699,7 @@ function Community({ language, userZip, onTabChange }) {
               {/* Find Recycling Button */}
               <div style={{ ...sectionStyle, textAlign: 'center' }}>
                 <button
-                  onClick={() => handleEarth911('Recycling')}
+                  onClick={() => window.open(`https://search.earth911.com/?where=${userZip || ''}&radius=25`, '_blank')}
                   style={{
                     width: '100%',
                     backgroundColor: '#4F8C6F',
