@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import NavBar from './NavBar';
 
 function GoFurther({ language, onTabChange }) {
   const [activeSection, setActiveSection] = useState('energy');
+  const [showSubmitForm, setShowSubmitForm] = useState(false);
   const [submission, setSubmission] = useState({ name: '', description: '', url: '', category: 'energy' });
   const [submitted, setSubmitted] = useState(false);
   const [submissions, setSubmissions] = useState(() => {
@@ -14,52 +15,17 @@ function GoFurther({ language, onTabChange }) {
     }
   });
 
-  const sectionRefs = {
-    energy: useRef(null),
-    banking: useRef(null),
-    action: useRef(null),
-    fund: useRef(null),
-    submit: useRef(null),
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['energy', 'banking', 'action', 'fund', 'submit'];
-      for (const section of sections) {
-        const ref = sectionRefs[section].current;
-        if (ref) {
-          const rect = ref.getBoundingClientRect();
-          if (rect.top <= 150 && rect.bottom >= 150) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const scrollToSection = (section) => {
-    const ref = sectionRefs[section].current;
-    if (ref) {
-      const offset = 80;
-      const top = ref.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  };
-
   const handleSubmit = () => {
     if (!submission.name || !submission.description || !submission.url) return;
-    const newSubmission = { ...submission, id: Date.now() };
+    const newSubmission = { ...submission, id: Date.now(), category: activeSection };
     const updated = [...submissions, newSubmission];
     setSubmissions(updated);
     try {
       localStorage.setItem('mira_go_further_submissions', JSON.stringify(updated));
     } catch {}
-    setSubmission({ name: '', description: '', url: '', category: 'energy' });
+    setSubmission({ name: '', description: '', url: '', category: activeSection });
     setSubmitted(true);
+    setShowSubmitForm(false);
     setTimeout(() => setSubmitted(false), 3000);
   };
 
@@ -67,20 +33,17 @@ function GoFurther({ language, onTabChange }) {
     EN: {
       title: 'Go Further',
       subtitle: 'Small steps add up. Here\'s how to go even further.',
-      sections: {
-        energy: { icon: '⚡', label: 'Green Energy' },
-        banking: { icon: '🏦', label: 'Green Banking' },
-        action: { icon: '📣', label: 'Take Action' },
-        fund: { icon: '💸', label: 'Fund Projects' },
-        submit: { icon: '🌱', label: 'Add Resource' },
-      },
-      energyTitle: '⚡ Switch to Clean Energy',
+      energy: '⚡ Green Energy',
+      banking: '🏦 Green Banking',
+      action: '📣 Take Action',
+      fund: '💸 Fund Projects',
+      energyTitle: 'Switch to Clean Energy',
       energyDesc: 'These providers let you switch your home electricity to renewable energy — no solar panels needed. Some work even if you rent.',
-      bankingTitle: '🏦 Bank Green',
+      bankingTitle: 'Bank Green',
       bankingDesc: 'Traditional banks invest your deposits in fossil fuels. These alternatives don\'t.',
-      actionTitle: '📣 Take Action',
+      actionTitle: 'Take Action',
       actionDesc: 'Individual action matters — but collective action changes systems. Here\'s how to connect with others.',
-      fundTitle: '💸 Fund Climate Projects',
+      fundTitle: 'Fund Climate Projects',
       fundDesc: 'These programs are independently verified and trusted by climate scientists worldwide. Mira has no financial relationship with any of them.',
       both: '✅ Renters & Owners',
       renterFriendly: '🏠 Works for Renters',
@@ -89,39 +52,31 @@ function GoFurther({ language, onTabChange }) {
       international: '🌍 International',
       visitSite: 'Visit Site →',
       note: 'Mira has no affiliation with any of these services. We list them equally because they share our mission.',
-      submitTitle: '🌱 Know a resource we should add?',
-      submitDesc: 'Help us grow this list. Share a service or organization you trust.',
+      suggestButton: '➕ Know a resource? Suggest one',
+      submitTitle: 'Suggest a Resource',
+      submitDesc: 'Know a service or organization that belongs here? Share it and we\'ll review it.',
       submitName: 'Resource name',
       submitDescription: 'What does it do? (one or two sentences)',
       submitUrl: 'Website URL',
-      submitCategory: 'Category',
-      submitButton: 'Submit Resource',
+      submitButton: 'Submit',
       submitSuccess: 'Thank you! We\'ll review your suggestion. 🌱',
-      submitCategories: {
-        energy: '⚡ Green Energy',
-        banking: '🏦 Green Banking',
-        action: '📣 Take Action',
-        fund: '💸 Fund Projects',
-      },
+      cancel: 'Cancel',
       communityLabel: '🌱 Suggested by the Mira community:',
     },
     ES: {
       title: 'Ir Más Lejos',
       subtitle: 'Los pequeños pasos suman. Así es cómo ir aún más lejos.',
-      sections: {
-        energy: { icon: '⚡', label: 'Energía Verde' },
-        banking: { icon: '🏦', label: 'Banca Verde' },
-        action: { icon: '📣', label: 'Tomar Acción' },
-        fund: { icon: '💸', label: 'Financiar' },
-        submit: { icon: '🌱', label: 'Agregar' },
-      },
-      energyTitle: '⚡ Cambia a Energía Limpia',
+      energy: '⚡ Energía Verde',
+      banking: '🏦 Banca Verde',
+      action: '📣 Tomar Acción',
+      fund: '💸 Financiar',
+      energyTitle: 'Cambia a Energía Limpia',
       energyDesc: 'Estos proveedores te permiten cambiar tu electricidad a energía renovable — sin paneles solares.',
-      bankingTitle: '🏦 Banca Verde',
+      bankingTitle: 'Banca Verde',
       bankingDesc: 'Los bancos tradicionales invierten tus depósitos en combustibles fósiles. Estas alternativas no.',
-      actionTitle: '📣 Toma Acción',
+      actionTitle: 'Toma Acción',
       actionDesc: 'La acción individual importa — pero la acción colectiva cambia sistemas.',
-      fundTitle: '💸 Financia Proyectos Climáticos',
+      fundTitle: 'Financia Proyectos Climáticos',
       fundDesc: 'Estos programas están verificados de forma independiente. Mira no tiene ninguna relación financiera con ninguno de ellos.',
       both: '✅ Inquilinos y Propietarios',
       renterFriendly: '🏠 Funciona para Inquilinos',
@@ -130,20 +85,15 @@ function GoFurther({ language, onTabChange }) {
       international: '🌍 Internacional',
       visitSite: 'Visitar Sitio →',
       note: 'Mira no tiene afiliación con ninguno de estos servicios. Los listamos por igual porque comparten nuestra misión.',
-      submitTitle: '🌱 ¿Conoces un recurso que deberíamos agregar?',
-      submitDesc: 'Ayúdanos a crecer esta lista.',
+      suggestButton: '➕ ¿Conoces un recurso? Sugiérelo',
+      submitTitle: 'Sugerir un Recurso',
+      submitDesc: '¿Conoces un servicio u organización que debería estar aquí? Compártelo.',
       submitName: 'Nombre del recurso',
       submitDescription: '¿Qué hace?',
       submitUrl: 'URL del sitio web',
-      submitCategory: 'Categoría',
-      submitButton: 'Enviar Recurso',
+      submitButton: 'Enviar',
       submitSuccess: '¡Gracias! Revisaremos tu sugerencia. 🌱',
-      submitCategories: {
-        energy: '⚡ Energía Verde',
-        banking: '🏦 Banca Verde',
-        action: '📣 Tomar Acción',
-        fund: '💸 Financiar',
-      },
+      cancel: 'Cancelar',
       communityLabel: '🌱 Sugerido por la comunidad Mira:',
     },
   };
@@ -184,10 +134,40 @@ function GoFurther({ language, onTabChange }) {
     { name: 'GoClimate', description: 'Swedish climate nonprofit. Simple monthly subscription with full transparency on where money goes.', region: 'international', url: 'https://www.goclimate.com', standard: 'Gold Standard verified' },
   ];
 
+  const getItems = () => {
+    if (activeSection === 'energy') return energyProviders;
+    if (activeSection === 'banking') return banks;
+    if (activeSection === 'action') return organizations;
+    if (activeSection === 'fund') return fundPrograms;
+    return [];
+  };
+
+  const getTitle = () => {
+    if (activeSection === 'energy') return current.energyTitle;
+    if (activeSection === 'banking') return current.bankingTitle;
+    if (activeSection === 'action') return current.actionTitle;
+    return current.fundTitle;
+  };
+
+  const getDesc = () => {
+    if (activeSection === 'energy') return current.energyDesc;
+    if (activeSection === 'banking') return current.bankingDesc;
+    if (activeSection === 'action') return current.actionDesc;
+    return current.fundDesc;
+  };
+
   const getWhoLabel = (who) => {
     if (who === 'both') return current.both;
     if (who === 'renter') return current.renterFriendly;
     return current.ownerOnly;
+  };
+
+  const sectionStyle = {
+    backgroundColor: 'white',
+    borderRadius: '16px',
+    padding: '16px',
+    marginBottom: '12px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
   };
 
   const inputStyle = {
@@ -203,56 +183,21 @@ function GoFurther({ language, onTabChange }) {
     fontFamily: 'Poppins, sans-serif',
   };
 
-  const renderCard = (item, showStandard = false) => (
-    <div key={item.name} style={{
-      backgroundColor: 'white',
-      borderRadius: '16px',
-      padding: '16px',
-      marginBottom: '10px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-    }}>
-      <h3 style={{ color: '#2C2C2C', fontSize: '16px', margin: '0 0 6px 0' }}>
-        {item.name}
-      </h3>
-      <p style={{ color: '#666', fontSize: '13px', margin: '0 0 10px 0', lineHeight: '1.6' }}>
-        {item.description}
-      </p>
-      {showStandard && item.standard && (
-        <div style={{ backgroundColor: '#EBF3EE', borderRadius: '8px', padding: '6px 12px', marginBottom: '10px' }}>
-          <p style={{ color: '#4F8C6F', fontSize: '11px', margin: 0, fontWeight: '600' }}>✓ {item.standard}</p>
-        </div>
-      )}
-      <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '12px' }}>
-        {item.who && (
-          <span style={{ backgroundColor: '#F0EBE3', color: '#2C2C2C', fontSize: '11px', padding: '3px 8px', borderRadius: '8px' }}>
-            {getWhoLabel(item.who)}
-          </span>
-        )}
-        <span style={{ backgroundColor: '#F0EBE3', color: '#2C2C2C', fontSize: '11px', padding: '3px 8px', borderRadius: '8px' }}>
-          {item.region === 'us' ? current.us : current.international}
-        </span>
-      </div>
-      <button
-        onClick={() => window.open(item.url, '_blank')}
-        style={{
-          width: '100%',
-          backgroundColor: '#4F8C6F',
-          color: 'white',
-          border: 'none',
-          padding: '10px',
-          borderRadius: '10px',
-          fontSize: '13px',
-          fontWeight: '600',
-          cursor: 'pointer',
-          fontFamily: 'Poppins, sans-serif',
-        }}
-      >
-        {current.visitSite}
-      </button>
-    </div>
-  );
+  const tabStyle = (active) => ({
+    flex: 1,
+    padding: '10px',
+    backgroundColor: active ? '#4F8C6F' : 'transparent',
+    color: active ? 'white' : '#A0A0A0',
+    border: 'none',
+    borderRadius: '12px',
+    fontSize: '12px',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    fontWeight: active ? 'bold' : 'normal',
+    fontFamily: 'Poppins, sans-serif',
+  });
 
-  const navSections = ['energy', 'banking', 'action', 'fund', 'submit'];
+  const communitySubmissions = submissions.filter(s => s.category === activeSection);
 
   return (
     <>
@@ -264,116 +209,205 @@ function GoFurther({ language, onTabChange }) {
         padding: '24px',
         paddingBottom: '100px',
       }}>
-        <div style={{ width: '100%', maxWidth: '900px', position: 'relative' }}>
-
-          {/* Sticky top nav */}
-          <div style={{
-            position: 'sticky',
-            top: 0,
-            zIndex: 100,
-            backgroundColor: '#F0EBE3',
-            paddingBottom: '12px',
-            marginBottom: '8px',
-          }}>
-            <div style={{
-              display: 'flex',
-              gap: '8px',
-              overflowX: 'auto',
-              paddingBottom: '4px',
-            }}>
-              {navSections.map((section) => (
-                <button
-                  key={section}
-                  onClick={() => scrollToSection(section)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    padding: '10px 16px',
-                    borderRadius: '20px',
-                    border: 'none',
-                    backgroundColor: activeSection === section ? '#4F8C6F' : 'white',
-                    color: activeSection === section ? 'white' : '#A0A0A0',
-                    fontSize: '13px',
-                    fontWeight: activeSection === section ? '600' : '400',
-                    cursor: 'pointer',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-                    transition: 'all 0.2s ease',
-                    whiteSpace: 'nowrap',
-                    fontFamily: 'Poppins, sans-serif',
-                  }}
-                >
-                  <span>{current.sections[section].icon}</span>
-                  <span>{current.sections[section].label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
+        <div style={{ width: '100%', maxWidth: '900px' }}>
 
           <h1 style={{ color: '#4F8C6F', fontSize: '28px', marginBottom: '8px', marginTop: '16px' }}>
             {current.title}
           </h1>
-          <p style={{ color: '#2C2C2C', fontSize: '14px', marginBottom: '40px' }}>
+          <p style={{ color: '#2C2C2C', fontSize: '14px', marginBottom: '24px' }}>
             {current.subtitle}
           </p>
 
-          {/* Green Energy Section */}
-          <div ref={sectionRefs.energy} style={{ marginBottom: '48px' }}>
-            <h2 style={{ color: '#2C2C2C', fontSize: '22px', marginBottom: '8px' }}>
-              {current.energyTitle}
-            </h2>
-            <p style={{ color: '#666', fontSize: '14px', marginBottom: '20px', lineHeight: '1.6' }}>
-              {current.energyDesc}
-            </p>
-            {energyProviders.map(item => renderCard(item))}
+          {/* Tabs */}
+          <div style={{
+            display: 'flex',
+            backgroundColor: 'white',
+            borderRadius: '16px',
+            padding: '4px',
+            marginBottom: '24px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+            gap: '4px',
+          }}>
+            {['energy', 'banking', 'action', 'fund'].map((section) => (
+              <button
+                key={section}
+                onClick={() => {
+                  setActiveSection(section);
+                  setShowSubmitForm(false);
+                  setSubmitted(false);
+                }}
+                style={tabStyle(activeSection === section)}
+              >
+                {section === 'energy' ? current.energy :
+                 section === 'banking' ? current.banking :
+                 section === 'action' ? current.action :
+                 current.fund}
+              </button>
+            ))}
           </div>
 
-          {/* Green Banking Section */}
-          <div ref={sectionRefs.banking} style={{ marginBottom: '48px' }}>
-            <h2 style={{ color: '#2C2C2C', fontSize: '22px', marginBottom: '8px' }}>
-              {current.bankingTitle}
-            </h2>
-            <p style={{ color: '#666', fontSize: '14px', marginBottom: '20px', lineHeight: '1.6' }}>
-              {current.bankingDesc}
-            </p>
-            {banks.map(item => renderCard(item))}
-          </div>
+          {/* Section Title and Description */}
+          <h2 style={{ color: '#2C2C2C', fontSize: '20px', marginBottom: '8px' }}>
+            {getTitle()}
+          </h2>
+          <p style={{ color: '#666', fontSize: '14px', marginBottom: '16px', lineHeight: '1.6' }}>
+            {getDesc()}
+          </p>
 
-          {/* Take Action Section */}
-          <div ref={sectionRefs.action} style={{ marginBottom: '48px' }}>
-            <h2 style={{ color: '#2C2C2C', fontSize: '22px', marginBottom: '8px' }}>
-              {current.actionTitle}
-            </h2>
-            <p style={{ color: '#666', fontSize: '14px', marginBottom: '20px', lineHeight: '1.6' }}>
-              {current.actionDesc}
-            </p>
-            {organizations.map(item => renderCard(item))}
-          </div>
+          {/* Suggest a Resource Button */}
+          {submitted ? (
+            <div style={{
+              backgroundColor: '#EBF3EE',
+              borderRadius: '12px',
+              padding: '12px 16px',
+              marginBottom: '20px',
+              textAlign: 'center',
+            }}>
+              <p style={{ color: '#4F8C6F', fontSize: '14px', margin: 0 }}>
+                {current.submitSuccess}
+              </p>
+            </div>
+          ) : !showSubmitForm ? (
+            <button
+              onClick={() => setShowSubmitForm(true)}
+              style={{
+                width: '100%',
+                backgroundColor: 'white',
+                color: '#4F8C6F',
+                border: '2px dashed #4F8C6F',
+                padding: '12px',
+                borderRadius: '12px',
+                fontSize: '14px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                marginBottom: '20px',
+                fontFamily: 'Poppins, sans-serif',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              {current.suggestButton}
+            </button>
+          ) : (
+            <div style={{ ...sectionStyle, marginBottom: '20px', border: '2px solid #4F8C6F' }}>
+              <h3 style={{ color: '#2C2C2C', fontSize: '16px', margin: '0 0 6px 0' }}>
+                {current.submitTitle}
+              </h3>
+              <p style={{ color: '#666', fontSize: '13px', margin: '0 0 16px 0' }}>
+                {current.submitDesc}
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <input
+                  type="text"
+                  placeholder={current.submitName}
+                  value={submission.name}
+                  onChange={(e) => setSubmission({ ...submission, name: e.target.value })}
+                  style={inputStyle}
+                />
+                <textarea
+                  placeholder={current.submitDescription}
+                  value={submission.description}
+                  onChange={(e) => setSubmission({ ...submission, description: e.target.value })}
+                  style={{ ...inputStyle, height: '80px', resize: 'vertical' }}
+                />
+                <input
+                  type="text"
+                  placeholder={current.submitUrl}
+                  value={submission.url}
+                  onChange={(e) => setSubmission({ ...submission, url: e.target.value })}
+                  style={inputStyle}
+                />
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button
+                    onClick={handleSubmit}
+                    disabled={!submission.name || !submission.description || !submission.url}
+                    style={{
+                      flex: 1,
+                      backgroundColor: submission.name && submission.description && submission.url ? '#D4956A' : '#E8E0D5',
+                      color: submission.name && submission.description && submission.url ? 'white' : '#A0A0A0',
+                      border: 'none',
+                      padding: '12px',
+                      borderRadius: '30px',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      cursor: submission.name && submission.description && submission.url ? 'pointer' : 'not-allowed',
+                      fontFamily: 'Poppins, sans-serif',
+                    }}
+                  >
+                    🌱 {current.submitButton}
+                  </button>
+                  <button
+                    onClick={() => setShowSubmitForm(false)}
+                    style={{
+                      backgroundColor: 'transparent',
+                      color: '#A0A0A0',
+                      border: '2px solid #E8E0D5',
+                      padding: '12px 20px',
+                      borderRadius: '30px',
+                      fontSize: '14px',
+                      cursor: 'pointer',
+                      fontFamily: 'Poppins, sans-serif',
+                    }}
+                  >
+                    {current.cancel}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
-          {/* Fund Climate Projects Section */}
-          <div ref={sectionRefs.fund} style={{ marginBottom: '48px' }}>
-            <h2 style={{ color: '#2C2C2C', fontSize: '22px', marginBottom: '8px' }}>
-              {current.fundTitle}
-            </h2>
-            <p style={{ color: '#666', fontSize: '14px', marginBottom: '20px', lineHeight: '1.6' }}>
-              {current.fundDesc}
-            </p>
-            {fundPrograms.map(item => renderCard(item, true))}
-          </div>
+          {/* Resource Cards */}
+          {getItems().map((item) => (
+            <div key={item.name} style={sectionStyle}>
+              <h3 style={{ color: '#2C2C2C', fontSize: '16px', margin: '0 0 6px 0' }}>
+                {item.name}
+              </h3>
+              <p style={{ color: '#666', fontSize: '13px', margin: '0 0 10px 0', lineHeight: '1.6' }}>
+                {item.description}
+              </p>
+              {item.standard && (
+                <div style={{ backgroundColor: '#EBF3EE', borderRadius: '8px', padding: '6px 12px', marginBottom: '10px' }}>
+                  <p style={{ color: '#4F8C6F', fontSize: '11px', margin: 0, fontWeight: '600' }}>✓ {item.standard}</p>
+                </div>
+              )}
+              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '12px' }}>
+                {item.who && (
+                  <span style={{ backgroundColor: '#F0EBE3', color: '#2C2C2C', fontSize: '11px', padding: '3px 8px', borderRadius: '8px' }}>
+                    {getWhoLabel(item.who)}
+                  </span>
+                )}
+                <span style={{ backgroundColor: '#F0EBE3', color: '#2C2C2C', fontSize: '11px', padding: '3px 8px', borderRadius: '8px' }}>
+                  {item.region === 'us' ? current.us : current.international}
+                </span>
+              </div>
+              <button
+                onClick={() => window.open(item.url, '_blank')}
+                style={{
+                  width: '100%',
+                  backgroundColor: '#4F8C6F',
+                  color: 'white',
+                  border: 'none',
+                  padding: '10px',
+                  borderRadius: '10px',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  fontFamily: 'Poppins, sans-serif',
+                }}
+              >
+                {current.visitSite}
+              </button>
+            </div>
+          ))}
 
-          {/* Community submissions */}
-          {submissions.length > 0 && (
-            <div style={{ marginBottom: '48px' }}>
-              <p style={{ color: '#4F8C6F', fontSize: '14px', fontWeight: '600', marginBottom: '12px' }}>
+          {/* Community Submissions for this section */}
+          {communitySubmissions.length > 0 && (
+            <div style={{ marginTop: '8px' }}>
+              <p style={{ color: '#4F8C6F', fontSize: '13px', fontWeight: '600', marginBottom: '12px' }}>
                 {current.communityLabel}
               </p>
-              {submissions.map((item, index) => (
+              {communitySubmissions.map((item, index) => (
                 <div key={index} style={{
-                  backgroundColor: 'white',
-                  borderRadius: '16px',
-                  padding: '16px',
-                  marginBottom: '10px',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                  ...sectionStyle,
                   borderLeft: '3px solid #4F8C6F',
                 }}>
                   <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: '0 0 6px 0' }}>{item.name}</h3>
@@ -398,82 +432,11 @@ function GoFurther({ language, onTabChange }) {
             backgroundColor: '#EBF3EE',
             borderRadius: '16px',
             padding: '16px',
-            marginBottom: '48px',
+            marginTop: '24px',
           }}>
             <p style={{ color: '#4F8C6F', fontSize: '13px', margin: 0, lineHeight: '1.6' }}>
               🌱 {current.note}
             </p>
-          </div>
-
-          {/* Community Submission Form */}
-          <div ref={sectionRefs.submit} style={{
-            backgroundColor: 'white',
-            borderRadius: '16px',
-            padding: '20px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-          }}>
-            <h3 style={{ color: '#2C2C2C', fontSize: '18px', margin: '0 0 8px 0' }}>
-              {current.submitTitle}
-            </h3>
-            <p style={{ color: '#666', fontSize: '13px', margin: '0 0 20px 0', lineHeight: '1.5' }}>
-              {current.submitDesc}
-            </p>
-            {submitted ? (
-              <p style={{ color: '#4F8C6F', fontSize: '15px', textAlign: 'center', padding: '16px 0' }}>
-                {current.submitSuccess}
-              </p>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <input
-                  type="text"
-                  placeholder={current.submitName}
-                  value={submission.name}
-                  onChange={(e) => setSubmission({ ...submission, name: e.target.value })}
-                  style={inputStyle}
-                />
-                <textarea
-                  placeholder={current.submitDescription}
-                  value={submission.description}
-                  onChange={(e) => setSubmission({ ...submission, description: e.target.value })}
-                  style={{ ...inputStyle, height: '80px', resize: 'vertical' }}
-                />
-                <input
-                  type="text"
-                  placeholder={current.submitUrl}
-                  value={submission.url}
-                  onChange={(e) => setSubmission({ ...submission, url: e.target.value })}
-                  style={inputStyle}
-                />
-                <select
-                  value={submission.category}
-                  onChange={(e) => setSubmission({ ...submission, category: e.target.value })}
-                  style={inputStyle}
-                >
-                  {Object.entries(current.submitCategories).map(([key, label]) => (
-                    <option key={key} value={key}>{label}</option>
-                  ))}
-                </select>
-                <button
-                  onClick={handleSubmit}
-                  disabled={!submission.name || !submission.description || !submission.url}
-                  style={{
-                    width: '100%',
-                    backgroundColor: submission.name && submission.description && submission.url ? '#D4956A' : '#E8E0D5',
-                    color: submission.name && submission.description && submission.url ? 'white' : '#A0A0A0',
-                    border: 'none',
-                    padding: '14px',
-                    borderRadius: '30px',
-                    fontSize: '15px',
-                    fontWeight: '600',
-                    cursor: submission.name && submission.description && submission.url ? 'pointer' : 'not-allowed',
-                    transition: 'all 0.3s ease',
-                    fontFamily: 'Poppins, sans-serif',
-                  }}
-                >
-                  🌱 {current.submitButton}
-                </button>
-              </div>
-            )}
           </div>
 
         </div>
