@@ -376,7 +376,7 @@ function GoFurther({ language, onTabChange }) {
                   </span>
                 )}
                 <span style={{ backgroundColor: '#F0EBE3', color: '#2C2C2C', fontSize: '11px', padding: '3px 8px', borderRadius: '8px' }}>
-                  {item.region === 'us' ? current.us : current.international}
+                  {item.region === 'us' ? '🇺🇸 U.S.' : '🌍 International'}
                 </span>
               </div>
               <button
