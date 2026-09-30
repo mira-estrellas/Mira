@@ -14,123 +14,171 @@ function Shop({ language, onTabChange }) {
   const products = [
     {
       id: 1,
-      name: 'Philips LED Smart Bulb Pack (4)',
+      name: 'Philips Hue White LED Smart Bulb Starter Kit',
       category: '💡 Lighting',
-      price: 14.99,
-      description: 'Energy efficient smart bulbs compatible with Alexa and Google Home. Lasts up to 25,000 hours.',
-      energySavings: 'Saves ~$8/year per bulb',
+      price: 34.99,
+      description: 'Energy efficient smart bulbs that use 75% less energy than incandescent. Voice and app controlled.',
+      energySavings: 'Saves ~$10/year per bulb',
       rebateEligible: false,
       renterFriendly: true,
       popular: 98,
-      url: 'https://www.amazon.com',
+      amazonUrl: 'https://www.amazon.com/s?k=philips+hue+white+led+smart+bulb+starter+kit',
+      homedepotUrl: 'https://www.homedepot.com/s/philips%20hue%20smart%20bulb',
+      bestbuyUrl: 'https://www.bestbuy.com/site/searchpage.jsp?st=philips+hue+smart+bulb',
     },
     {
       id: 2,
-      name: 'Nest Learning Thermostat',
+      name: 'Google Nest Learning Thermostat',
       category: '🌡️ Heating & Cooling',
       price: 129.99,
-      description: 'Learns your schedule and programs itself. Can reduce heating and cooling bills significantly.',
+      description: 'Learns your schedule and programs itself. Saves an average of 10-12% on heating and 15% on cooling.',
       energySavings: 'Saves ~$150/year',
       rebateEligible: true,
       renterFriendly: false,
       popular: 95,
-      url: 'https://www.amazon.com',
+      amazonUrl: 'https://www.amazon.com/s?k=google+nest+learning+thermostat',
+      homedepotUrl: 'https://www.homedepot.com/s/nest%20learning%20thermostat',
+      bestbuyUrl: 'https://www.bestbuy.com/site/searchpage.jsp?st=nest+learning+thermostat',
     },
     {
       id: 3,
-      name: 'Jackery Solar Generator 300',
+      name: 'Jackery Solar Generator 300 Plus',
       category: '☀️ Solar',
       price: 299.99,
-      description: 'Portable solar generator perfect for renters. No installation needed. Powers small appliances.',
-      energySavings: 'Offsets ~$20/month',
+      description: 'Portable solar generator perfect for renters. No installation needed. Powers small appliances and charges devices.',
+      energySavings: 'Offsets ~$20/month in electricity',
       rebateEligible: true,
       renterFriendly: true,
       popular: 87,
-      url: 'https://www.amazon.com',
+      amazonUrl: 'https://www.amazon.com/s?k=jackery+solar+generator+300',
+      homedepotUrl: 'https://www.homedepot.com/s/jackery%20solar%20generator',
+      bestbuyUrl: 'https://www.bestbuy.com/site/searchpage.jsp?st=jackery+solar+generator',
     },
     {
       id: 4,
       name: 'ChargePoint Home Flex EV Charger',
       category: '🚗 EV & Charging',
-      price: 179.99,
-      description: 'Level 2 home EV charger. Charges up to 9x faster than a standard outlet.',
+      price: 174.99,
+      description: 'Level 2 home EV charger. Charges up to 9x faster than a standard outlet. Works with all EVs.',
       energySavings: 'Saves ~$600/year vs gas',
       rebateEligible: true,
       renterFriendly: false,
       popular: 91,
-      url: 'https://www.amazon.com',
+      amazonUrl: 'https://www.amazon.com/s?k=chargepoint+home+flex+ev+charger',
+      homedepotUrl: 'https://www.homedepot.com/s/chargepoint%20home%20flex',
+      bestbuyUrl: 'https://www.bestbuy.com/site/searchpage.jsp?st=chargepoint+home+flex',
     },
     {
       id: 5,
-      name: 'Weatherstrip Door Seal Kit',
+      name: 'Duck Brand Weatherstrip Door Seal',
       category: '🏠 Home & Insulation',
       price: 12.99,
-      description: 'Easy to install door seal that prevents drafts and reduces heating and cooling costs.',
-      energySavings: 'Saves ~$30/year',
+      description: 'Easy peel and stick door seal that stops drafts instantly. No tools needed — perfect for renters.',
+      energySavings: 'Saves ~$30/year on heating',
       rebateEligible: false,
       renterFriendly: true,
       popular: 82,
-      url: 'https://www.amazon.com',
+      amazonUrl: 'https://www.amazon.com/s?k=duck+brand+weatherstrip+door+seal',
+      homedepotUrl: 'https://www.homedepot.com/s/weatherstrip%20door%20seal',
+      bestbuyUrl: null,
     },
     {
       id: 6,
-      name: 'Kasa Smart Power Strip',
+      name: 'Kasa Smart Power Strip EP40',
       category: '📦 General',
       price: 27.99,
-      description: 'Smart power strip that eliminates phantom energy drain. Control each outlet individually.',
+      description: 'Smart power strip that eliminates phantom energy drain. Control each outlet individually via app.',
       energySavings: 'Saves ~$50/year',
       rebateEligible: false,
       renterFriendly: true,
       popular: 89,
-      url: 'https://www.amazon.com',
+      amazonUrl: 'https://www.amazon.com/s?k=kasa+smart+power+strip+EP40',
+      homedepotUrl: 'https://www.homedepot.com/s/kasa%20smart%20power%20strip',
+      bestbuyUrl: 'https://www.bestbuy.com/site/searchpage.jsp?st=kasa+smart+power+strip',
     },
     {
       id: 7,
-      name: 'Solatube Solar Skylight',
+      name: 'EcoFlow DELTA 2 Portable Power Station',
       category: '☀️ Solar',
-      price: 449.99,
-      description: 'Brings natural daylight into any room, reducing the need for electric lighting during the day.',
-      energySavings: 'Saves ~$100/year',
+      price: 499.99,
+      description: 'Powerful portable solar generator for renters. Runs appliances, charges via solar panels. No installation.',
+      energySavings: 'Offsets ~$40/month in electricity',
       rebateEligible: true,
-      renterFriendly: false,
-      popular: 74,
-      url: 'https://www.amazon.com',
+      renterFriendly: true,
+      popular: 85,
+      amazonUrl: 'https://www.amazon.com/s?k=ecoflow+delta+2+portable+power+station',
+      homedepotUrl: 'https://www.homedepot.com/s/ecoflow%20delta%202',
+      bestbuyUrl: 'https://www.bestbuy.com/site/searchpage.jsp?st=ecoflow+delta+2',
     },
     {
       id: 8,
       name: 'Rain Bird Drip Irrigation Kit',
       category: '🌱 Garden & Outdoor',
       price: 34.99,
-      description: 'Efficient drip irrigation system that uses up to 50% less water than traditional sprinklers.',
-      energySavings: 'Saves ~$40/year on water',
+      description: 'Efficient drip irrigation that uses up to 50% less water than sprinklers. Easy DIY setup.',
+      energySavings: 'Saves ~$40/year on water bills',
       rebateEligible: false,
       renterFriendly: true,
       popular: 78,
-      url: 'https://www.amazon.com',
+      amazonUrl: 'https://www.amazon.com/s?k=rain+bird+drip+irrigation+kit',
+      homedepotUrl: 'https://www.homedepot.com/s/rain%20bird%20drip%20irrigation',
+      bestbuyUrl: null,
     },
     {
       id: 9,
-      name: 'GE Heat Pump Water Heater',
+      name: 'Rheem Performance Platinum Heat Pump Water Heater',
       category: '🌡️ Heating & Cooling',
-      price: 899.99,
-      description: 'Uses 70% less energy than traditional water heaters. Qualifies for federal tax credit.',
+      price: 899.00,
+      description: 'Uses 70% less energy than traditional water heaters. Qualifies for federal tax credit up to $2,000.',
       energySavings: 'Saves ~$330/year',
       rebateEligible: true,
       renterFriendly: false,
-      popular: 85,
-      url: 'https://www.amazon.com',
+      popular: 84,
+      amazonUrl: 'https://www.amazon.com/s?k=rheem+heat+pump+water+heater',
+      homedepotUrl: 'https://www.homedepot.com/s/rheem%20heat%20pump%20water%20heater',
+      bestbuyUrl: null,
     },
     {
       id: 10,
-      name: 'Lutron Caseta Smart Dimmer',
+      name: 'Lutron Caseta Wireless Smart Dimmer Switch',
       category: '💡 Lighting',
-      price: 39.99,
-      description: 'Smart dimmer switch that extends bulb life and reduces energy use. Easy DIY install.',
-      energySavings: 'Saves ~$25/year',
+      price: 39.95,
+      description: 'Smart dimmer that extends bulb life and reduces energy use. Works without neutral wire — easy install.',
+      energySavings: 'Saves ~$25/year per switch',
       rebateEligible: false,
       renterFriendly: false,
       popular: 86,
-      url: 'https://www.amazon.com',
+      amazonUrl: 'https://www.amazon.com/s?k=lutron+caseta+wireless+smart+dimmer',
+      homedepotUrl: 'https://www.homedepot.com/s/lutron%20caseta%20dimmer',
+      bestbuyUrl: 'https://www.bestbuy.com/site/searchpage.jsp?st=lutron+caseta+dimmer',
+    },
+    {
+      id: 11,
+      name: 'Renogy 100W Portable Solar Panel',
+      category: '☀️ Solar',
+      price: 89.99,
+      description: 'Foldable portable solar panel for renters. Charges power stations, phones, laptops. No installation.',
+      energySavings: 'Offsets ~$10/month in electricity',
+      rebateEligible: false,
+      renterFriendly: true,
+      popular: 83,
+      amazonUrl: 'https://www.amazon.com/s?k=renogy+100w+portable+solar+panel',
+      homedepotUrl: 'https://www.homedepot.com/s/renogy%20portable%20solar%20panel',
+      bestbuyUrl: 'https://www.bestbuy.com/site/searchpage.jsp?st=renogy+portable+solar+panel',
+    },
+    {
+      id: 12,
+      name: 'Owens Corning R-38 Attic Insulation',
+      category: '🏠 Home & Insulation',
+      price: 54.97,
+      description: 'Blown-in attic insulation that dramatically reduces heating and cooling costs for homeowners.',
+      energySavings: 'Saves ~$200/year on energy',
+      rebateEligible: true,
+      renterFriendly: false,
+      popular: 76,
+      amazonUrl: 'https://www.amazon.com/s?k=owens+corning+attic+insulation+r38',
+      homedepotUrl: 'https://www.homedepot.com/s/owens%20corning%20attic%20insulation',
+      bestbuyUrl: null,
     },
   ];
 
@@ -139,33 +187,45 @@ function Shop({ language, onTabChange }) {
       title: 'Shop',
       subtitle: 'Curated clean energy products from trusted sellers.',
       searchPlaceholder: 'Search products...',
+      searchOn: 'Search across retailers:',
+      searchAmazon: '🛒 Amazon',
+      searchHomeDepot: '🏠 Home Depot',
+      searchBestBuy: '💻 Best Buy',
+      searchLowes: '🔨 Lowe\'s',
+      searchWalmart: '🏪 Walmart',
       renterToggle: 'Renter Friendly Only',
       sortPopular: 'Most Popular',
       sortPrice: 'Price: Low to High',
       maxPricePlaceholder: 'Max price $',
       rebadge: '💰 Rebate Eligible',
       renterBadge: '🏠 Renter Friendly',
-      viewDeal: 'View Deal',
+      viewOn: 'View on',
       save: '☆',
       saved: '⭐',
       noResults: 'No products match your filters. Try adjusting your search or price range.',
-      popular: 'popular',
+      priceNote: '* Prices are approximate and may vary by retailer.',
     },
     ES: {
       title: 'Tienda',
       subtitle: 'Productos de energía limpia de vendedores de confianza.',
       searchPlaceholder: 'Buscar productos...',
+      searchOn: 'Buscar en tiendas:',
+      searchAmazon: '🛒 Amazon',
+      searchHomeDepot: '🏠 Home Depot',
+      searchBestBuy: '💻 Best Buy',
+      searchLowes: '🔨 Lowe\'s',
+      searchWalmart: '🏪 Walmart',
       renterToggle: 'Solo Apto para Inquilinos',
       sortPopular: 'Más Popular',
       sortPrice: 'Precio: Menor a Mayor',
       maxPricePlaceholder: 'Precio máx $',
       rebadge: '💰 Elegible para Reembolso',
       renterBadge: '🏠 Apto para Inquilinos',
-      viewDeal: 'Ver Oferta',
+      viewOn: 'Ver en',
       save: '☆',
       saved: '⭐',
       noResults: 'Ningún producto coincide con tus filtros. Intenta ajustar tu búsqueda.',
-      popular: 'popular',
+      priceNote: '* Los precios son aproximados y pueden variar según el minorista.',
     },
   };
 
@@ -177,9 +237,23 @@ function Shop({ language, onTabChange }) {
     );
   };
 
+  const handleRetailerSearch = (retailer) => {
+    if (!search.trim()) return;
+    const query = encodeURIComponent(search + ' energy efficient');
+    const urls = {
+      amazon: `https://www.amazon.com/s?k=${query}`,
+      homedepot: `https://www.homedepot.com/s/${query}`,
+      bestbuy: `https://www.bestbuy.com/site/searchpage.jsp?st=${query}`,
+      lowes: `https://www.lowes.com/search?searchTerm=${query}`,
+      walmart: `https://www.walmart.com/search?q=${query}`,
+    };
+    window.open(urls[retailer], '_blank');
+  };
+
   const filteredProducts = products
     .filter(p => {
-      const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase()) ||
+      const matchesSearch = !search ||
+        p.name.toLowerCase().includes(search.toLowerCase()) ||
         p.description.toLowerCase().includes(search.toLowerCase());
       const matchesCategory = filterCategory === 'All' || p.category === filterCategory;
       const matchesRenter = !renterOnly || p.renterFriendly;
@@ -219,7 +293,7 @@ function Shop({ language, onTabChange }) {
           </p>
 
           {/* Search Bar */}
-          <div style={{ position: 'relative', marginBottom: '16px' }}>
+          <div style={{ position: 'relative', marginBottom: '12px' }}>
             <span style={{
               position: 'absolute',
               left: '16px',
@@ -246,7 +320,49 @@ function Shop({ language, onTabChange }) {
             />
           </div>
 
-          {/* Filters Row */}
+          {/* Retailer Search Buttons */}
+          {search.trim() && (
+            <div style={{
+              backgroundColor: 'white',
+              borderRadius: '16px',
+              padding: '16px',
+              marginBottom: '16px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+            }}>
+              <p style={{ color: '#2C2C2C', fontSize: '13px', fontWeight: '500', margin: '0 0 12px 0' }}>
+                {current.searchOn}
+              </p>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {[
+                  { key: 'amazon', label: current.searchAmazon },
+                  { key: 'homedepot', label: current.searchHomeDepot },
+                  { key: 'bestbuy', label: current.searchBestBuy },
+                  { key: 'lowes', label: current.searchLowes },
+                  { key: 'walmart', label: current.searchWalmart },
+                ].map((retailer) => (
+                  <button
+                    key={retailer.key}
+                    onClick={() => handleRetailerSearch(retailer.key)}
+                    style={{
+                      padding: '10px 16px',
+                      borderRadius: '20px',
+                      border: '2px solid #4F8C6F',
+                      backgroundColor: '#EBF3EE',
+                      color: '#4F8C6F',
+                      fontSize: '13px',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    {retailer.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Filters */}
           <div style={{
             backgroundColor: 'white',
             borderRadius: '16px',
@@ -306,11 +422,7 @@ function Shop({ language, onTabChange }) {
               </div>
             </div>
 
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <p style={{ color: '#2C2C2C', fontSize: '13px', margin: 0 }}>
                 🏠 {current.renterToggle}
               </p>
@@ -399,6 +511,7 @@ function Shop({ language, onTabChange }) {
                   flexDirection: 'column',
                   gap: '10px',
                 }}>
+                  {/* Header */}
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <p style={{ color: '#A0A0A0', fontSize: '11px', margin: 0 }}>{product.category}</p>
                     <button
@@ -415,19 +528,22 @@ function Shop({ language, onTabChange }) {
                     </button>
                   </div>
 
+                  {/* Name and Price */}
                   <div>
                     <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: '0 0 4px 0', lineHeight: '1.4' }}>
                       {product.name}
                     </h3>
                     <p style={{ color: '#4F8C6F', fontSize: '20px', fontWeight: '700', margin: 0 }}>
-                      ${product.price.toFixed(2)}
+                      ~${product.price.toFixed(2)}
                     </p>
                   </div>
 
+                  {/* Description */}
                   <p style={{ color: '#666', fontSize: '13px', margin: 0, lineHeight: '1.5' }}>
                     {product.description}
                   </p>
 
+                  {/* Energy Savings */}
                   <div style={{
                     backgroundColor: '#FDF0E8',
                     borderRadius: '8px',
@@ -438,6 +554,7 @@ function Shop({ language, onTabChange }) {
                     </p>
                   </div>
 
+                  {/* Badges */}
                   <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                     {product.rebateEligible && (
                       <span style={{
@@ -465,31 +582,78 @@ function Shop({ language, onTabChange }) {
                     )}
                   </div>
 
-                  
-                  <button
-                    onClick={() => window.open(product.url, '_blank')}
-                    style={{
-                      display: 'block',
-                      width: '100%',
-                      textAlign: 'center',
-                      backgroundColor: '#D4956A',
-                      color: 'white',
-                      padding: '12px',
-                      borderRadius: '12px',
-                      fontSize: '14px',
-                      fontWeight: '600',
-                      border: 'none',
-                      cursor: 'pointer',
-                      marginTop: 'auto',
-                      transition: 'all 0.2s ease',
-                    }}
-                  >
-                    {current.viewDeal}
-                  </button>
+                  {/* Retailer Buttons */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: 'auto' }}>
+                    {product.amazonUrl && (
+                      <button
+                        onClick={() => window.open(product.amazonUrl, '_blank')}
+                        style={{
+                          width: '100%',
+                          textAlign: 'center',
+                          backgroundColor: '#FF9900',
+                          color: 'white',
+                          padding: '10px',
+                          borderRadius: '10px',
+                          fontSize: '13px',
+                          fontWeight: '600',
+                          border: 'none',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        🛒 {current.viewOn} Amazon
+                      </button>
+                    )}
+                    <div style={{ display: 'flex', gap: '6px' }}>
+                      {product.homedepotUrl && (
+                        <button
+                          onClick={() => window.open(product.homedepotUrl, '_blank')}
+                          style={{
+                            flex: 1,
+                            textAlign: 'center',
+                            backgroundColor: '#F96302',
+                            color: 'white',
+                            padding: '8px',
+                            borderRadius: '10px',
+                            fontSize: '12px',
+                            fontWeight: '600',
+                            border: 'none',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          🏠 Home Depot
+                        </button>
+                      )}
+                      {product.bestbuyUrl && (
+                        <button
+                          onClick={() => window.open(product.bestbuyUrl, '_blank')}
+                          style={{
+                            flex: 1,
+                            textAlign: 'center',
+                            backgroundColor: '#003B64',
+                            color: 'white',
+                            padding: '8px',
+                            borderRadius: '10px',
+                            fontSize: '12px',
+                            fontWeight: '600',
+                            border: 'none',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          💻 Best Buy
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
           )}
+
+          {/* Price note */}
+          <p style={{ color: '#A0A0A0', fontSize: '12px', marginTop: '24px', textAlign: 'center' }}>
+            {current.priceNote}
+          </p>
+
         </div>
       </div>
       <NavBar activeTab="shop" onTabChange={onTabChange} language={language} />
