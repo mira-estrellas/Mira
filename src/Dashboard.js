@@ -20,6 +20,41 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
   const { incentives, loading, error } = useIncentives(currentZip, currentHousing, currentSize, currentIncome);
   const impactStats = calculateImpact(currentZip, currentHousing, currentSize, language);
 
+  const [savedIncentives, setSavedIncentives] = useState(() => {
+    try {
+      const saved = localStorage.getItem('mira_saved_incentives');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('mira_saved_incentives', JSON.stringify(savedIncentives));
+    } catch {
+      console.log('localStorage not available');
+    }
+  }, [savedIncentives]);
+
+  const handleSaveIncentive = (item) => {
+    const isAlreadySaved = savedIncentives.some(s => s.program === item.program);
+    if (isAlreadySaved) {
+      setSavedIncentives(savedIncentives.filter(s => s.program !== item.program));
+    } else {
+      setSavedIncentives([...savedIncentives, item]);
+    }
+  };
+
+  const handleSaveFallbackIncentive = (item) => {
+    const isAlreadySaved = savedIncentives.some(s => s.title === item.title);
+    if (isAlreadySaved) {
+      setSavedIncentives(savedIncentives.filter(s => s.title !== item.title));
+    } else {
+      setSavedIncentives([...savedIncentives, { ...item, isFallback: true }]);
+    }
+  };
+
   useEffect(() => {
     const handleResize = () => setIsWide(window.innerWidth > 600);
     window.addEventListener('resize', handleResize);
@@ -85,20 +120,11 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
     const isRenter = currentHousing === 'rent' || currentHousing === 'guest';
     const lang = language === 'ES' ? 'ES' : 'EN';
     const items = isRenter ? allSwapItems.renter[lang] : allSwapItems.owner[lang];
-
     if (!budgetNum) return items;
-
-    // Filter and sort by what's affordable
-    // Solar panels with $0 financing always show for owners
-    const affordable = items.filter(item =>
-      item.costNum === 0 || item.costNum <= budgetNum
-    );
-
-    // If nothing is affordable show the cheapest 2 options
+    const affordable = items.filter(item => item.costNum === 0 || item.costNum <= budgetNum);
     if (affordable.length === 0) {
       return [...items].sort((a, b) => a.costNum - b.costNum).slice(0, 2);
     }
-
     return affordable.sort((a, b) => a.costNum - b.costNum);
   };
 
@@ -118,6 +144,8 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
         { title: 'Heat Pump Rebate', description: 'Federal rebate for switching to an electric heat pump.', amount: 'Up to $2,000' },
         { title: 'EV Tax Credit', description: 'Credit for purchasing a new electric vehicle.', amount: 'Up to $7,500' },
       ],
+      saveIncentive: 'Save',
+      savedIncentive: 'Saved ⭐',
     },
     ES: {
       greeting: 'Aquí está tu plan personalizado',
@@ -132,6 +160,8 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
         { title: 'Reembolso de Bomba de Calor', description: 'Reembolso federal por cambiar a una bomba de calor eléctrica.', amount: 'Hasta $2,000' },
         { title: 'Crédito Fiscal para VE', description: 'Crédito por comprar un vehículo eléctrico nuevo.', amount: 'Hasta $7,500' },
       ],
+      saveIncentive: 'Guardar',
+      savedIncentive: 'Guardado ⭐',
     },
   };
 
@@ -162,22 +192,11 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
   };
 
   if (activeTab === 'shop') {
-    return (
-      <Shop
-        language={language}
-        onTabChange={setActiveTab}
-      />
-    );
+    return <Shop language={language} onTabChange={setActiveTab} />;
   }
 
   if (activeTab === 'community') {
-    return (
-      <Community
-        language={language}
-        userZip={currentZip}
-        onTabChange={setActiveTab}
-      />
-    );
+    return <Community language={language} userZip={currentZip} onTabChange={setActiveTab} />;
   }
 
   if (activeTab === 'profile') {
@@ -189,6 +208,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
         budget={currentBudget}
         householdSize={currentSize}
         householdIncome={currentIncome}
+        savedIncentives={savedIncentives}
         onTabChange={setActiveTab}
         onUpdateProfile={({ zipCode, housingType, budget, householdSize, householdIncome }) => {
           setCurrentZip(zipCode);
@@ -217,19 +237,10 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
           paddingBottom: '80px',
         }}>
 
-          <h1 style={{
-            color: '#4F8C6F',
-            fontSize: '28px',
-            marginBottom: '8px',
-            marginTop: '16px',
-          }}>
+          <h1 style={{ color: '#4F8C6F', fontSize: '28px', marginBottom: '8px', marginTop: '16px' }}>
             {current.greeting}
           </h1>
-          <p style={{
-            color: '#2C2C2C',
-            fontSize: '14px',
-            marginBottom: '32px',
-          }}>
+          <p style={{ color: '#2C2C2C', fontSize: '14px', marginBottom: '32px' }}>
             {current.subtitle}
           </p>
 
@@ -256,12 +267,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
             </p>
           )}
 
-          <h2 style={{
-            color: '#2C2C2C',
-            fontSize: '18px',
-            marginTop: '32px',
-            marginBottom: '16px',
-          }}>
+          <h2 style={{ color: '#2C2C2C', fontSize: '18px', marginTop: '32px', marginBottom: '16px' }}>
             🎁 {current.incentives}
           </h2>
 
@@ -269,80 +275,96 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
             <div style={gridStyle}>
               {incentives
                 .filter(item => !item.paused)
-                .map((item, index) => (
-                  <div key={index} style={cardStyle}>
-                    <div style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'flex-start',
-                      marginBottom: '6px',
-                    }}>
-                      <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: 0, flex: 1 }}>
-                        {item.program}
-                      </h3>
-                      <span style={{
-                        backgroundColor: '#EBF3EE',
-                        color: '#4F8C6F',
-                        borderRadius: '20px',
-                        padding: '4px 10px',
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        marginLeft: '8px',
-                        whiteSpace: 'nowrap',
-                      }}>
-                        {item.amount.type === 'dollar_amount'
-                          ? `$${item.amount.number.toLocaleString()}`
-                          : item.amount.type === 'percent'
-                          ? `${item.amount.number}%`
-                          : 'Varies'}
-                      </span>
-                    </div>
-                    <p style={{ color: '#666', fontSize: '13px', margin: '0 0 8px 0' }}>
-                      {item.short_description}
-                    </p>
-                    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '8px' }}>
-                      <span style={{
-                        backgroundColor: '#F0EBE3',
-                        color: '#2C2C2C',
-                        borderRadius: '8px',
-                        padding: '2px 8px',
-                        fontSize: '11px',
-                      }}>
-                        {item.authority_type === 'federal' ? '🏛️ Federal' :
-                         item.authority_type === 'state' ? '🏢 State' :
-                         item.authority_type === 'utility' ? '⚡ Utility' : '🏠 Local'}
-                      </span>
-                      <span style={{
-                        backgroundColor: '#F0EBE3',
-                        color: '#2C2C2C',
-                        borderRadius: '8px',
-                        padding: '2px 8px',
-                        fontSize: '11px',
-                      }}>
-                        {item.payment_methods[0] === 'tax_credit' ? '💳 Tax Credit' :
-                         item.payment_methods[0] === 'pos_rebate' ? '💰 Instant Rebate' :
-                         item.payment_methods[0] === 'rebate' ? '💰 Rebate' : '💵 Discount'}
-                      </span>
-                    </div>
-                    {item.program_url && (
-                      <button
-                        onClick={() => window.open(item.program_url, '_blank')}
-                        style={{
-                          backgroundColor: '#4F8C6F',
-                          color: 'white',
-                          border: 'none',
-                          padding: '8px 16px',
+                .map((item, index) => {
+                  const isSaved = savedIncentives.some(s => s.program === item.program);
+                  return (
+                    <div key={index} style={cardStyle}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
+                        <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: 0, flex: 1 }}>
+                          {item.program}
+                        </h3>
+                        <span style={{
+                          backgroundColor: '#EBF3EE',
+                          color: '#4F8C6F',
                           borderRadius: '20px',
+                          padding: '4px 10px',
                           fontSize: '12px',
-                          cursor: 'pointer',
-                          marginTop: 'auto',
-                        }}
-                      >
-                        Learn More
-                      </button>
-                    )}
-                  </div>
-                ))}
+                          fontWeight: 'bold',
+                          marginLeft: '8px',
+                          whiteSpace: 'nowrap',
+                        }}>
+                          {item.amount.type === 'dollar_amount'
+                            ? `$${item.amount.number.toLocaleString()}`
+                            : item.amount.type === 'percent'
+                            ? `${item.amount.number}%`
+                            : 'Varies'}
+                        </span>
+                      </div>
+                      <p style={{ color: '#666', fontSize: '13px', margin: '0 0 8px 0' }}>
+                        {item.short_description}
+                      </p>
+                      <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '8px' }}>
+                        <span style={{
+                          backgroundColor: '#F0EBE3',
+                          color: '#2C2C2C',
+                          borderRadius: '8px',
+                          padding: '2px 8px',
+                          fontSize: '11px',
+                        }}>
+                          {item.authority_type === 'federal' ? '🏛️ Federal' :
+                           item.authority_type === 'state' ? '🏢 State' :
+                           item.authority_type === 'utility' ? '⚡ Utility' : '🏠 Local'}
+                        </span>
+                        <span style={{
+                          backgroundColor: '#F0EBE3',
+                          color: '#2C2C2C',
+                          borderRadius: '8px',
+                          padding: '2px 8px',
+                          fontSize: '11px',
+                        }}>
+                          {item.payment_methods[0] === 'tax_credit' ? '💳 Tax Credit' :
+                           item.payment_methods[0] === 'pos_rebate' ? '💰 Instant Rebate' :
+                           item.payment_methods[0] === 'rebate' ? '💰 Rebate' : '💵 Discount'}
+                        </span>
+                      </div>
+                      <div style={{ display: 'flex', gap: '8px', marginTop: 'auto' }}>
+                        {item.program_url && (
+                          <button
+                            onClick={() => window.open(item.program_url, '_blank')}
+                            style={{
+                              flex: 1,
+                              backgroundColor: '#4F8C6F',
+                              color: 'white',
+                              border: 'none',
+                              padding: '8px 16px',
+                              borderRadius: '20px',
+                              fontSize: '12px',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            Learn More
+                          </button>
+                        )}
+                        <button
+                          onClick={() => handleSaveIncentive(item)}
+                          style={{
+                            flex: 1,
+                            backgroundColor: isSaved ? '#EBF3EE' : 'white',
+                            color: isSaved ? '#4F8C6F' : '#A0A0A0',
+                            border: `2px solid ${isSaved ? '#4F8C6F' : '#E8E0D5'}`,
+                            padding: '8px 16px',
+                            borderRadius: '20px',
+                            fontSize: '12px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease',
+                          }}
+                        >
+                          {isSaved ? current.savedIncentive : current.saveIncentive}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
             </div>
           ) : (
             <div>
@@ -357,65 +379,66 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
                 🌱 Showing general federal incentives. Personalized data for your state coming soon.
               </div>
               <div style={gridStyle}>
-                {current.incentiveItems.map((item, index) => (
-                  <div key={index} style={cardStyle}>
-                    <div style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'flex-start',
-                      marginBottom: '6px',
-                    }}>
-                      <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: 0, flex: 1 }}>
-                        {item.title}
-                      </h3>
-                      <span style={{
-                        backgroundColor: '#EBF3EE',
-                        color: '#4F8C6F',
-                        borderRadius: '20px',
-                        padding: '4px 10px',
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        marginLeft: '8px',
-                        whiteSpace: 'nowrap',
-                      }}>
-                        {item.amount}
-                      </span>
+                {current.incentiveItems.map((item, index) => {
+                  const isSaved = savedIncentives.some(s => s.title === item.title);
+                  return (
+                    <div key={index} style={cardStyle}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
+                        <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: 0, flex: 1 }}>
+                          {item.title}
+                        </h3>
+                        <span style={{
+                          backgroundColor: '#EBF3EE',
+                          color: '#4F8C6F',
+                          borderRadius: '20px',
+                          padding: '4px 10px',
+                          fontSize: '12px',
+                          fontWeight: 'bold',
+                          marginLeft: '8px',
+                          whiteSpace: 'nowrap',
+                        }}>
+                          {item.amount}
+                        </span>
+                      </div>
+                      <p style={{ color: '#666', fontSize: '13px', margin: '0 0 8px 0' }}>
+                        {item.description}
+                      </p>
+                      <button
+                        onClick={() => handleSaveFallbackIncentive(item)}
+                        style={{
+                          width: '100%',
+                          backgroundColor: isSaved ? '#EBF3EE' : 'white',
+                          color: isSaved ? '#4F8C6F' : '#A0A0A0',
+                          border: `2px solid ${isSaved ? '#4F8C6F' : '#E8E0D5'}`,
+                          padding: '8px 16px',
+                          borderRadius: '20px',
+                          fontSize: '12px',
+                          cursor: 'pointer',
+                          marginTop: 'auto',
+                          transition: 'all 0.2s ease',
+                        }}
+                      >
+                        {isSaved ? current.savedIncentive : current.saveIncentive}
+                      </button>
                     </div>
-                    <p style={{ color: '#666', fontSize: '13px', margin: 0 }}>
-                      {item.description}
-                    </p>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
 
-          <h2 style={{
-            color: '#2C2C2C',
-            fontSize: '18px',
-            marginTop: '32px',
-            marginBottom: '8px',
-          }}>
+          <h2 style={{ color: '#2C2C2C', fontSize: '18px', marginTop: '32px', marginBottom: '8px' }}>
             ♻️ {current.swaps}
           </h2>
 
-          <p style={{
-            color: '#4F8C6F',
-            fontSize: '13px',
-            marginBottom: '16px',
-          }}>
+          <p style={{ color: '#4F8C6F', fontSize: '13px', marginBottom: '16px' }}>
             {current.budgetNote}
           </p>
 
           <div style={gridStyle}>
             {swapItems.map((item, index) => (
               <div key={index} style={cardStyle}>
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-start',
-                  marginBottom: '6px',
-                }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
                   <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: 0, flex: 1 }}>
                     {item.title}
                   </h3>
@@ -439,12 +462,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
             ))}
           </div>
 
-          <h2 style={{
-            color: '#2C2C2C',
-            fontSize: '18px',
-            marginTop: '32px',
-            marginBottom: '16px',
-          }}>
+          <h2 style={{ color: '#2C2C2C', fontSize: '18px', marginTop: '32px', marginBottom: '16px' }}>
             🌍 {current.impact}
           </h2>
 
@@ -459,11 +477,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
                 flexDirection: 'column',
                 gap: '8px',
               }}>
-                <span style={{
-                  color: '#4F8C6F',
-                  fontSize: '26px',
-                  fontWeight: 'bold',
-                }}>
+                <span style={{ color: '#4F8C6F', fontSize: '26px', fontWeight: 'bold' }}>
                   {item.stat}
                 </span>
                 <span style={{ color: '#666', fontSize: '13px' }}>
@@ -472,7 +486,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
               </div>
             ))}
           </div>
-          
+
           <CarbonTracker language={language} />
           <WaterTracker language={language} />
 

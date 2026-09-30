@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import NavBar from './NavBar';
 
-function Profile({ language, zipCode, housingType, budget, householdSize, householdIncome, onUpdateProfile, onTabChange }) {
+function Profile({ language, zipCode, housingType, budget, householdSize, householdIncome, savedIncentives, onUpdateProfile, onTabChange }) {
 
   const [editing, setEditing] = useState(false);
   const [newZip, setNewZip] = useState(zipCode);
@@ -461,9 +461,49 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
             <p style={{ color: '#2C2C2C', fontSize: '16px', fontWeight: '500', marginBottom: '12px' }}>
               ⭐ {current.saved}
             </p>
-            <p style={{ color: '#A0A0A0', fontSize: '14px', textAlign: 'center', padding: '24px 0' }}>
-              {current.savedEmpty}
-            </p>
+            {!savedIncentives || savedIncentives.length === 0 ? (
+              <p style={{ color: '#A0A0A0', fontSize: '14px', textAlign: 'center', padding: '24px 0' }}>
+                {current.savedEmpty}
+              </p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {savedIncentives.map((item, index) => (
+                  <div key={index} style={{
+                    backgroundColor: '#FAF7F2',
+                    borderRadius: '12px',
+                    padding: '14px 16px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+                    gap: '12px',
+                  }}>
+                    <div style={{ flex: 1 }}>
+                      <p style={{ color: '#2C2C2C', fontSize: '14px', fontWeight: '500', margin: '0 0 4px 0' }}>
+                        {item.program || item.title}
+                      </p>
+                      <p style={{ color: '#666', fontSize: '12px', margin: 0 }}>
+                        {item.short_description || item.description}
+                      </p>
+                    </div>
+                    <span style={{
+                      backgroundColor: '#EBF3EE',
+                      color: '#4F8C6F',
+                      borderRadius: '20px',
+                      padding: '4px 10px',
+                      fontSize: '11px',
+                      fontWeight: 'bold',
+                      whiteSpace: 'nowrap',
+                    }}>
+                      {item.amount?.type === 'dollar_amount'
+                        ? `$${item.amount.number.toLocaleString()}`
+                        : item.amount?.type === 'percent'
+                        ? `${item.amount.number}%`
+                        : item.amount || 'Varies'}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
         </div>
