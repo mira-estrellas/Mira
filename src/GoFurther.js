@@ -282,13 +282,13 @@ function GoFurther({ language, onTabChange }) {
                 key={section}
                 onClick={() => scrollToSection(section)}
                 style={{
-                  width: '64px',
-                  padding: '8px 4px',
+                  width: '72px',
+                  padding: '10px 6px',
                   borderRadius: '12px',
                   border: 'none',
                   backgroundColor: activeSection === section ? '#4F8C6F' : 'white',
                   color: activeSection === section ? 'white' : '#A0A0A0',
-                  fontSize: '18px',
+                  fontSize: '20px',
                   cursor: 'pointer',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
                   transition: 'all 0.2s ease',
@@ -300,7 +300,7 @@ function GoFurther({ language, onTabChange }) {
               >
                 <span style={{ fontSize: '18px' }}>{current.sections[section].icon}</span>
                 <span style={{
-                  fontSize: '9px',
+                  fontSize: '11px',
                   fontFamily: 'Poppins, sans-serif',
                   fontWeight: activeSection === section ? '600' : '400',
                   lineHeight: '1.2',
