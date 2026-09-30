@@ -1,67 +1,85 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar';
+
+const DEFAULT_LISTINGS = [
+  {
+    id: 1,
+    title: 'Solar Panel Cleaning Kit',
+    category: '⚡ Energy & Solar',
+    condition: 'Like New',
+    zip: '45202',
+    miles: '1.2',
+    description: 'Complete kit for cleaning solar panels. Includes soft brush, squeegee and biodegradable soap.',
+    verified: true,
+    interested: 0,
+    hasExpressedInterest: false,
+    saved: false,
+    reported: false,
+  },
+  {
+    id: 2,
+    title: 'Electric Lawn Mower',
+    category: '🌱 Garden & Outdoor',
+    condition: 'Good',
+    zip: '45203',
+    miles: '2.4',
+    description: 'Cordless electric mower, fully charged and ready to use. Available weekends.',
+    verified: false,
+    interested: 3,
+    hasExpressedInterest: false,
+    saved: false,
+    reported: false,
+  },
+  {
+    id: 3,
+    title: 'Home Energy Monitor',
+    category: '🔧 Home & Repair',
+    condition: 'Excellent',
+    zip: '45201',
+    miles: '0.8',
+    description: 'Smart home energy monitor that tracks real time electricity usage by device.',
+    verified: true,
+    interested: 1,
+    hasExpressedInterest: false,
+    saved: false,
+    reported: false,
+  },
+  {
+    id: 4,
+    title: 'EV Charging Cable',
+    category: '🚗 EV & Transport',
+    condition: 'Good',
+    zip: '45205',
+    miles: '3.1',
+    description: 'Level 2 EV charging cable, compatible with most electric vehicles.',
+    verified: true,
+    interested: 2,
+    hasExpressedInterest: false,
+    saved: false,
+    reported: false,
+  },
+];
 
 function Community({ language, userZip, onTabChange }) {
   const [activeSection, setActiveSection] = useState('browse');
   const [maxMiles, setMaxMiles] = useState(10);
-  const [listings, setListings] = useState([
-    {
-      id: 1,
-      title: 'Solar Panel Cleaning Kit',
-      category: '⚡ Energy & Solar',
-      condition: 'Like New',
-      zip: '45202',
-      miles: '1.2',
-      description: 'Complete kit for cleaning solar panels. Includes soft brush, squeegee and biodegradable soap.',
-      verified: true,
-      interested: 0,
-      hasExpressedInterest: false,
-      saved: false,
-      reported: false,
-    },
-    {
-      id: 2,
-      title: 'Electric Lawn Mower',
-      category: '🌱 Garden & Outdoor',
-      condition: 'Good',
-      zip: '45203',
-      miles: '2.4',
-      description: 'Cordless electric mower, fully charged and ready to use. Available weekends.',
-      verified: false,
-      interested: 3,
-      hasExpressedInterest: false,
-      saved: false,
-      reported: false,
-    },
-    {
-      id: 3,
-      title: 'Home Energy Monitor',
-      category: '🔧 Home & Repair',
-      condition: 'Excellent',
-      zip: '45201',
-      miles: '0.8',
-      description: 'Smart home energy monitor that tracks real time electricity usage by device.',
-      verified: true,
-      interested: 1,
-      hasExpressedInterest: false,
-      saved: false,
-      reported: false,
-    },
-    {
-      id: 4,
-      title: 'EV Charging Cable',
-      category: '🚗 EV & Transport',
-      condition: 'Good',
-      zip: '45205',
-      miles: '3.1',
-      description: 'Level 2 EV charging cable, compatible with most electric vehicles.',
-      verified: true,
-      interested: 2,
-      hasExpressedInterest: false,
-      saved: false,
-      reported: false,
-    },
-  ]);
+
+  const [listings, setListings] = useState(() => {
+    try {
+      const saved = localStorage.getItem('mira_listings');
+      return saved ? JSON.parse(saved) : DEFAULT_LISTINGS;
+    } catch {
+      return DEFAULT_LISTINGS;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('mira_listings', JSON.stringify(listings));
+    } catch {
+      console.log('localStorage not available');
+    }
+  }, [listings]);
 
   const [newListing, setNewListing] = useState({
     title: '',
@@ -79,66 +97,16 @@ function Community({ language, userZip, onTabChange }) {
   const conditions = ['Like New', 'Excellent', 'Good', 'Fair'];
 
   const recycleCategories = [
-    {
-      icon: '📱',
-      title: 'Electronics',
-      tips: 'Old phones, laptops, TVs and cables. Never throw in regular trash — they contain toxic materials.',
-      earth911Material: 'Electronics',
-    },
-    {
-      icon: '🔋',
-      title: 'Batteries',
-      tips: 'Car batteries, AA/AAA, lithium-ion. Many hardware stores accept them for free.',
-      earth911Material: 'Batteries',
-    },
-    {
-      icon: '🪟',
-      title: 'Glass',
-      tips: 'Bottles and jars are widely accepted. Window glass and mirrors usually require special drop-off.',
-      earth911Material: 'Glass',
-    },
-    {
-      icon: '📦',
-      title: 'Cardboard',
-      tips: 'Break down boxes and keep dry. Greasy pizza boxes go in compost, not recycling.',
-      earth911Material: 'Cardboard',
-    },
-    {
-      icon: '🥤',
-      title: 'Plastic',
-      tips: 'Check the number on the bottom. #1 and #2 are most widely accepted. Plastic bags need special drop-off.',
-      earth911Material: 'Plastic Bags',
-    },
-    {
-      icon: '💡',
-      title: 'Light Bulbs',
-      tips: 'LED and CFL bulbs need special recycling. Many hardware stores accept them.',
-      earth911Material: 'Light Bulbs',
-    },
-    {
-      icon: '🛋️',
-      title: 'Furniture',
-      tips: 'Donate usable furniture first. For broken items check local bulk pickup or habitat for humanity.',
-      earth911Material: 'Furniture',
-    },
-    {
-      icon: '👕',
-      title: 'Clothing',
-      tips: 'Donate wearable clothes. Worn out textiles can go to H&M, Patagonia or TerraCycle.',
-      earth911Material: 'Clothing',
-    },
-    {
-      icon: '🚗',
-      title: 'Motor Oil',
-      tips: 'Never pour down the drain. Most auto parts stores accept used motor oil for free.',
-      earth911Material: 'Motor Oil',
-    },
-    {
-      icon: '💊',
-      title: 'Medications',
-      tips: 'Never flush medications. Use DEA drug take-back programs or approved disposal bags.',
-      earth911Material: 'Medications',
-    },
+    { icon: '📱', title: 'Electronics', tips: 'Old phones, laptops, TVs and cables. Never throw in regular trash — they contain toxic materials.', earth911Material: 'Electronics' },
+    { icon: '🔋', title: 'Batteries', tips: 'Car batteries, AA/AAA, lithium-ion. Many hardware stores accept them for free.', earth911Material: 'Batteries' },
+    { icon: '🪟', title: 'Glass', tips: 'Bottles and jars are widely accepted. Window glass and mirrors usually require special drop-off.', earth911Material: 'Glass' },
+    { icon: '📦', title: 'Cardboard', tips: 'Break down boxes and keep dry. Greasy pizza boxes go in compost, not recycling.', earth911Material: 'Cardboard' },
+    { icon: '🥤', title: 'Plastic', tips: 'Check the number on the bottom. #1 and #2 are most widely accepted. Plastic bags need special drop-off.', earth911Material: 'Plastic Bags' },
+    { icon: '💡', title: 'Light Bulbs', tips: 'LED and CFL bulbs need special recycling. Many hardware stores accept them.', earth911Material: 'Light Bulbs' },
+    { icon: '🛋️', title: 'Furniture', tips: 'Donate usable furniture first. For broken items check local bulk pickup or habitat for humanity.', earth911Material: 'Furniture' },
+    { icon: '👕', title: 'Clothing', tips: 'Donate wearable clothes. Worn out textiles can go to H&M, Patagonia or TerraCycle.', earth911Material: 'Clothing' },
+    { icon: '🚗', title: 'Motor Oil', tips: 'Never pour down the drain. Most auto parts stores accept used motor oil for free.', earth911Material: 'Motor Oil' },
+    { icon: '💊', title: 'Medications', tips: 'Never flush medications. Use DEA drug take-back programs or approved disposal bags.', earth911Material: 'Medications' },
   ];
 
   const content = {
@@ -260,7 +228,7 @@ function Community({ language, userZip, onTabChange }) {
   const handlePost = () => {
     if (!newListing.title || !newListing.description) return;
     const listing = {
-      id: listings.length + 1,
+      id: Date.now(),
       ...newListing,
       miles: '0.0',
       verified: false,
@@ -278,7 +246,7 @@ function Community({ language, userZip, onTabChange }) {
 
   const handleEarth911 = (material) => {
     const zip = userZip || '';
-    window.open(`https://search.earth911.com/?what=${encodeURIComponent(material)}&where=${zip}&radius=25&utm_source=mira`, '_blank');
+    window.open(`https://search.earth911.com/?what=${encodeURIComponent(material)}&where=${zip}&radius=25`, '_blank');
   };
 
   const sectionStyle = {
@@ -696,7 +664,6 @@ function Community({ language, userZip, onTabChange }) {
                 {current.recycleSubtitle}
               </p>
 
-              {/* Find Recycling Button */}
               <div style={{ ...sectionStyle, textAlign: 'center' }}>
                 <button
                   onClick={() => window.open(`https://search.earth911.com/?where=${userZip || ''}&radius=25`, '_blank')}
@@ -720,7 +687,6 @@ function Community({ language, userZip, onTabChange }) {
                 </p>
               </div>
 
-              {/* Find Water Button */}
               <div style={{ ...sectionStyle, textAlign: 'center' }}>
                 <button
                   onClick={() => window.open('https://www.findtap.com', '_blank')}
@@ -744,7 +710,6 @@ function Community({ language, userZip, onTabChange }) {
                 </p>
               </div>
 
-              {/* Recycle Categories Grid */}
               <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
@@ -774,11 +739,7 @@ function Community({ language, userZip, onTabChange }) {
                     <p style={{ color: '#666', fontSize: '13px', margin: '0 0 8px 0', lineHeight: '1.5' }}>
                       {cat.tips}
                     </p>
-                    <span style={{
-                      color: '#4F8C6F',
-                      fontSize: '12px',
-                      fontWeight: '600',
-                    }}>
+                    <span style={{ color: '#4F8C6F', fontSize: '12px', fontWeight: '600' }}>
                       Find locations →
                     </span>
                   </div>
