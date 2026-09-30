@@ -12,8 +12,8 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
   const [currentZip, setCurrentZip] = useState(zipCode);
   const [currentHousing, setCurrentHousing] = useState(housingType);
   const [currentBudget, setCurrentBudget] = useState(budget);
-  const currentSize = householdSize || 2;
-  const currentIncome = householdIncome || 80000;
+  const [currentSize, setCurrentSize] = useState(householdSize || 2);
+  const [currentIncome, setCurrentIncome] = useState(householdIncome || 80000);
   const { incentives, loading, error } = useIncentives(currentZip, currentHousing, currentSize, currentIncome);
 
   useEffect(() => {
@@ -147,11 +147,15 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
         zipCode={currentZip}
         housingType={currentHousing}
         budget={currentBudget}
+        householdSize={currentSize}
+        householdIncome={currentIncome}
         onTabChange={setActiveTab}
-        onUpdateProfile={({ zipCode, housingType, budget }) => {
+        onUpdateProfile={({ zipCode, housingType, budget, householdSize, householdIncome }) => {
           setCurrentZip(zipCode);
           setCurrentHousing(housingType);
           setCurrentBudget(budget);
+          setCurrentSize(householdSize);
+          setCurrentIncome(householdIncome);
           setActiveTab('home');
         }}
       />

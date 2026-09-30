@@ -1,13 +1,31 @@
 import React, { useState } from 'react';
 import NavBar from './NavBar';
 
-function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTabChange }) {
+function Profile({ language, zipCode, housingType, budget, householdSize, householdIncome, onUpdateProfile, onTabChange }) {
 
   const [editing, setEditing] = useState(false);
   const [newZip, setNewZip] = useState(zipCode);
   const [newHousing, setNewHousing] = useState(housingType);
   const [newBudget, setNewBudget] = useState(budget || '');
+  const [newSize, setNewSize] = useState(householdSize || 2);
+  const [newIncome, setNewIncome] = useState(householdIncome || 80000);
   const [saved, setSaved] = useState(false);
+
+  const incomeBrackets = [
+    { label: 'Under $30,000', value: 20000 },
+    { label: '$30,000 – $60,000', value: 45000 },
+    { label: '$60,000 – $100,000', value: 80000 },
+    { label: '$100,000 – $150,000', value: 125000 },
+    { label: 'Over $150,000', value: 175000 },
+  ];
+
+  const incomeBracketsES = [
+    { label: 'Menos de $30,000', value: 20000 },
+    { label: '$30,000 – $60,000', value: 45000 },
+    { label: '$60,000 – $100,000', value: 80000 },
+    { label: '$100,000 – $150,000', value: 125000 },
+    { label: 'Más de $150,000', value: 175000 },
+  ];
 
   const content = {
     EN: {
@@ -16,19 +34,21 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
       location: 'Location',
       housing: 'Housing Type',
       monthlyBudget: 'Monthly Budget',
+      householdSize: 'Household Size',
+      householdIncome: 'Annual Household Income',
       renter: 'Renter',
       homeowner: 'Homeowner',
+      guest: 'Living with Family/Others',
       flexible: 'Flexible',
       edit: 'Edit Profile',
       save: 'Save Changes',
       cancel: 'Cancel',
       saved: 'Saved Items',
       savedEmpty: 'No saved items yet. Browse your dashboard to save incentives and swaps!',
-      language: 'Language',
       notifications: 'Notifications',
       notifDesc: 'Get updates when new incentives become available in your area.',
-      on: 'On',
-      off: 'Off',
+      person: 'person',
+      people: 'people',
     },
     ES: {
       title: 'Mi Perfil',
@@ -36,24 +56,39 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
       location: 'Ubicación',
       housing: 'Tipo de Vivienda',
       monthlyBudget: 'Presupuesto Mensual',
+      householdSize: 'Tamaño del Hogar',
+      householdIncome: 'Ingreso Anual del Hogar',
       renter: 'Inquilino',
       homeowner: 'Propietario',
+      guest: 'Vivo con Familia/Otros',
       flexible: 'Flexible',
       edit: 'Editar Perfil',
       save: 'Guardar Cambios',
       cancel: 'Cancelar',
       saved: 'Elementos Guardados',
       savedEmpty: '¡Aún no hay elementos guardados. Explora tu panel para guardar incentivos!',
-      language: 'Idioma',
       notifications: 'Notificaciones',
       notifDesc: 'Recibe actualizaciones cuando haya nuevos incentivos disponibles en tu área.',
-      on: 'Activado',
-      off: 'Desactivado',
+      person: 'persona',
+      people: 'personas',
     },
   };
 
   const current = content[language] || content.EN;
+  const currentBrackets = language === 'ES' ? incomeBracketsES : incomeBrackets;
   const [notifications, setNotifications] = useState(true);
+
+  const getIncomeLabel = (value) => {
+    const bracket = incomeBrackets.find(b => b.value === value);
+    return bracket ? bracket.label : '$60,000 – $100,000';
+  };
+
+  const getHousingLabel = (type) => {
+    if (type === 'rent') return current.renter;
+    if (type === 'own') return current.homeowner;
+    if (type === 'guest') return current.guest;
+    return current.renter;
+  };
 
   const sectionStyle = {
     backgroundColor: 'white',
@@ -159,8 +194,10 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
 
             {editing ? (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+
+                {/* Zip Code */}
                 <div>
-                  <p style={labelStyle}>{current.location}</p>
+                  <p style={labelStyle}>📍 {current.location}</p>
                   <input
                     type="number"
                     value={newZip}
@@ -170,15 +207,16 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
                   />
                 </div>
 
+                {/* Housing Type */}
                 <div>
-                  <p style={labelStyle}>{current.housing}</p>
-                  <div style={{ display: 'flex', gap: '12px', marginTop: '4px' }}>
-                    {['rent', 'own'].map((option) => (
+                  <p style={labelStyle}>🏠 {current.housing}</p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '4px' }}>
+                    {['rent', 'own', 'guest'].map((option) => (
                       <button
                         key={option}
                         onClick={() => setNewHousing(option)}
                         style={{
-                          flex: 1,
+                          width: '100%',
                           padding: '12px',
                           borderRadius: '12px',
                           border: `2px solid ${newHousing === option ? '#4F8C6F' : '#E8E0D5'}`,
@@ -186,16 +224,80 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
                           color: '#2C2C2C',
                           fontSize: '14px',
                           cursor: 'pointer',
+                          textAlign: 'center',
                         }}
                       >
-                        {option === 'rent' ? `🏠 ${current.renter}` : `🏡 ${current.homeowner}`}
+                        {option === 'rent' ? `🏠 ${current.renter}` :
+                         option === 'own' ? `🏡 ${current.homeowner}` :
+                         `👨‍👩‍👧 ${current.guest}`}
                       </button>
                     ))}
                   </div>
                 </div>
 
+                {/* Household Size */}
                 <div>
-                  <p style={labelStyle}>{current.monthlyBudget}</p>
+                  <p style={labelStyle}>👥 {current.householdSize}</p>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(4, 1fr)',
+                    gap: '8px',
+                    marginTop: '4px',
+                  }}>
+                    {[1, 2, 3, 4, 5, 6, 7, '8+'].map((num) => (
+                      <button
+                        key={num}
+                        onClick={() => setNewSize(num === '8+' ? 8 : num)}
+                        style={{
+                          padding: '14px 8px',
+                          borderRadius: '12px',
+                          border: `2px solid ${(num === '8+' ? 8 : num) === newSize ? '#4F8C6F' : '#E8E0D5'}`,
+                          backgroundColor: (num === '8+' ? 8 : num) === newSize ? '#EBF3EE' : '#FAF7F2',
+                          color: (num === '8+' ? 8 : num) === newSize ? '#4F8C6F' : '#2C2C2C',
+                          fontSize: '16px',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                        }}
+                      >
+                        {num}
+                      </button>
+                    ))}
+                  </div>
+                  <p style={{ color: '#4F8C6F', fontSize: '13px', marginTop: '8px', textAlign: 'center' }}>
+                    {newSize} {newSize === 1 ? current.person : current.people}
+                  </p>
+                </div>
+
+                {/* Household Income */}
+                <div>
+                  <p style={labelStyle}>💰 {current.householdIncome}</p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '4px' }}>
+                    {currentBrackets.map((bracket, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setNewIncome(bracket.value)}
+                        style={{
+                          width: '100%',
+                          padding: '12px',
+                          borderRadius: '12px',
+                          border: `2px solid ${newIncome === bracket.value ? '#4F8C6F' : '#E8E0D5'}`,
+                          backgroundColor: newIncome === bracket.value ? '#EBF3EE' : '#FAF7F2',
+                          color: '#2C2C2C',
+                          fontSize: '14px',
+                          cursor: 'pointer',
+                          textAlign: 'center',
+                        }}
+                      >
+                        {bracket.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Monthly Budget */}
+                <div>
+                  <p style={labelStyle}>💵 {current.monthlyBudget}</p>
                   <div style={{ position: 'relative' }}>
                     <span style={{
                       position: 'absolute',
@@ -218,7 +320,13 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
                   onClick={() => {
                     setSaved(true);
                     setTimeout(() => {
-                      onUpdateProfile({ zipCode: newZip, housingType: newHousing, budget: newBudget });
+                      onUpdateProfile({
+                        zipCode: newZip,
+                        housingType: newHousing,
+                        budget: newBudget,
+                        householdSize: newSize,
+                        householdIncome: newIncome,
+                      });
                       setEditing(false);
                       setSaved(false);
                     }, 1500);
@@ -238,6 +346,7 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
                 >
                   {saved ? '✓ Saved!' : current.save}
                 </button>
+
                 {saved && (
                   <p style={{
                     color: '#4F8C6F',
@@ -254,14 +363,22 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div>
                   <p style={labelStyle}>📍 {current.location}</p>
-                  <p style={valueStyle}>{zipCode}</p>
+                  <p style={valueStyle}>{zipCode || 'Not set'}</p>
                 </div>
                 <div>
                   <p style={labelStyle}>🏠 {current.housing}</p>
-                  <p style={valueStyle}>{housingType === 'rent' ? current.renter : current.homeowner}</p>
+                  <p style={valueStyle}>{getHousingLabel(housingType)}</p>
                 </div>
                 <div>
-                  <p style={labelStyle}>💰 {current.monthlyBudget}</p>
+                  <p style={labelStyle}>👥 {current.householdSize}</p>
+                  <p style={valueStyle}>{householdSize ? `${householdSize === 8 ? '8+' : householdSize} ${householdSize === 1 ? current.person : current.people}` : '2 people'}</p>
+                </div>
+                <div>
+                  <p style={labelStyle}>💰 {current.householdIncome}</p>
+                  <p style={valueStyle}>{getIncomeLabel(householdIncome)}</p>
+                </div>
+                <div>
+                  <p style={labelStyle}>💵 {current.monthlyBudget}</p>
                   <p style={valueStyle}>{budget ? `$${budget}/mo` : current.flexible}</p>
                 </div>
               </div>
@@ -326,7 +443,6 @@ function Profile({ language, zipCode, housingType, budget, onUpdateProfile, onTa
         </div>
       </div>
       <NavBar activeTab="profile" onTabChange={onTabChange} language={language} />
-
     </>
   );
 }
