@@ -294,8 +294,9 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
           padding: '40px 24px 48px',
           position: 'relative',
           overflow: 'hidden',
+          textAlign: 'center',
         }}>
-          {/* Decorative circle */}
+          {/* Decorative circles */}
           <div style={{
             position: 'absolute',
             top: '-40px',
@@ -318,29 +319,32 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
           <div style={{ maxWidth: '900px', margin: '0 auto' }}>
             <h1 style={{
               color: 'white',
-              fontSize: isWide ? '32px' : '26px',
+              fontSize: isWide ? '34px' : '28px',
               fontWeight: '700',
-              margin: '0 0 10px 0',
+              margin: '0 0 14px 0',
               lineHeight: '1.3',
               letterSpacing: '-0.5px',
             }}>
               {current.greeting}
             </h1>
             <p style={{
-              color: 'rgba(255,255,255,0.75)',
-              fontSize: '15px',
-              margin: '0 0 24px 0',
+              color: 'rgba(255,255,255,0.85)',
+              fontSize: '17px',
+              margin: '0 0 28px 0',
               lineHeight: '1.7',
-              maxWidth: '600px',
+              maxWidth: '560px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
             }}>
               {current.subtitle}
             </p>
 
-            {/* Profile pill */}
+            {/* Profile pills */}
             <div style={{
-              display: 'inline-flex',
+              display: 'flex',
               flexWrap: 'wrap',
               gap: '8px',
+              justifyContent: 'center',
             }}>
               {[
                 currentZip && `📍 ${currentZip}`,
@@ -627,10 +631,10 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
                 flexDirection: 'column',
                 gap: '8px',
               }}>
-                <span style={{ color: colors.newGrowth, fontSize: '28px', fontWeight: '800', letterSpacing: '-1px' }}>
+                <span style={{ color: 'white', fontSize: '28px', fontWeight: '800', letterSpacing: '-1px' }}>
                   {item.stat}
                 </span>
-                <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '13px', lineHeight: '1.5' }}>
+                <span style={{ color: 'rgba(255,255,255,0.9)', fontSize: '15px', lineHeight: '1.5' }}>
                   {item.description}
                 </span>
               </div>
