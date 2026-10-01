@@ -253,16 +253,49 @@ function Onboarding({ language, onBack }) {
         padding: '24px',
         textAlign: 'center',
       }}>
-        {/* Animated leaf */}
+
+        {/* Spinning recycling symbol */}
         <div style={{
-          fontSize: '64px',
-          marginBottom: '32px',
-          animation: 'spin 3s linear infinite',
+          marginBottom: '40px',
+          animation: 'gentleSpin 3s linear infinite',
         }}>
-          🌱
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M40 8 L48 22 L32 22 Z"
+              fill="#4F8C6F"
+            />
+            <path
+              d="M40 8 C52 8 62 16 66 28 L58 28 C55 20 48 14 40 14 C32 14 25 20 22 28 L14 28 C18 16 28 8 40 8Z"
+              fill="#4F8C6F"
+            />
+            <path
+              d="M66 28 L72 42 L60 42 Z"
+              fill="#4F8C6F"
+              transform="rotate(120 40 40)"
+            />
+            <path
+              d="M40 8 C52 8 62 16 66 28 L58 28 C55 20 48 14 40 14 C32 14 25 20 22 28 L14 28 C18 16 28 8 40 8Z"
+              fill="#4F8C6F"
+              transform="rotate(120 40 40)"
+            />
+            <path
+              d="M40 8 C52 8 62 16 66 28 L58 28 C55 20 48 14 40 14 C32 14 25 20 22 28 L14 28 C18 16 28 8 40 8Z"
+              fill="#4F8C6F"
+              transform="rotate(240 40 40)"
+            />
+            <path
+              d="M66 28 L72 42 L60 42 Z"
+              fill="#4F8C6F"
+              transform="rotate(240 40 40)"
+            />
+            <path
+              d="M66 28 L72 42 L60 42 Z"
+              fill="#4F8C6F"
+            />
+          </svg>
         </div>
 
-        {/* Animated message */}
+        {/* Animated message — no emojis */}
         <p style={{
           color: '#2C2C2C',
           fontSize: '22px',
@@ -273,7 +306,7 @@ function Onboarding({ language, onBack }) {
           transform: fadeIn ? 'translateY(0)' : 'translateY(10px)',
           transition: 'opacity 0.4s ease, transform 0.4s ease',
         }}>
-          {messages[loadingStep]}
+          {messages[loadingStep].replace(/[\u{1F300}-\u{1FFFF}]/gu, '').trim()}
         </p>
 
         {/* Progress dots */}
@@ -297,12 +330,9 @@ function Onboarding({ language, onBack }) {
         </div>
 
         <style>{`
-          @keyframes spin {
-            0% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(10deg) scale(1.1); }
-            50% { transform: rotate(0deg) scale(1); }
-            75% { transform: rotate(-10deg) scale(1.1); }
-            100% { transform: rotate(0deg) scale(1); }
+          @keyframes gentleSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
           }
         `}</style>
       </div>
