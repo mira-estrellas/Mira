@@ -15,6 +15,8 @@ const DEFAULT_LISTINGS = [
     hasExpressedInterest: false,
     saved: false,
     reported: false,
+    transactionType: 'borrow',
+    price: '',
   },
   {
     id: 2,
@@ -29,6 +31,8 @@ const DEFAULT_LISTINGS = [
     hasExpressedInterest: false,
     saved: false,
     reported: false,
+    transactionType: 'borrow',
+    price: '',
   },
   {
     id: 3,
@@ -43,6 +47,8 @@ const DEFAULT_LISTINGS = [
     hasExpressedInterest: false,
     saved: false,
     reported: false,
+    transactionType: 'sale',
+    price: '$45',
   },
   {
     id: 4,
@@ -57,6 +63,8 @@ const DEFAULT_LISTINGS = [
     hasExpressedInterest: false,
     saved: false,
     reported: false,
+    transactionType: 'free',
+    price: '',
   },
 ];
 
@@ -88,9 +96,12 @@ function Community({ language, userZip, onTabChange }) {
     condition: 'Good',
     zip: userZip || '',
     description: '',
+    transactionType: 'borrow',
+    price: '',
   });
 
   const [filterCategory, setFilterCategory] = useState('All');
+  const [filterTransaction, setFilterTransaction] = useState('All');
   const [reportedId, setReportedId] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -113,7 +124,7 @@ function Community({ language, userZip, onTabChange }) {
   const content = {
     EN: {
       title: 'Community',
-      subtitle: 'Borrow and lend green tools with your neighbors.',
+      subtitle: 'Borrow, buy and share green tools with your neighbors.',
       browse: 'Browse',
       saved: 'Saved',
       safety: 'Safety Tips',
@@ -130,9 +141,22 @@ function Community({ language, userZip, onTabChange }) {
       postCondition: 'Condition',
       postZip: 'Your Zip Code',
       postDesc: 'Description',
+      postTransactionType: 'Listing Type',
+      postPrice: 'Price (e.g. $25 or "Make an offer")',
       postSubmit: 'Post Tool',
       postSuccess: 'Your tool has been listed! 🌱',
       postCancel: 'Cancel',
+      transactionTypes: {
+        borrow: '🤝 Borrow/Return',
+        sale: '💰 For Sale',
+        free: '🎁 Free',
+      },
+      transactionFilter: {
+        All: 'All Listings',
+        borrow: '🤝 Borrow',
+        sale: '💰 For Sale',
+        free: '🎁 Free',
+      },
       milesAway: 'miles away',
       milesLabel: 'Show listings within',
       miles: 'miles',
@@ -156,7 +180,7 @@ function Community({ language, userZip, onTabChange }) {
     },
     ES: {
       title: 'Comunidad',
-      subtitle: 'Presta y toma prestado herramientas verdes con tus vecinos.',
+      subtitle: 'Presta, compra y comparte herramientas verdes con tus vecinos.',
       browse: 'Explorar',
       saved: 'Guardados',
       safety: 'Consejos de Seguridad',
@@ -167,15 +191,28 @@ function Community({ language, userZip, onTabChange }) {
       unsave: '⭐ No Guardar',
       report: '🚩 Reportar',
       verified: 'Vecino Verificado',
-      postButton: '➕ Compartir una Herramienta',
+      postButton: '➕ Publicar una Herramienta',
       postTitle: 'Nombre de la Herramienta',
       postCategory: 'Categoría',
       postCondition: 'Condición',
       postZip: 'Tu Código Postal',
       postDesc: 'Descripción',
-      postSubmit: 'Compartir Herramienta',
+      postTransactionType: 'Tipo de Listado',
+      postPrice: 'Precio (ej. $25 o "Negociable")',
+      postSubmit: 'Publicar Herramienta',
       postSuccess: '¡Tu herramienta ha sido publicada! 🌱',
       postCancel: 'Cancelar',
+      transactionTypes: {
+        borrow: '🤝 Préstamo',
+        sale: '💰 En Venta',
+        free: '🎁 Gratis',
+      },
+      transactionFilter: {
+        All: 'Todos',
+        borrow: '🤝 Préstamo',
+        sale: '💰 En Venta',
+        free: '🎁 Gratis',
+      },
       milesAway: 'millas de distancia',
       milesLabel: 'Mostrar listados a menos de',
       miles: 'millas',
@@ -201,10 +238,17 @@ function Community({ language, userZip, onTabChange }) {
 
   const current = content[language] || content.EN;
 
+  const getTransactionBadge = (type, price) => {
+    if (type === 'free') return { label: '🎁 Free', bg: '#EBF3EE', color: '#4F8C6F' };
+    if (type === 'sale') return { label: `💰 ${price || 'For Sale'}`, bg: '#FDF0E8', color: '#D4956A' };
+    return { label: '🤝 Borrow/Return', bg: '#F0EBE3', color: '#2C2C2C' };
+  };
+
   const filteredListings = listings.filter(l => {
     const withinMiles = parseFloat(l.miles) <= maxMiles;
     const matchesCategory = filterCategory === 'All' || l.category === filterCategory;
-    return withinMiles && matchesCategory;
+    const matchesTransaction = filterTransaction === 'All' || l.transactionType === filterTransaction;
+    return withinMiles && matchesCategory && matchesTransaction;
   });
 
   const savedListings = listings.filter(l => l.saved);
@@ -241,7 +285,7 @@ function Community({ language, userZip, onTabChange }) {
       reported: false,
     };
     setListings([listing, ...listings]);
-    setNewListing({ title: '', category: '🔧 Home & Repair', condition: 'Good', zip: userZip || '', description: '' });
+    setNewListing({ title: '', category: '🔧 Home & Repair', condition: 'Good', zip: userZip || '', description: '', transactionType: 'borrow', price: '' });
     setSuccessMessage(current.postSuccess);
     setShowPostForm(false);
     setTimeout(() => setSuccessMessage(''), 3000);
@@ -319,7 +363,7 @@ function Community({ language, userZip, onTabChange }) {
             </div>
           )}
 
-          {/* Section Tabs — no more Post tab */}
+          {/* Section Tabs */}
           <div style={{
             display: 'flex',
             backgroundColor: 'white',
@@ -357,31 +401,14 @@ function Community({ language, userZip, onTabChange }) {
                 marginBottom: '16px',
                 boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
               }}>
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginBottom: '10px',
-                }}>
-                  <p style={{ color: '#2C2C2C', fontSize: '13px', margin: 0 }}>
-                    📍 {current.milesLabel}
-                  </p>
-                  <span style={{
-                    backgroundColor: '#EBF3EE',
-                    color: '#4F8C6F',
-                    padding: '4px 12px',
-                    borderRadius: '20px',
-                    fontSize: '13px',
-                    fontWeight: 'bold',
-                  }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                  <p style={{ color: '#2C2C2C', fontSize: '13px', margin: 0 }}>📍 {current.milesLabel}</p>
+                  <span style={{ backgroundColor: '#EBF3EE', color: '#4F8C6F', padding: '4px 12px', borderRadius: '20px', fontSize: '13px', fontWeight: 'bold' }}>
                     {maxMiles} {current.miles}
                   </span>
                 </div>
                 <input
-                  type="range"
-                  min="1"
-                  max="25"
-                  value={maxMiles}
+                  type="range" min="1" max="25" value={maxMiles}
                   onChange={(e) => setMaxMiles(Number(e.target.value))}
                   style={{ width: '100%', accentColor: '#4F8C6F', cursor: 'pointer' }}
                 />
@@ -392,30 +419,39 @@ function Community({ language, userZip, onTabChange }) {
               </div>
 
               {/* Category Filter */}
-              <div style={{
-                display: 'flex',
-                gap: '8px',
-                overflowX: 'auto',
-                paddingBottom: '12px',
-                marginBottom: '16px',
-              }}>
+              <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '12px', marginBottom: '8px' }}>
                 {categories.map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setFilterCategory(cat)}
                     style={{
-                      padding: '8px 16px',
-                      borderRadius: '20px',
+                      padding: '8px 16px', borderRadius: '20px',
                       border: `2px solid ${filterCategory === cat ? '#4F8C6F' : '#E8E0D5'}`,
                       backgroundColor: filterCategory === cat ? '#EBF3EE' : 'white',
                       color: filterCategory === cat ? '#4F8C6F' : '#A0A0A0',
-                      fontSize: '13px',
-                      cursor: 'pointer',
-                      whiteSpace: 'nowrap',
-                      transition: 'all 0.2s ease',
+                      fontSize: '13px', cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.2s ease',
                     }}
                   >
                     {cat}
+                  </button>
+                ))}
+              </div>
+
+              {/* Transaction Filter */}
+              <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '12px', marginBottom: '16px' }}>
+                {Object.entries(current.transactionFilter).map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setFilterTransaction(key)}
+                    style={{
+                      padding: '8px 16px', borderRadius: '20px',
+                      border: `2px solid ${filterTransaction === key ? '#D4956A' : '#E8E0D5'}`,
+                      backgroundColor: filterTransaction === key ? '#FDF0E8' : 'white',
+                      color: filterTransaction === key ? '#D4956A' : '#A0A0A0',
+                      fontSize: '13px', cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.2s ease',
+                    }}
+                  >
+                    {label}
                   </button>
                 ))}
               </div>
@@ -425,18 +461,10 @@ function Community({ language, userZip, onTabChange }) {
                 <button
                   onClick={() => setShowPostForm(true)}
                   style={{
-                    width: '100%',
-                    backgroundColor: 'white',
-                    color: '#4F8C6F',
-                    border: '2px dashed #4F8C6F',
-                    padding: '12px',
-                    borderRadius: '12px',
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    marginBottom: '16px',
-                    fontFamily: 'Poppins, sans-serif',
-                    transition: 'all 0.2s ease',
+                    width: '100%', backgroundColor: 'white', color: '#4F8C6F',
+                    border: '2px dashed #4F8C6F', padding: '12px', borderRadius: '12px',
+                    fontSize: '14px', fontWeight: '600', cursor: 'pointer', marginBottom: '16px',
+                    fontFamily: 'Poppins, sans-serif', transition: 'all 0.2s ease',
                   }}
                 >
                   {current.postButton}
@@ -449,13 +477,49 @@ function Community({ language, userZip, onTabChange }) {
                         {current.postTitle}
                       </p>
                       <input
-                        type="text"
-                        value={newListing.title}
+                        type="text" value={newListing.title}
                         onChange={(e) => setNewListing({ ...newListing, title: e.target.value })}
-                        style={inputStyle}
-                        placeholder="e.g. Solar Panel Cleaning Kit"
+                        style={inputStyle} placeholder="e.g. Solar Panel Cleaning Kit"
                       />
                     </div>
+                    <div>
+                      <p style={{ color: '#A0A0A0', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 4px 0' }}>
+                        {current.postTransactionType}
+                      </p>
+                      <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+                        {Object.entries(current.transactionTypes).map(([key, label]) => (
+                          <button
+                            key={key}
+                            onClick={() => setNewListing({ ...newListing, transactionType: key, price: '' })}
+                            style={{
+                              flex: 1, padding: '10px 8px', borderRadius: '12px',
+                              border: `2px solid ${newListing.transactionType === key ? '#4F8C6F' : '#E8E0D5'}`,
+                              backgroundColor: newListing.transactionType === key ? '#EBF3EE' : '#FAF7F2',
+                              color: newListing.transactionType === key ? '#4F8C6F' : '#2C2C2C',
+                              fontSize: '12px', cursor: 'pointer', transition: 'all 0.2s ease',
+                              fontFamily: 'Poppins, sans-serif',
+                            }}
+                          >
+                            {label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Price field — only shows for sale */}
+                    {newListing.transactionType === 'sale' && (
+                      <div>
+                        <p style={{ color: '#A0A0A0', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 4px 0' }}>
+                          {current.postPrice}
+                        </p>
+                        <input
+                          type="text" value={newListing.price}
+                          onChange={(e) => setNewListing({ ...newListing, price: e.target.value })}
+                          style={inputStyle} placeholder="$25 or Make an offer"
+                        />
+                      </div>
+                    )}
+
                     <div>
                       <p style={{ color: '#A0A0A0', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 4px 0' }}>
                         {current.postCategory}
@@ -489,11 +553,9 @@ function Community({ language, userZip, onTabChange }) {
                         {current.postZip}
                       </p>
                       <input
-                        type="number"
-                        value={newListing.zip}
+                        type="number" value={newListing.zip}
                         onChange={(e) => setNewListing({ ...newListing, zip: e.target.value })}
-                        style={inputStyle}
-                        placeholder="e.g. 45202"
+                        style={inputStyle} placeholder="e.g. 45202"
                       />
                     </div>
                     <div>
@@ -515,13 +577,9 @@ function Community({ language, userZip, onTabChange }) {
                           flex: 1,
                           backgroundColor: newListing.title && newListing.description ? '#D4956A' : '#E8E0D5',
                           color: newListing.title && newListing.description ? 'white' : '#A0A0A0',
-                          border: 'none',
-                          padding: '14px',
-                          borderRadius: '30px',
-                          fontSize: '15px',
+                          border: 'none', padding: '14px', borderRadius: '30px', fontSize: '15px',
                           cursor: newListing.title && newListing.description ? 'pointer' : 'not-allowed',
-                          transition: 'all 0.3s ease',
-                          fontFamily: 'Poppins, sans-serif',
+                          transition: 'all 0.3s ease', fontFamily: 'Poppins, sans-serif',
                         }}
                       >
                         🌱 {current.postSubmit}
@@ -529,13 +587,9 @@ function Community({ language, userZip, onTabChange }) {
                       <button
                         onClick={() => setShowPostForm(false)}
                         style={{
-                          backgroundColor: 'transparent',
-                          color: '#A0A0A0',
-                          border: '2px solid #E8E0D5',
-                          padding: '14px 20px',
-                          borderRadius: '30px',
-                          fontSize: '15px',
-                          cursor: 'pointer',
+                          backgroundColor: 'transparent', color: '#A0A0A0',
+                          border: '2px solid #E8E0D5', padding: '14px 20px',
+                          borderRadius: '30px', fontSize: '15px', cursor: 'pointer',
                           fontFamily: 'Poppins, sans-serif',
                         }}
                       >
@@ -553,96 +607,81 @@ function Community({ language, userZip, onTabChange }) {
                   <p style={{ color: '#A0A0A0', fontSize: '14px' }}>{current.noListings}</p>
                 </div>
               ) : (
-                filteredListings.map((listing) => (
-                  <div key={listing.id} style={sectionStyle}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                          <h3 style={{ color: '#2C2C2C', fontSize: '16px', margin: 0 }}>
-                            {listing.title}
-                          </h3>
-                          {listing.verified && (
-                            <span style={{
-                              backgroundColor: '#EBF3EE',
-                              color: '#4F8C6F',
-                              fontSize: '11px',
-                              padding: '2px 8px',
-                              borderRadius: '10px',
-                              fontWeight: 'bold',
-                            }}>
-                              🌱 {current.verified}
+                filteredListings.map((listing) => {
+                  const badge = getTransactionBadge(listing.transactionType, listing.price);
+                  return (
+                    <div key={listing.id} style={sectionStyle}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                            <h3 style={{ color: '#2C2C2C', fontSize: '16px', margin: 0 }}>
+                              {listing.title}
+                            </h3>
+                            {listing.verified && (
+                              <span style={{ backgroundColor: '#EBF3EE', color: '#4F8C6F', fontSize: '11px', padding: '2px 8px', borderRadius: '10px', fontWeight: 'bold' }}>
+                                🌱 {current.verified}
+                              </span>
+                            )}
+                            <span style={{ backgroundColor: badge.bg, color: badge.color, fontSize: '11px', padding: '2px 8px', borderRadius: '10px', fontWeight: 'bold' }}>
+                              {badge.label}
                             </span>
-                          )}
+                          </div>
+                          <p style={{ color: '#A0A0A0', fontSize: '12px', margin: '4px 0' }}>
+                            {listing.category} • {listing.condition} • {listing.miles} {current.milesAway} • {listing.zip}
+                          </p>
                         </div>
-                        <p style={{ color: '#A0A0A0', fontSize: '12px', margin: '4px 0' }}>
-                          {listing.category} • {listing.condition} • {listing.miles} {current.milesAway} • {listing.zip}
-                        </p>
                       </div>
-                    </div>
-                    <p style={{ color: '#666', fontSize: '13px', marginBottom: '12px' }}>
-                      {listing.description}
-                    </p>
-                    {reportedId === listing.id ? (
-                      <p style={{ color: '#4F8C6F', fontSize: '13px', textAlign: 'center', padding: '8px' }}>
-                        {current.reportConfirm}
+                      <p style={{ color: '#666', fontSize: '13px', marginBottom: '12px' }}>
+                        {listing.description}
                       </p>
-                    ) : (
-                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                        <button
-                          onClick={() => handleInterested(listing.id)}
-                          disabled={listing.hasExpressedInterest}
-                          style={{
-                            flex: 1,
-                            padding: '10px',
-                            borderRadius: '12px',
-                            border: 'none',
-                            backgroundColor: listing.hasExpressedInterest ? '#EBF3EE' : '#D4956A',
-                            color: listing.hasExpressedInterest ? '#4F8C6F' : 'white',
-                            fontSize: '13px',
-                            cursor: listing.hasExpressedInterest ? 'default' : 'pointer',
-                            fontWeight: 'bold',
-                            transition: 'all 0.3s ease',
-                          }}
-                        >
-                          {listing.hasExpressedInterest
-                            ? current.alreadyInterested
-                            : `👋 ${current.interested} ${listing.interested > 0 ? `(${listing.interested})` : ''}`}
-                        </button>
-                        <button
-                          onClick={() => handleSave(listing.id)}
-                          style={{
-                            flex: 1,
-                            padding: '10px',
-                            borderRadius: '12px',
-                            border: `2px solid ${listing.saved ? '#4F8C6F' : '#E8E0D5'}`,
-                            backgroundColor: listing.saved ? '#EBF3EE' : 'white',
-                            color: listing.saved ? '#4F8C6F' : '#A0A0A0',
-                            fontSize: '13px',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s ease',
-                          }}
-                        >
-                          {listing.saved ? current.unsave : current.save}
-                        </button>
-                        <button
-                          onClick={() => handleReport(listing.id)}
-                          style={{
-                            padding: '10px 14px',
-                            borderRadius: '12px',
-                            border: '2px solid #E8E0D5',
-                            backgroundColor: 'white',
-                            color: '#A0A0A0',
-                            fontSize: '13px',
-                            cursor: 'pointer',
-                            whiteSpace: 'nowrap',
-                          }}
-                        >
-                          {current.report}
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ))
+                      {reportedId === listing.id ? (
+                        <p style={{ color: '#4F8C6F', fontSize: '13px', textAlign: 'center', padding: '8px' }}>
+                          {current.reportConfirm}
+                        </p>
+                      ) : (
+                        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                          <button
+                            onClick={() => handleInterested(listing.id)}
+                            disabled={listing.hasExpressedInterest}
+                            style={{
+                              flex: 1, padding: '10px', borderRadius: '12px', border: 'none',
+                              backgroundColor: listing.hasExpressedInterest ? '#EBF3EE' : '#D4956A',
+                              color: listing.hasExpressedInterest ? '#4F8C6F' : 'white',
+                              fontSize: '13px', cursor: listing.hasExpressedInterest ? 'default' : 'pointer',
+                              fontWeight: 'bold', transition: 'all 0.3s ease',
+                            }}
+                          >
+                            {listing.hasExpressedInterest
+                              ? current.alreadyInterested
+                              : `👋 ${current.interested} ${listing.interested > 0 ? `(${listing.interested})` : ''}`}
+                          </button>
+                          <button
+                            onClick={() => handleSave(listing.id)}
+                            style={{
+                              flex: 1, padding: '10px', borderRadius: '12px',
+                              border: `2px solid ${listing.saved ? '#4F8C6F' : '#E8E0D5'}`,
+                              backgroundColor: listing.saved ? '#EBF3EE' : 'white',
+                              color: listing.saved ? '#4F8C6F' : '#A0A0A0',
+                              fontSize: '13px', cursor: 'pointer', transition: 'all 0.2s ease',
+                            }}
+                          >
+                            {listing.saved ? current.unsave : current.save}
+                          </button>
+                          <button
+                            onClick={() => handleReport(listing.id)}
+                            style={{
+                              padding: '10px 14px', borderRadius: '12px',
+                              border: '2px solid #E8E0D5', backgroundColor: 'white',
+                              color: '#A0A0A0', fontSize: '13px', cursor: 'pointer', whiteSpace: 'nowrap',
+                            }}
+                          >
+                            {current.report}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })
               )}
             </>
           )}
@@ -656,25 +695,33 @@ function Community({ language, userZip, onTabChange }) {
                   <p style={{ color: '#A0A0A0', fontSize: '14px' }}>{current.noSaved}</p>
                 </div>
               ) : (
-                savedListings.map((listing) => (
-                  <div key={listing.id} style={sectionStyle}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                      <div>
-                        <h3 style={{ color: '#2C2C2C', fontSize: '16px', margin: 0 }}>{listing.title}</h3>
-                        <p style={{ color: '#A0A0A0', fontSize: '12px', margin: '4px 0' }}>
-                          {listing.category} • {listing.miles} {current.milesAway} • {listing.zip}
-                        </p>
+                savedListings.map((listing) => {
+                  const badge = getTransactionBadge(listing.transactionType, listing.price);
+                  return (
+                    <div key={listing.id} style={sectionStyle}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                        <div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                            <h3 style={{ color: '#2C2C2C', fontSize: '16px', margin: 0 }}>{listing.title}</h3>
+                            <span style={{ backgroundColor: badge.bg, color: badge.color, fontSize: '11px', padding: '2px 8px', borderRadius: '10px', fontWeight: 'bold' }}>
+                              {badge.label}
+                            </span>
+                          </div>
+                          <p style={{ color: '#A0A0A0', fontSize: '12px', margin: '4px 0' }}>
+                            {listing.category} • {listing.miles} {current.milesAway} • {listing.zip}
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => handleSave(listing.id)}
+                          style={{ backgroundColor: 'transparent', border: 'none', fontSize: '20px', cursor: 'pointer' }}
+                        >
+                          ⭐
+                        </button>
                       </div>
-                      <button
-                        onClick={() => handleSave(listing.id)}
-                        style={{ backgroundColor: 'transparent', border: 'none', fontSize: '20px', cursor: 'pointer' }}
-                      >
-                        ⭐
-                      </button>
+                      <p style={{ color: '#666', fontSize: '13px' }}>{listing.description}</p>
                     </div>
-                    <p style={{ color: '#666', fontSize: '13px' }}>{listing.description}</p>
-                  </div>
-                ))
+                  );
+                })
               )}
             </>
           )}
@@ -714,12 +761,7 @@ function Community({ language, userZip, onTabChange }) {
                 </button>
                 <p style={{ color: '#A0A0A0', fontSize: '12px', margin: 0 }}>{current.tapNote}</p>
               </div>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-                gap: '12px',
-                marginTop: '8px',
-              }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '12px', marginTop: '8px' }}>
                 {recycleCategories.map((cat, index) => (
                   <div
                     key={index}
@@ -736,12 +778,8 @@ function Community({ language, userZip, onTabChange }) {
                       <span style={{ fontSize: '28px' }}>{cat.icon}</span>
                       <h3 style={{ color: '#2C2C2C', fontSize: '15px', margin: 0 }}>{cat.title}</h3>
                     </div>
-                    <p style={{ color: '#666', fontSize: '13px', margin: '0 0 8px 0', lineHeight: '1.5' }}>
-                      {cat.tips}
-                    </p>
-                    <span style={{ color: '#4F8C6F', fontSize: '12px', fontWeight: '600' }}>
-                      Find locations →
-                    </span>
+                    <p style={{ color: '#666', fontSize: '13px', margin: '0 0 8px 0', lineHeight: '1.5' }}>{cat.tips}</p>
+                    <span style={{ color: '#4F8C6F', fontSize: '12px', fontWeight: '600' }}>Find locations →</span>
                   </div>
                 ))}
               </div>
