@@ -4,17 +4,116 @@ function Budget({ language, onNext, onBack }) {
   const [budget, setBudget] = useState('');
 
   const content = {
-    EN: { question: 'What is your monthly budget for home expenses?', placeholder: 'Enter amount in dollars', next: 'Next', skip: 'I prefer not to say', back: '← Back' },
-    ES: { question: '¿Cuál es tu presupuesto mensual para gastos del hogar?', placeholder: 'Ingresa el monto en dólares', next: 'Siguiente', skip: 'Prefiero no decir', back: '← Atrás' },
-    ZH: { question: '您的家庭月度预算是多少？', placeholder: '输入金额（美元）', next: '下一步', skip: '我不想透露', back: '← 返回' },
-    AR: { question: 'ما هي ميزانيتك الشهرية لمصاريف المنزل؟', placeholder: 'أدخل المبلغ بالدولار', next: 'التالي', skip: 'أفضل عدم الإفصاح', back: 'رجوع →' },
-    FR: { question: 'Quel est votre budget mensuel pour les dépenses du foyer?', placeholder: 'Entrez le montant en dollars', next: 'Suivant', skip: 'Je préfère ne pas dire', back: '← Retour' },
-    PT: { question: 'Qual é o seu orçamento mensal para despesas domésticas?', placeholder: 'Digite o valor em dólares', next: 'Próximo', skip: 'Prefiro não dizer', back: '← Voltar' },
-    KO: { question: '가정 지출을 위한 월 예산은 얼마인가요?', placeholder: '금액 입력 (달러)', next: '다음', skip: '말하고 싶지 않아요', back: '← 뒤로' },
-    VI: { question: 'Ngân sách hàng tháng cho chi phí gia đình của bạn là bao nhiêu?', placeholder: 'Nhập số tiền bằng đô la', next: 'Tiếp theo', skip: 'Tôi không muốn nói', back: '← Quay lại' },
-    TL: { question: 'Magkano ang iyong buwanang badyet para sa mga gastusin sa bahay?', placeholder: 'Ilagay ang halaga sa dolyar', next: 'Susunod', skip: 'Mas gusto kong huwag sabihin', back: '← Bumalik' },
-    RU: { question: 'Каков ваш ежемесячный бюджет на домашние расходы?', placeholder: 'Введите сумму в долларах', next: 'Далее', skip: 'Предпочитаю не говорить', back: '← Назад' },
-    HT: { question: 'Ki bùdjè mansyèl ou pou depans kay ou?', placeholder: 'Antre montan an dola', next: 'Pwochen', skip: 'Mwen pito pa di', back: '← Retounen' },
+    EN: {
+      question: 'What\'s your monthly budget for clean energy swaps?',
+      hint: 'This helps us show you options you can actually afford. You can always update this later.',
+      placeholder: 'e.g. 50',
+      skip: 'Skip — I\'d rather not say',
+      next: 'Next',
+      back: '← Back',
+      prefix: '$',
+      suffix: '/mo',
+    },
+    ES: {
+      question: '¿Cuál es tu presupuesto mensual para cambios de energía limpia?',
+      hint: 'Esto nos ayuda a mostrarte opciones que realmente puedes pagar. Puedes actualizarlo más tarde.',
+      placeholder: 'ej. 50',
+      skip: 'Omitir — prefiero no decir',
+      next: 'Siguiente',
+      back: '← Atrás',
+      prefix: '$',
+      suffix: '/mes',
+    },
+    ZH: {
+      question: '您每月的清洁能源预算是多少？',
+      hint: '这有助于我们为您展示您真正能负担得起的选项。您可以随时更新。',
+      placeholder: '例如 50',
+      skip: '跳过',
+      next: '下一步',
+      back: '← 返回',
+      prefix: '$',
+      suffix: '/月',
+    },
+    AR: {
+      question: 'ما هي ميزانيتك الشهرية لتبديلات الطاقة النظيفة؟',
+      hint: 'يساعدنا هذا في إظهار الخيارات التي يمكنك تحملها فعلاً.',
+      placeholder: 'مثال: 50',
+      skip: 'تخطي',
+      next: 'التالي',
+      back: 'رجوع →',
+      prefix: '$',
+      suffix: '/شهر',
+    },
+    FR: {
+      question: 'Quel est votre budget mensuel pour les changements énergétiques?',
+      hint: 'Cela nous aide à vous montrer des options que vous pouvez vraiment vous permettre.',
+      placeholder: 'ex. 50',
+      skip: 'Passer',
+      next: 'Suivant',
+      back: '← Retour',
+      prefix: '$',
+      suffix: '/mois',
+    },
+    PT: {
+      question: 'Qual é o seu orçamento mensal para trocas de energia limpa?',
+      hint: 'Isso nos ajuda a mostrar opções que você realmente pode pagar.',
+      placeholder: 'ex. 50',
+      skip: 'Pular',
+      next: 'Próximo',
+      back: '← Voltar',
+      prefix: '$',
+      suffix: '/mês',
+    },
+    KO: {
+      question: '청정 에너지 전환을 위한 월 예산은 얼마인가요?',
+      hint: '실제로 감당할 수 있는 옵션을 보여드리는 데 도움이 됩니다.',
+      placeholder: '예: 50',
+      skip: '건너뛰기',
+      next: '다음',
+      back: '← 뒤로',
+      prefix: '$',
+      suffix: '/월',
+    },
+    VI: {
+      question: 'Ngân sách hàng tháng của bạn cho các thay đổi năng lượng sạch là bao nhiêu?',
+      hint: 'Điều này giúp chúng tôi hiển thị các tùy chọn bạn thực sự có thể chi trả.',
+      placeholder: 'vd. 50',
+      skip: 'Bỏ qua',
+      next: 'Tiếp theo',
+      back: '← Quay lại',
+      prefix: '$',
+      suffix: '/tháng',
+    },
+    TL: {
+      question: 'Ano ang iyong buwanang badyet para sa mga malinis na pagpapalit ng enerhiya?',
+      hint: 'Nakakatulong ito sa amin na ipakita ang mga opsyong kayang-kaya mo.',
+      placeholder: 'hal. 50',
+      skip: 'Laktawan',
+      next: 'Susunod',
+      back: '← Bumalik',
+      prefix: '$',
+      suffix: '/buwan',
+    },
+    RU: {
+      question: 'Каков ваш ежемесячный бюджет на экологичные замены?',
+      hint: 'Это помогает нам показывать вам варианты, которые вы действительно можете себе позволить.',
+      placeholder: 'напр. 50',
+      skip: 'Пропустить',
+      next: 'Далее',
+      back: '← Назад',
+      prefix: '$',
+      suffix: '/мес',
+    },
+    HT: {
+      question: 'Ki bidjè mansyèl ou pou chanjman enèji pwòp?',
+      hint: 'Sa ede nou montre ou opsyon ou ka reyèlman peye.',
+      placeholder: 'ex. 50',
+      skip: 'Sote',
+      next: 'Pwochen',
+      back: '← Retounen',
+      prefix: '$',
+      suffix: '/mwa',
+    },
   };
 
   const current = content[language] || content.EN;
@@ -26,76 +125,100 @@ function Budget({ language, onNext, onBack }) {
       alignItems: 'center',
       justifyContent: 'center',
       minHeight: '100vh',
-      backgroundColor: '#FAF7F2',
       direction: language === 'AR' ? 'rtl' : 'ltr',
       padding: '24px 0',
       boxSizing: 'border-box',
+      position: 'relative',
+      backgroundImage: 'url(/skyforest.jpg)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
     }}>
+
+      {/* Blurred overlay */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backdropFilter: 'blur(12px)',
+        background: 'rgba(0,20,10,0.55)',
+        zIndex: 0,
+      }} />
+
       <div style={{
         width: '100%',
         maxWidth: '400px',
         padding: '0 24px',
         display: 'flex',
         flexDirection: 'column',
+        boxSizing: 'border-box',
+        position: 'relative',
+        zIndex: 1,
       }}>
+        {/* Progress bar */}
         <div style={{
           width: '100%',
           height: '6px',
-          backgroundColor: '#E8E0D5',
+          backgroundColor: 'rgba(255,255,255,0.2)',
           borderRadius: '10px',
           marginBottom: '24px',
         }}>
           <div style={{
-            width: '75%',
+            width: '83%',
             height: '100%',
-            backgroundColor: '#4F8C6F',
+            backgroundColor: '#4CAF7D',
             borderRadius: '10px',
           }}/>
         </div>
 
         <button onClick={onBack} style={{
           backgroundColor: 'transparent',
-          color: '#4F8C6F',
+          color: 'rgba(255,255,255,0.7)',
           border: 'none',
           fontSize: '16px',
           cursor: 'pointer',
           padding: '8px 0',
           marginBottom: '24px',
           alignSelf: 'flex-start',
+          fontFamily: 'Poppins, sans-serif',
         }}>
           {current.back}
         </button>
 
         <h2 style={{
-          color: '#2C2C2C',
+          color: 'white',
           fontSize: '24px',
           marginBottom: '8px',
           textAlign: 'center',
+          textShadow: '0 1px 8px rgba(0,0,0,0.4)',
         }}>
           {current.question}
         </h2>
 
         <p style={{
-          color: '#4F8C6F',
-          fontSize: '14px',
+          color: 'rgba(255,255,255,0.75)',
+          fontSize: '13px',
           textAlign: 'center',
           marginBottom: '32px',
+          lineHeight: '1.6',
         }}>
-          This helps us find options you can actually afford.
+          {current.hint}
         </p>
 
+        {/* Budget input */}
         <div style={{
           position: 'relative',
-          width: '100%',
+          marginBottom: '8px',
         }}>
           <span style={{
             position: 'absolute',
             left: '16px',
             top: '50%',
             transform: 'translateY(-50%)',
-            color: '#4F8C6F',
+            color: 'rgba(255,255,255,0.7)',
             fontSize: '20px',
-          }}>$</span>
+            fontWeight: '500',
+          }}>
+            {current.prefix}
+          </span>
           <input
             type="number"
             placeholder={current.placeholder}
@@ -103,16 +226,29 @@ function Budget({ language, onNext, onBack }) {
             onChange={(e) => setBudget(e.target.value)}
             style={{
               width: '100%',
-              padding: '16px 16px 16px 36px',
-              borderRadius: '12px',
-              border: '2px solid #4F8C6F',
-              fontSize: '20px',
-              backgroundColor: '#FAF7F2',
-              color: '#2C2C2C',
+              padding: '18px 60px',
+              borderRadius: '16px',
+              border: `2px solid ${budget ? '#4CAF7D' : 'rgba(255,255,255,0.25)'}`,
+              fontSize: '22px',
+              textAlign: 'center',
+              backgroundColor: 'rgba(255,255,255,0.1)',
+              color: 'white',
               boxSizing: 'border-box',
               outline: 'none',
+              backdropFilter: 'blur(4px)',
+              fontFamily: 'Poppins, sans-serif',
             }}
           />
+          <span style={{
+            position: 'absolute',
+            right: '16px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            color: 'rgba(255,255,255,0.7)',
+            fontSize: '16px',
+          }}>
+            {current.suffix}
+          </span>
         </div>
 
         <button
@@ -120,15 +256,16 @@ function Budget({ language, onNext, onBack }) {
           onClick={() => onNext(budget)}
           style={{
             width: '100%',
-            backgroundColor: budget ? '#D4956A' : '#E8E0D5',
-            color: budget ? 'white' : '#A0A0A0',
+            backgroundColor: budget ? '#2D7D52' : 'rgba(255,255,255,0.15)',
+            color: budget ? 'white' : 'rgba(255,255,255,0.4)',
             border: 'none',
             padding: '16px',
             borderRadius: '30px',
             fontSize: '18px',
-            marginTop: '32px',
+            marginTop: '24px',
             cursor: budget ? 'pointer' : 'not-allowed',
             transition: 'all 0.3s ease',
+            fontFamily: 'Poppins, sans-serif',
           }}
         >
           {current.next}
@@ -139,12 +276,13 @@ function Budget({ language, onNext, onBack }) {
           style={{
             width: '100%',
             backgroundColor: 'transparent',
-            color: '#A0A0A0',
+            color: 'rgba(255,255,255,0.5)',
             border: 'none',
-            padding: '16px',
+            padding: '14px',
             fontSize: '14px',
             marginTop: '8px',
             cursor: 'pointer',
+            fontFamily: 'Poppins, sans-serif',
           }}
         >
           {current.skip}

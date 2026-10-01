@@ -17,70 +17,70 @@ function Onboarding({ language, onBack }) {
 
   const loadingMessages = {
     EN: [
-      '🌍 Finding incentives in your area...',
-      '💰 Calculating your potential savings...',
-      '🔄 Matching swaps to your budget...',
-      '🌱 Building your personalized plan...',
+      'Finding incentives in your area...',
+      'Calculating your potential savings...',
+      'Matching swaps to your budget...',
+      'Building your personalized plan...',
     ],
     ES: [
-      '🌍 Encontrando incentivos en tu área...',
-      '💰 Calculando tus ahorros potenciales...',
-      '🔄 Combinando cambios con tu presupuesto...',
-      '🌱 Construyendo tu plan personalizado...',
+      'Encontrando incentivos en tu área...',
+      'Calculando tus ahorros potenciales...',
+      'Combinando cambios con tu presupuesto...',
+      'Construyendo tu plan personalizado...',
     ],
     ZH: [
-      '🌍 正在查找您所在地区的激励措施...',
-      '💰 计算您的潜在节省...',
-      '🔄 根据您的预算匹配方案...',
-      '🌱 建立您的个性化计划...',
+      '正在查找您所在地区的激励措施...',
+      '计算您的潜在节省...',
+      '根据您的预算匹配方案...',
+      '建立您的个性化计划...',
     ],
     AR: [
-      '🌍 البحث عن الحوافز في منطقتك...',
-      '💰 حساب مدخراتك المحتملة...',
-      '🔄 مطابقة التغييرات مع ميزانيتك...',
-      '🌱 بناء خطتك الشخصية...',
+      'البحث عن الحوافز في منطقتك...',
+      'حساب مدخراتك المحتملة...',
+      'مطابقة التغييرات مع ميزانيتك...',
+      'بناء خطتك الشخصية...',
     ],
     FR: [
-      '🌍 Recherche des aides dans votre région...',
-      '💰 Calcul de vos économies potentielles...',
-      '🔄 Adaptation des changements à votre budget...',
-      '🌱 Construction de votre plan personnalisé...',
+      'Recherche des aides dans votre région...',
+      'Calcul de vos économies potentielles...',
+      'Adaptation des changements à votre budget...',
+      'Construction de votre plan personnalisé...',
     ],
     PT: [
-      '🌍 Encontrando incentivos na sua área...',
-      '💰 Calculando suas economias potenciais...',
-      '🔄 Combinando trocas com seu orçamento...',
-      '🌱 Construindo seu plano personalizado...',
+      'Encontrando incentivos na sua área...',
+      'Calculando suas economias potenciais...',
+      'Combinando trocas com seu orçamento...',
+      'Construindo seu plano personalizado...',
     ],
     KO: [
-      '🌍 해당 지역의 인센티브 찾는 중...',
-      '💰 잠재적 절감액 계산 중...',
-      '🔄 예산에 맞는 스왑 매칭 중...',
-      '🌱 맞춤형 계획 구성 중...',
+      '해당 지역의 인센티브 찾는 중...',
+      '잠재적 절감액 계산 중...',
+      '예산에 맞는 스왑 매칭 중...',
+      '맞춤형 계획 구성 중...',
     ],
     VI: [
-      '🌍 Tìm kiếm ưu đãi trong khu vực của bạn...',
-      '💰 Tính toán khoản tiết kiệm tiềm năng...',
-      '🔄 Kết hợp các thay đổi với ngân sách...',
-      '🌱 Xây dựng kế hoạch cá nhân hóa...',
+      'Tìm kiếm ưu đãi trong khu vực của bạn...',
+      'Tính toán khoản tiết kiệm tiềm năng...',
+      'Kết hợp các thay đổi với ngân sách...',
+      'Xây dựng kế hoạch cá nhân hóa...',
     ],
     TL: [
-      '🌍 Naghahanap ng mga insentibo sa iyong lugar...',
-      '💰 Kinakalkula ang iyong potensyal na ipon...',
-      '🔄 Itutugma ang mga pagbabago sa iyong badyet...',
-      '🌱 Binubuo ang iyong personalisadong plano...',
+      'Naghahanap ng mga insentibo sa iyong lugar...',
+      'Kinakalkula ang iyong potensyal na ipon...',
+      'Itutugma ang mga pagbabago sa iyong badyet...',
+      'Binubuo ang iyong personalisadong plano...',
     ],
     RU: [
-      '🌍 Поиск льгот в вашем регионе...',
-      '💰 Расчёт потенциальной экономии...',
-      '🔄 Подбор изменений под ваш бюджет...',
-      '🌱 Создание вашего персонального плана...',
+      'Поиск льгот в вашем регионе...',
+      'Расчёт потенциальной экономии...',
+      'Подбор изменений под ваш бюджет...',
+      'Создание вашего персонального плана...',
     ],
     HT: [
-      '🌍 Ap chèche ensentif nan zòn ou...',
-      '💰 Ap kalkile ekonomi potansyèl ou...',
-      '🔄 Ap adapte chanjman yo ak bidjè ou...',
-      '🌱 Ap bati plan pèsonalize ou...',
+      'Ap chèche ensentif nan zòn ou...',
+      'Ap kalkile ekonomi potansyèl ou...',
+      'Ap adapte chanjman yo ak bidjè ou...',
+      'Ap bati plan pèsonalize ou...',
     ],
   };
 
@@ -247,58 +247,66 @@ function Onboarding({ language, onBack }) {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '100vh',
-        backgroundColor: '#FAF7F2',
+        minHeight: '100vh',
+        position: 'relative',
+        backgroundImage: 'url(/skyforest.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         fontFamily: 'Poppins, sans-serif',
         padding: '24px',
         textAlign: 'center',
       }}>
-
-        {/* Spinning recycling symbol */}
         <div style={{
-          marginBottom: '40px',
-          animation: 'gentleSpin 3s linear infinite',
-        }}>
-          <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            {/* Outer ring */}
-            <circle cx="50" cy="50" r="42" stroke="#4F8C6F" strokeWidth="8" fill="none" strokeDasharray="180 85" strokeLinecap="round" />
-            {/* Arrow head top */}
-            <polygon points="50,4 42,18 58,18" fill="#4F8C6F" />
-          </svg>
-        </div>
+          position: 'absolute',
+          inset: 0,
+          backdropFilter: 'blur(16px)',
+          background: 'rgba(0,20,10,0.6)',
+          zIndex: 0,
+        }} />
 
-        {/* Animated message — no emojis */}
-        <p style={{
-          color: '#2C2C2C',
-          fontSize: '22px',
-          fontWeight: '500',
-          maxWidth: '320px',
-          lineHeight: '1.6',
-          opacity: fadeIn ? 1 : 0,
-          transform: fadeIn ? 'translateY(0)' : 'translateY(10px)',
-          transition: 'opacity 0.4s ease, transform 0.4s ease',
-        }}>
-          {messages[loadingStep].replace(/[\u{1F300}-\u{1FFFF}]/gu, '').trim()}
-        </p>
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{
+            marginBottom: '40px',
+            animation: 'gentleSpin 3s linear infinite',
+          }}>
+            <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="42" stroke="#4CAF7D" strokeWidth="8" fill="none" strokeDasharray="180 85" strokeLinecap="round" />
+              <polygon points="50,4 42,18 58,18" fill="#4CAF7D" />
+            </svg>
+          </div>
 
-        {/* Progress dots */}
-        <div style={{
-          display: 'flex',
-          gap: '10px',
-          marginTop: '40px',
-        }}>
-          {messages.map((_, index) => (
-            <div
-              key={index}
-              style={{
-                width: '10px',
-                height: '10px',
-                borderRadius: '50%',
-                backgroundColor: index <= loadingStep ? '#4F8C6F' : '#E8E0D5',
-                transition: 'background-color 0.4s ease',
-              }}
-            />
-          ))}
+          <p style={{
+            color: 'white',
+            fontSize: '22px',
+            fontWeight: '500',
+            maxWidth: '320px',
+            lineHeight: '1.6',
+            opacity: fadeIn ? 1 : 0,
+            transform: fadeIn ? 'translateY(0)' : 'translateY(10px)',
+            transition: 'opacity 0.4s ease, transform 0.4s ease',
+          }}>
+            {messages[loadingStep]}
+          </p>
+
+          <div style={{
+            display: 'flex',
+            gap: '10px',
+            marginTop: '40px',
+            justifyContent: 'center',
+          }}>
+            {messages.map((_, index) => (
+              <div
+                key={index}
+                style={{
+                  width: '10px',
+                  height: '10px',
+                  borderRadius: '50%',
+                  backgroundColor: index <= loadingStep ? '#4CAF7D' : 'rgba(255,255,255,0.3)',
+                  transition: 'background-color 0.4s ease',
+                }}
+              />
+            ))}
+          </div>
         </div>
 
         <style>{`
@@ -341,57 +349,75 @@ function Onboarding({ language, onBack }) {
       alignItems: 'center',
       justifyContent: 'center',
       minHeight: '100vh',
-      backgroundColor: '#FAF7F2',
       direction: language === 'AR' ? 'rtl' : 'ltr',
       padding: '24px 0',
       boxSizing: 'border-box',
+      position: 'relative',
+      backgroundImage: 'url(/skyforest.jpg)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
     }}>
+
+      {/* Blurred overlay */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backdropFilter: 'blur(12px)',
+        background: 'rgba(0,20,10,0.55)',
+        zIndex: 0,
+      }} />
+
       <div style={{
         width: '100%',
         maxWidth: '400px',
         padding: '0 24px',
         display: 'flex',
         flexDirection: 'column',
+        boxSizing: 'border-box',
+        position: 'relative',
+        zIndex: 1,
       }}>
         <div style={{
           width: '100%',
           height: '6px',
-          backgroundColor: '#E8E0D5',
+          backgroundColor: 'rgba(255,255,255,0.2)',
           borderRadius: '10px',
           marginBottom: '24px',
         }}>
           <div style={{
             width: '17%',
             height: '100%',
-            backgroundColor: '#4F8C6F',
+            backgroundColor: '#4CAF7D',
             borderRadius: '10px',
           }}/>
         </div>
 
         <button onClick={onBack} style={{
           backgroundColor: 'transparent',
-          color: '#4F8C6F',
+          color: 'rgba(255,255,255,0.7)',
           border: 'none',
           fontSize: '16px',
           cursor: 'pointer',
           padding: '8px 0',
           marginBottom: '24px',
           alignSelf: 'flex-start',
+          fontFamily: 'Poppins, sans-serif',
         }}>
           {current.back}
         </button>
 
         <h2 style={{
-          color: '#2C2C2C',
+          color: 'white',
           fontSize: '24px',
           marginBottom: '12px',
           textAlign: 'center',
+          textShadow: '0 1px 8px rgba(0,0,0,0.4)',
         }}>
           {current.question}
         </h2>
 
         <p style={{
-          color: '#4F8C6F',
+          color: 'rgba(255,255,255,0.75)',
           fontSize: '14px',
           textAlign: 'center',
           marginBottom: '24px',
@@ -410,13 +436,15 @@ function Onboarding({ language, onBack }) {
             width: '100%',
             padding: '16px',
             borderRadius: '12px',
-            border: '2px solid #4F8C6F',
+            border: `2px solid ${zipCode.length === 5 ? '#4CAF7D' : 'rgba(255,255,255,0.25)'}`,
             fontSize: '20px',
             textAlign: 'center',
-            backgroundColor: '#FAF7F2',
-            color: '#2C2C2C',
+            backgroundColor: 'rgba(255,255,255,0.1)',
+            color: 'white',
             boxSizing: 'border-box',
             outline: 'none',
+            backdropFilter: 'blur(4px)',
+            fontFamily: 'Poppins, sans-serif',
           }}
         />
 
@@ -425,8 +453,8 @@ function Onboarding({ language, onBack }) {
           onClick={() => setScreen('housing')}
           style={{
             width: '100%',
-            backgroundColor: zipCode.length === 5 ? '#D4956A' : '#E8E0D5',
-            color: zipCode.length === 5 ? 'white' : '#A0A0A0',
+            backgroundColor: zipCode.length === 5 ? '#2D7D52' : 'rgba(255,255,255,0.15)',
+            color: zipCode.length === 5 ? 'white' : 'rgba(255,255,255,0.4)',
             border: 'none',
             padding: '16px',
             borderRadius: '30px',
@@ -434,6 +462,7 @@ function Onboarding({ language, onBack }) {
             marginTop: '32px',
             cursor: zipCode.length === 5 ? 'pointer' : 'not-allowed',
             transition: 'all 0.3s ease',
+            fontFamily: 'Poppins, sans-serif',
           }}
         >
           {current.next}
@@ -447,17 +476,17 @@ function Onboarding({ language, onBack }) {
           style={{
             width: '100%',
             backgroundColor: 'transparent',
-            color: '#5C6B5E',
+            color: 'rgba(255,255,255,0.5)',
             border: 'none',
             padding: '16px',
             fontSize: '15px',
             marginTop: '8px',
             cursor: 'pointer',
+            fontFamily: 'Poppins, sans-serif',
           }}
         >
           {current.skip}
         </button>
-
       </div>
     </div>
   );

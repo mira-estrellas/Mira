@@ -26,58 +26,77 @@ function HouseholdSize({ language, onNext, onBack }) {
       alignItems: 'center',
       justifyContent: 'center',
       minHeight: '100vh',
-      backgroundColor: '#FAF7F2',
       direction: language === 'AR' ? 'rtl' : 'ltr',
       padding: '24px 0',
       boxSizing: 'border-box',
+      position: 'relative',
+      backgroundImage: 'url(/skyforest.jpg)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
     }}>
+
+      {/* Blurred overlay */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backdropFilter: 'blur(12px)',
+        background: 'rgba(0,20,10,0.55)',
+        zIndex: 0,
+      }} />
+
       <div style={{
         width: '100%',
         maxWidth: '400px',
         padding: '0 24px',
         display: 'flex',
         flexDirection: 'column',
+        boxSizing: 'border-box',
+        position: 'relative',
+        zIndex: 1,
       }}>
+        {/* Progress bar */}
         <div style={{
           width: '100%',
           height: '6px',
-          backgroundColor: '#E8E0D5',
+          backgroundColor: 'rgba(255,255,255,0.2)',
           borderRadius: '10px',
           marginBottom: '24px',
         }}>
           <div style={{
             width: '50%',
             height: '100%',
-            backgroundColor: '#4F8C6F',
+            backgroundColor: '#4CAF7D',
             borderRadius: '10px',
           }}/>
         </div>
 
         <button onClick={onBack} style={{
           backgroundColor: 'transparent',
-          color: '#4F8C6F',
+          color: 'rgba(255,255,255,0.7)',
           border: 'none',
           fontSize: '16px',
           cursor: 'pointer',
           padding: '8px 0',
           marginBottom: '24px',
           alignSelf: 'flex-start',
+          fontFamily: 'Poppins, sans-serif',
         }}>
           {current.back}
         </button>
 
         <h2 style={{
-          color: '#2C2C2C',
+          color: 'white',
           fontSize: '24px',
           marginBottom: '8px',
           textAlign: 'center',
+          textShadow: '0 1px 8px rgba(0,0,0,0.4)',
         }}>
           {current.question}
         </h2>
 
         <p style={{
-          color: '#4F8C6F',
-          fontSize: '13px',
+          color: 'rgba(255,255,255,0.75)',
+          fontSize: '14px',
           textAlign: 'center',
           marginBottom: '32px',
         }}>
@@ -97,14 +116,16 @@ function HouseholdSize({ language, onNext, onBack }) {
               style={{
                 padding: '20px 8px',
                 borderRadius: '16px',
-                border: `2px solid ${selected === num ? '#4F8C6F' : '#E8E0D5'}`,
-                backgroundColor: selected === num ? '#EBF3EE' : '#FAF7F2',
-                color: selected === num ? '#4F8C6F' : '#2C2C2C',
+                border: `2px solid ${selected === num ? '#4CAF7D' : 'rgba(255,255,255,0.25)'}`,
+                backgroundColor: selected === num ? 'rgba(76,175,125,0.25)' : 'rgba(255,255,255,0.1)',
+                color: 'white',
                 fontSize: '20px',
                 fontWeight: 'bold',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 textAlign: 'center',
+                backdropFilter: 'blur(4px)',
+                fontFamily: 'Poppins, sans-serif',
               }}
             >
               {num}
@@ -114,7 +135,7 @@ function HouseholdSize({ language, onNext, onBack }) {
 
         {selected && (
           <p style={{
-            color: '#4F8C6F',
+            color: '#4CAF7D',
             fontSize: '14px',
             textAlign: 'center',
             marginBottom: '8px',
@@ -128,8 +149,8 @@ function HouseholdSize({ language, onNext, onBack }) {
           onClick={() => onNext(selected)}
           style={{
             width: '100%',
-            backgroundColor: selected ? '#D4956A' : '#E8E0D5',
-            color: selected ? 'white' : '#A0A0A0',
+            backgroundColor: selected ? '#2D7D52' : 'rgba(255,255,255,0.15)',
+            color: selected ? 'white' : 'rgba(255,255,255,0.4)',
             border: 'none',
             padding: '16px',
             borderRadius: '30px',
@@ -137,6 +158,7 @@ function HouseholdSize({ language, onNext, onBack }) {
             marginTop: '16px',
             cursor: selected ? 'pointer' : 'not-allowed',
             transition: 'all 0.3s ease',
+            fontFamily: 'Poppins, sans-serif',
           }}
         >
           {current.next}
