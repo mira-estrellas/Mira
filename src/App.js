@@ -4,6 +4,7 @@ import Onboarding from './Onboarding';
 import ComingSoon from './ComingSoon';
 import Dashboard from './Dashboard';
 import ZeroWasteGuide from './ZeroWasteGuide';
+import { VineLeft, VineRight } from './Vines';
 
 const languages = {
   EN: {
@@ -148,7 +149,11 @@ function LandingPage({ language, setLanguage, onGetStarted }) {
         flexDirection: 'column',
         alignItems: 'center',
         fontFamily: 'Poppins, sans-serif',
+        position: 'relative',
+        overflow: 'hidden',
       }}>
+        <VineLeft opacity={0.18} color="#2D7D52" />
+        <VineRight opacity={0.18} color="#2D7D52" />
         <div style={{
           width: '100%',
           display: 'flex',
