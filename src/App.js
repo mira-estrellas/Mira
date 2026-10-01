@@ -358,7 +358,7 @@ function AppContent() {
   const [language, setLanguage] = useState('EN');
   const [screen, setScreen] = useState('landing');
   const [savedProfile, setSavedProfile] = useState(null);
-  const [transitioning, setTransitioning] = useState(false);
+  const [, setTransitioning] = useState(false);
   const [visible, setVisible] = useState(true);
   const isPreview = new URLSearchParams(window.location.search).get('preview') === 'true';
 
