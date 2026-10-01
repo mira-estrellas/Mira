@@ -420,7 +420,7 @@ function Community({ language, userZip, onTabChange }) {
                 ))}
               </div>
 
-              {/* Share a Tool Button */}
+              {/* Post a Tool Button */}
               {!showPostForm ? (
                 <button
                   onClick={() => setShowPostForm(true)}
