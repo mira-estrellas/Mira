@@ -182,6 +182,7 @@ function ZeroWasteGuide() {
           tip: 'Bulk bins at grocery stores use far less packaging than individually wrapped items.',
         },
       ],
+      farmersMarket: true,
     },
   ];
 
@@ -287,6 +288,40 @@ function ZeroWasteGuide() {
                 </div>
               </div>
             ))}
+
+            {/* Farmers Market Finder */}
+            {section.farmersMarket && (
+              <div style={{
+                backgroundColor: '#EBF3EE',
+                borderRadius: '16px',
+                padding: '20px',
+                marginTop: '24px',
+                textAlign: 'center',
+              }}>
+                <p style={{ color: '#2C2C2C', fontSize: '17px', fontWeight: '600', margin: '0 0 8px 0' }}>
+                  🥕 Find a Farmers Market Near You
+                </p>
+                <p style={{ color: '#666', fontSize: '15px', margin: '0 0 16px 0', lineHeight: '1.6' }}>
+                  The USDA maintains a directory of farmers markets across the US, including which ones accept SNAP/EBT and WIC.
+                </p>
+                <button
+                  onClick={() => window.open('https://www.ams.usda.gov/local-food-directories/farmersmarkets', '_blank')}
+                  style={{
+                    backgroundColor: '#4F8C6F',
+                    color: 'white',
+                    border: 'none',
+                    padding: '14px 28px',
+                    borderRadius: '30px',
+                    fontSize: '15px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    fontFamily: 'Poppins, sans-serif',
+                  }}
+                >
+                  Search the USDA Directory →
+                </button>
+              </div>
+            )}
 
             {/* Food Waste Tips */}
             {section.foodWasteTips && (
