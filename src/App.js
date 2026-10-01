@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Onboarding from './Onboarding';
 import ComingSoon from './ComingSoon';
 import Dashboard from './Dashboard';
@@ -314,7 +314,6 @@ function AppContent() {
   const [language, setLanguage] = useState('EN');
   const [screen, setScreen] = useState('landing');
   const [savedProfile, setSavedProfile] = useState(null);
-  const navigate = useNavigate();
   const isPreview = new URLSearchParams(window.location.search).get('preview') === 'true';
 
   useEffect(() => {

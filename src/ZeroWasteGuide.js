@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function ZeroWasteGuide() {
-  const [expandedTip, setExpandedTip] = useState(null);
-
   const sections = [
     {
       id: 'kitchen',
