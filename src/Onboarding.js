@@ -259,39 +259,11 @@ function Onboarding({ language, onBack }) {
           marginBottom: '40px',
           animation: 'gentleSpin 3s linear infinite',
         }}>
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M40 8 L48 22 L32 22 Z"
-              fill="#4F8C6F"
-            />
-            <path
-              d="M40 8 C52 8 62 16 66 28 L58 28 C55 20 48 14 40 14 C32 14 25 20 22 28 L14 28 C18 16 28 8 40 8Z"
-              fill="#4F8C6F"
-            />
-            <path
-              d="M66 28 L72 42 L60 42 Z"
-              fill="#4F8C6F"
-              transform="rotate(120 40 40)"
-            />
-            <path
-              d="M40 8 C52 8 62 16 66 28 L58 28 C55 20 48 14 40 14 C32 14 25 20 22 28 L14 28 C18 16 28 8 40 8Z"
-              fill="#4F8C6F"
-              transform="rotate(120 40 40)"
-            />
-            <path
-              d="M40 8 C52 8 62 16 66 28 L58 28 C55 20 48 14 40 14 C32 14 25 20 22 28 L14 28 C18 16 28 8 40 8Z"
-              fill="#4F8C6F"
-              transform="rotate(240 40 40)"
-            />
-            <path
-              d="M66 28 L72 42 L60 42 Z"
-              fill="#4F8C6F"
-              transform="rotate(240 40 40)"
-            />
-            <path
-              d="M66 28 L72 42 L60 42 Z"
-              fill="#4F8C6F"
-            />
+          <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            {/* Outer ring */}
+            <circle cx="50" cy="50" r="42" stroke="#4F8C6F" strokeWidth="8" fill="none" strokeDasharray="180 85" strokeLinecap="round" />
+            {/* Arrow head top */}
+            <polygon points="50,4 42,18 58,18" fill="#4F8C6F" />
           </svg>
         </div>
 
