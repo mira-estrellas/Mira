@@ -317,6 +317,10 @@ function AppContent() {
   const isPreview = new URLSearchParams(window.location.search).get('preview') === 'true';
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [screen]);
+
+  useEffect(() => {
     try {
       const profile = localStorage.getItem('mira_profile');
       if (profile) {

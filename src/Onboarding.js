@@ -390,10 +390,10 @@ function Onboarding({ language, onBack }) {
 
         <p style={{
           color: '#4F8C6F',
-          fontSize: '12px',
+          fontSize: '14px',
           textAlign: 'center',
           marginBottom: '24px',
-          lineHeight: '1.5',
+          lineHeight: '1.6',
         }}>
           {current.privacy}
         </p>
@@ -445,10 +445,10 @@ function Onboarding({ language, onBack }) {
           style={{
             width: '100%',
             backgroundColor: 'transparent',
-            color: '#A0A0A0',
+            color: '#5C6B5E',
             border: 'none',
             padding: '16px',
-            fontSize: '13px',
+            fontSize: '15px',
             marginTop: '8px',
             cursor: 'pointer',
           }}
