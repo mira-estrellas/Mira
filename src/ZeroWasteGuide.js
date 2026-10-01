@@ -67,7 +67,7 @@ function ZeroWasteGuide() {
         },
         {
           name: 'Organic cotton, hemp or jute rags',
-          tip: 'Make your own by cutting up clean old cotton shirts, sheets or towels.',
+          tip: 'Or make your own by cutting up clean old cotton shirts, sheets or towels.',
         },
         {
           name: 'Plant bristle brushes',
@@ -128,7 +128,7 @@ function ZeroWasteGuide() {
         },
         {
           name: 'Bar soap',
-          tip: 'Lasts longer than liquid soap and uses no plastic packaging. Dr. Bronner\'s works as body wash, shampoo and shaving soap.',
+          tip: 'Lasts longer than liquid soap and uses no plastic packaging.',
         },
         {
           name: 'Natural loofah sponges',
@@ -140,7 +140,7 @@ function ZeroWasteGuide() {
         },
         {
           name: 'Reusable razors',
-          tip: 'A safety razor with replaceable blades produces a fraction of the plastic waste of disposable razors.',
+          tip: 'Razors with replaceable blades/cartridges produce a fraction of the plastic waste of disposable razors.',
         },
       ],
     },
@@ -151,11 +151,11 @@ function ZeroWasteGuide() {
       items: [
         {
           name: 'Wool dryer balls',
-          tip: 'Replace dryer sheets entirely. Add a few drops of essential oil for scent. Lasts for hundreds of loads.',
+          tip: 'Replace dryer sheets entirely. Add a few drops of essential oil for scent. Lasts for hundreds of loads!',
         },
         {
           name: 'Wash full loads only',
-          tip: 'Washing full loads uses the same amount of water as a half load — always wait until you have a full machine.',
+          tip: 'Washing full loads uses the same amount of water as a half load. If possible, wait until you have a full machine.',
         },
         {
           name: 'Wash in cold water',
@@ -206,7 +206,7 @@ function ZeroWasteGuide() {
         </p>
         <h1 style={{
           color: 'white',
-          fontSize: '32px',
+          fontSize: '40px',
           fontWeight: '700',
           margin: '0 0 12px 0',
           lineHeight: '1.2',
@@ -215,12 +215,12 @@ function ZeroWasteGuide() {
         </h1>
         <p style={{
           color: 'rgba(255,255,255,0.85)',
-          fontSize: '15px',
+          fontSize: '18px',
           maxWidth: '560px',
           margin: '0 auto',
           lineHeight: '1.7',
         }}>
-          Small everyday swaps that reduce waste and save money — no matter where you live or how much you can spend. Written by a real person, not a corporation.
+          Small everyday swaps that reduce waste and save money no matter where you live or how much you can spend.
         </p>
         <button
           onClick={() => window.history.back()}
@@ -231,7 +231,7 @@ function ZeroWasteGuide() {
             border: '1px solid rgba(255,255,255,0.4)',
             padding: '8px 20px',
             borderRadius: '20px',
-            fontSize: '13px',
+            fontSize: '14px',
             cursor: 'pointer',
             fontFamily: 'Poppins, sans-serif',
           }}
@@ -253,7 +253,7 @@ function ZeroWasteGuide() {
             {/* Section Header */}
             <h2 style={{
               color: '#2C2C2C',
-              fontSize: '22px',
+              fontSize: '24px',
               fontWeight: '700',
               margin: '0 0 20px 0',
               paddingBottom: '10px',
@@ -274,7 +274,7 @@ function ZeroWasteGuide() {
                     {item.tip && (
                       <p style={{
                         color: '#666',
-                        fontSize: '13px',
+                        fontSize: '14px',
                         margin: '4px 0 0 0',
                         lineHeight: '1.6',
                         fontStyle: 'italic',
