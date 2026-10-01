@@ -11,26 +11,20 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: 'API key not configured' });
   }
 
-  // We need lat/lng from zip — use a free geocoding service
   try {
-    const geoResponse = await fetch(
-      `https://nominatim.openstreetmap.org/search?postalcode=${zip}&country=US&format=json&limit=1`,
-      { headers: { 'User-Agent': 'MiraApp/1.0' } }
+    const response = await fetch(
+      `https://www.usdalocalfoodportal.com/api/farmersmarket/?apikey=${apiKey}&zip=${zip}&radius=25`
     );
-    const geoData = await geoResponse.json();
 
-    if (!geoData || geoData.length === 0) {
-      return res.status(404).json({ error: 'Could not find location for this ZIP code' });
+    const text = await response.text();
+    console.log('USDA response:', text.substring(0, 300));
+
+    if (!response.ok) {
+      return res.status(response.status).json({ error: `USDA error: ${response.status}`, details: text });
     }
 
-    const { lat, lon } = geoData[0];
-
-    const marketsResponse = await fetch(
-      `https://www.usdalocalfoodportal.com/api/farmersmarket/?apikey=${apiKey}&x=${lon}&y=${lat}&radius=25`
-    );
-
-    const marketsData = await marketsResponse.json();
-    res.status(200).json(marketsData);
+    const data = JSON.parse(text);
+    res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
