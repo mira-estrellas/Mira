@@ -69,6 +69,10 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const budgetNum = parseFloat(currentBudget) || null;
 
   const getStateFromZip = (zip) => {
