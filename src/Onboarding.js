@@ -341,7 +341,6 @@ function Onboarding({ language, onBack }) {
       alignItems: 'center',
       justifyContent: 'center',
       minHeight: '100vh',
-      minHeight: '-webkit-fill-available',
       backgroundColor: '#FAF7F2',
       direction: language === 'AR' ? 'rtl' : 'ltr',
       padding: '24px 0',
