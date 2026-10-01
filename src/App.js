@@ -358,11 +358,23 @@ function AppContent() {
   const [language, setLanguage] = useState('EN');
   const [screen, setScreen] = useState('landing');
   const [savedProfile, setSavedProfile] = useState(null);
+  const [transitioning, setTransitioning] = useState(false);
+  const [visible, setVisible] = useState(true);
   const isPreview = new URLSearchParams(window.location.search).get('preview') === 'true';
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [screen]);
+
+  const transitionTo = (newScreen) => {
+    setTransitioning(true);
+    setVisible(false);
+    setTimeout(() => {
+      setScreen(newScreen);
+      setVisible(true);
+      setTransitioning(false);
+    }, 500);
+  };
 
   useEffect(() => {
     try {
@@ -377,18 +389,26 @@ function AppContent() {
 
   const handleGetStarted = () => {
     if (process.env.NODE_ENV === 'development' || isPreview) {
-      setScreen('onboarding');
+      transitionTo('onboarding');
     } else {
-      setScreen('comingSoon');
+      transitionTo('comingSoon');
     }
   };
 
   if (screen === 'comingSoon') {
-    return <ComingSoon language={language} onBack={() => setScreen('landing')} />;
+    return (
+      <div style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+        <ComingSoon language={language} onBack={() => transitionTo('landing')} />
+      </div>
+    );
   }
 
   if (screen === 'onboarding') {
-    return <Onboarding language={language} onBack={() => setScreen('landing')} />;
+    return (
+      <div style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+        <Onboarding language={language} onBack={() => transitionTo('landing')} />
+      </div>
+    );
   }
 
   if (screen === 'landing' && savedProfile && (process.env.NODE_ENV === 'development' || isPreview)) {
@@ -405,11 +425,13 @@ function AppContent() {
   }
 
   return (
-    <LandingPage
-      language={language}
-      setLanguage={setLanguage}
-      onGetStarted={handleGetStarted}
-    />
+    <div style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+      <LandingPage
+        language={language}
+        setLanguage={setLanguage}
+        onGetStarted={handleGetStarted}
+      />
+    </div>
   );
 }
 
