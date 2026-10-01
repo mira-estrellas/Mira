@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function NavBar({ activeTab, onTabChange, language }) {
+function NavBar({ activeTab, onTabChange, language, transparentAtTop = false, fixed = true }) {
   const [scrolled, setScrolled] = useState(false);
   const [hovered, setHovered] = useState(false);
 
@@ -41,14 +41,14 @@ function NavBar({ activeTab, onTabChange, language }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        position: 'fixed',
+        position: fixed ? 'fixed' : 'relative',
         top: 0,
         left: 0,
         right: 0,
         zIndex: 1000,
-        backgroundColor: isVisible ? '#1B5E3B' : 'transparent',
+        backgroundColor: fixed ? (isVisible ? '#1B5E3B' : 'transparent') : '#1B5E3B',
         transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
-        boxShadow: isVisible ? '0 2px 20px rgba(0,0,0,0.2)' : 'none',
+        boxShadow: fixed ? (isVisible ? '0 2px 20px rgba(0,0,0,0.2)' : 'none') : '0 2px 20px rgba(0,0,0,0.15)',
         padding: '0 16px',
       }}
     >

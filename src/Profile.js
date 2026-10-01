@@ -136,13 +136,14 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
 
   return (
     <>
+      <NavBar activeTab="profile" onTabChange={onTabChange} language={language} fixed={false} />
       <div style={{
         backgroundColor: '#F0EBE3',
         minHeight: '100vh',
         display: 'flex',
         justifyContent: 'center',
         padding: '24px',
-        paddingBottom: '100px',
+        paddingBottom: '40px',
       }}>
         <div style={{
           width: '100%',
@@ -508,7 +509,7 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
 
         </div>
       </div>
-      <NavBar activeTab="profile" onTabChange={onTabChange} language={language} />
+      <NavBar activeTab="profile" onTabChange={onTabChange} language={language} fixed={false} />
     </>
   );
 }

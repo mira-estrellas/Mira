@@ -201,6 +201,7 @@ function GoFurther({ language, onTabChange }) {
 
   return (
     <>
+      <NavBar activeTab="goFurther" onTabChange={onTabChange} language={language} fixed={false} />
       <div style={{
         backgroundColor: '#F0EBE3',
         minHeight: '100vh',
@@ -441,7 +442,7 @@ function GoFurther({ language, onTabChange }) {
 
         </div>
       </div>
-      <NavBar activeTab="goFurther" onTabChange={onTabChange} language={language} />
+      <NavBar activeTab="goFurther" onTabChange={onTabChange} language={language} fixed={false} />
     </>
   );
 }

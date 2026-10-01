@@ -700,13 +700,14 @@ function Shop({ language, onTabChange }) {
 
   return (
     <>
+      <NavBar activeTab="shop" onTabChange={onTabChange} language={language} fixed={false} />
       <div style={{
         backgroundColor: '#F0EBE3',
         minHeight: '100vh',
         display: 'flex',
         justifyContent: 'center',
         padding: '24px',
-        paddingBottom: '100px',
+        paddingBottom: '40px',
       }}>
         <div style={{ width: '100%', maxWidth: '900px' }}>
 
@@ -1105,7 +1106,7 @@ function Shop({ language, onTabChange }) {
 
         </div>
       </div>
-      <NavBar activeTab="shop" onTabChange={onTabChange} language={language} />
+      <NavBar activeTab="shop" onTabChange={onTabChange} language={language} fixed={false} />
     </>
   );
 }
