@@ -63,6 +63,7 @@ const DEFAULT_LISTINGS = [
 function Community({ language, userZip, onTabChange }) {
   const [activeSection, setActiveSection] = useState('browse');
   const [maxMiles, setMaxMiles] = useState(10);
+  const [showPostForm, setShowPostForm] = useState(false);
 
   const [listings, setListings] = useState(() => {
     try {
@@ -114,7 +115,6 @@ function Community({ language, userZip, onTabChange }) {
       title: 'Community',
       subtitle: 'Borrow and lend green tools with your neighbors.',
       browse: 'Browse',
-      post: 'Post a Tool',
       saved: 'Saved',
       safety: 'Safety Tips',
       recycle: '♻️ Recycle',
@@ -122,15 +122,17 @@ function Community({ language, userZip, onTabChange }) {
       alreadyInterested: 'Interest Sent ✓',
       save: '☆ Save',
       unsave: '⭐ Unsave',
-      report: '🚩 Report Listing',
+      report: '🚩 Report',
       verified: 'Verified Neighbor',
+      postButton: '➕ Share a Tool',
       postTitle: 'Tool Name',
       postCategory: 'Category',
       postCondition: 'Condition',
       postZip: 'Your Zip Code',
       postDesc: 'Description',
-      postButton: 'Share Tool',
+      postSubmit: 'Share Tool',
       postSuccess: 'Your tool has been listed! 🌱',
+      postCancel: 'Cancel',
       milesAway: 'miles away',
       milesLabel: 'Show listings within',
       miles: 'miles',
@@ -156,7 +158,6 @@ function Community({ language, userZip, onTabChange }) {
       title: 'Comunidad',
       subtitle: 'Presta y toma prestado herramientas verdes con tus vecinos.',
       browse: 'Explorar',
-      post: 'Publicar Herramienta',
       saved: 'Guardados',
       safety: 'Consejos de Seguridad',
       recycle: '♻️ Reciclar',
@@ -164,15 +165,17 @@ function Community({ language, userZip, onTabChange }) {
       alreadyInterested: 'Interés Enviado ✓',
       save: '☆ Guardar',
       unsave: '⭐ No Guardar',
-      report: '🚩 Reportar Listado',
+      report: '🚩 Reportar',
       verified: 'Vecino Verificado',
+      postButton: '➕ Compartir una Herramienta',
       postTitle: 'Nombre de la Herramienta',
       postCategory: 'Categoría',
       postCondition: 'Condición',
       postZip: 'Tu Código Postal',
       postDesc: 'Descripción',
-      postButton: 'Compartir Herramienta',
+      postSubmit: 'Compartir Herramienta',
       postSuccess: '¡Tu herramienta ha sido publicada! 🌱',
+      postCancel: 'Cancelar',
       milesAway: 'millas de distancia',
       milesLabel: 'Mostrar listados a menos de',
       miles: 'millas',
@@ -240,7 +243,7 @@ function Community({ language, userZip, onTabChange }) {
     setListings([listing, ...listings]);
     setNewListing({ title: '', category: '🔧 Home & Repair', condition: 'Good', zip: userZip || '', description: '' });
     setSuccessMessage(current.postSuccess);
-    setActiveSection('browse');
+    setShowPostForm(false);
     setTimeout(() => setSuccessMessage(''), 3000);
   };
 
@@ -311,13 +314,12 @@ function Community({ language, userZip, onTabChange }) {
               marginBottom: '16px',
               fontSize: '14px',
               textAlign: 'center',
-              animation: 'fadeIn 0.3s ease',
             }}>
               {successMessage}
             </div>
           )}
 
-          {/* Section Tabs */}
+          {/* Section Tabs — no more Post tab */}
           <div style={{
             display: 'flex',
             backgroundColor: 'white',
@@ -327,14 +329,16 @@ function Community({ language, userZip, onTabChange }) {
             boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
             gap: '4px',
           }}>
-            {['browse', 'post', 'saved', 'recycle', 'safety'].map((section) => (
+            {['browse', 'saved', 'recycle', 'safety'].map((section) => (
               <button
                 key={section}
-                onClick={() => setActiveSection(section)}
+                onClick={() => {
+                  setActiveSection(section);
+                  setShowPostForm(false);
+                }}
                 style={tabStyle(activeSection === section)}
               >
                 {section === 'browse' ? current.browse :
-                 section === 'post' ? current.post :
                  section === 'saved' ? current.saved :
                  section === 'recycle' ? current.recycle :
                  current.safety}
@@ -345,6 +349,7 @@ function Community({ language, userZip, onTabChange }) {
           {/* Browse Section */}
           {activeSection === 'browse' && (
             <>
+              {/* Distance Slider */}
               <div style={{
                 backgroundColor: 'white',
                 borderRadius: '16px',
@@ -378,22 +383,15 @@ function Community({ language, userZip, onTabChange }) {
                   max="25"
                   value={maxMiles}
                   onChange={(e) => setMaxMiles(Number(e.target.value))}
-                  style={{
-                    width: '100%',
-                    accentColor: '#4F8C6F',
-                    cursor: 'pointer',
-                  }}
+                  style={{ width: '100%', accentColor: '#4F8C6F', cursor: 'pointer' }}
                 />
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  marginTop: '4px',
-                }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px' }}>
                   <span style={{ color: '#A0A0A0', fontSize: '11px' }}>1 mi</span>
                   <span style={{ color: '#A0A0A0', fontSize: '11px' }}>25 mi</span>
                 </div>
               </div>
 
+              {/* Category Filter */}
               <div style={{
                 display: 'flex',
                 gap: '8px',
@@ -422,6 +420,133 @@ function Community({ language, userZip, onTabChange }) {
                 ))}
               </div>
 
+              {/* Share a Tool Button */}
+              {!showPostForm ? (
+                <button
+                  onClick={() => setShowPostForm(true)}
+                  style={{
+                    width: '100%',
+                    backgroundColor: 'white',
+                    color: '#4F8C6F',
+                    border: '2px dashed #4F8C6F',
+                    padding: '12px',
+                    borderRadius: '12px',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    marginBottom: '16px',
+                    fontFamily: 'Poppins, sans-serif',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  {current.postButton}
+                </button>
+              ) : (
+                <div style={{ ...sectionStyle, marginBottom: '16px', border: '2px solid #4F8C6F' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                    <div>
+                      <p style={{ color: '#A0A0A0', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 4px 0' }}>
+                        {current.postTitle}
+                      </p>
+                      <input
+                        type="text"
+                        value={newListing.title}
+                        onChange={(e) => setNewListing({ ...newListing, title: e.target.value })}
+                        style={inputStyle}
+                        placeholder="e.g. Solar Panel Cleaning Kit"
+                      />
+                    </div>
+                    <div>
+                      <p style={{ color: '#A0A0A0', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 4px 0' }}>
+                        {current.postCategory}
+                      </p>
+                      <select
+                        value={newListing.category}
+                        onChange={(e) => setNewListing({ ...newListing, category: e.target.value })}
+                        style={inputStyle}
+                      >
+                        {categories.filter(c => c !== 'All').map((cat) => (
+                          <option key={cat} value={cat}>{cat}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <p style={{ color: '#A0A0A0', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 4px 0' }}>
+                        {current.postCondition}
+                      </p>
+                      <select
+                        value={newListing.condition}
+                        onChange={(e) => setNewListing({ ...newListing, condition: e.target.value })}
+                        style={inputStyle}
+                      >
+                        {conditions.map((c) => (
+                          <option key={c} value={c}>{c}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <p style={{ color: '#A0A0A0', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 4px 0' }}>
+                        {current.postZip}
+                      </p>
+                      <input
+                        type="number"
+                        value={newListing.zip}
+                        onChange={(e) => setNewListing({ ...newListing, zip: e.target.value })}
+                        style={inputStyle}
+                        placeholder="e.g. 45202"
+                      />
+                    </div>
+                    <div>
+                      <p style={{ color: '#A0A0A0', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 4px 0' }}>
+                        {current.postDesc}
+                      </p>
+                      <textarea
+                        value={newListing.description}
+                        onChange={(e) => setNewListing({ ...newListing, description: e.target.value })}
+                        style={{ ...inputStyle, height: '100px', resize: 'vertical' }}
+                        placeholder="Describe the tool, availability, any conditions..."
+                      />
+                    </div>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <button
+                        onClick={handlePost}
+                        disabled={!newListing.title || !newListing.description}
+                        style={{
+                          flex: 1,
+                          backgroundColor: newListing.title && newListing.description ? '#D4956A' : '#E8E0D5',
+                          color: newListing.title && newListing.description ? 'white' : '#A0A0A0',
+                          border: 'none',
+                          padding: '14px',
+                          borderRadius: '30px',
+                          fontSize: '15px',
+                          cursor: newListing.title && newListing.description ? 'pointer' : 'not-allowed',
+                          transition: 'all 0.3s ease',
+                          fontFamily: 'Poppins, sans-serif',
+                        }}
+                      >
+                        🌱 {current.postSubmit}
+                      </button>
+                      <button
+                        onClick={() => setShowPostForm(false)}
+                        style={{
+                          backgroundColor: 'transparent',
+                          color: '#A0A0A0',
+                          border: '2px solid #E8E0D5',
+                          padding: '14px 20px',
+                          borderRadius: '30px',
+                          fontSize: '15px',
+                          cursor: 'pointer',
+                          fontFamily: 'Poppins, sans-serif',
+                        }}
+                      >
+                        {current.postCancel}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Listings */}
               {filteredListings.length === 0 ? (
                 <div style={{ ...sectionStyle, textAlign: 'center', padding: '48px 24px' }}>
                   <p style={{ fontSize: '48px', marginBottom: '16px' }}>📍</p>
@@ -454,11 +579,9 @@ function Community({ language, userZip, onTabChange }) {
                         </p>
                       </div>
                     </div>
-
                     <p style={{ color: '#666', fontSize: '13px', marginBottom: '12px' }}>
                       {listing.description}
                     </p>
-
                     {reportedId === listing.id ? (
                       <p style={{ color: '#4F8C6F', fontSize: '13px', textAlign: 'center', padding: '8px' }}>
                         {current.reportConfirm}
@@ -524,99 +647,6 @@ function Community({ language, userZip, onTabChange }) {
             </>
           )}
 
-          {/* Post Section */}
-          {activeSection === 'post' && (
-            <div style={sectionStyle}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div>
-                  <p style={{ color: '#A0A0A0', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 4px 0' }}>
-                    {current.postTitle}
-                  </p>
-                  <input
-                    type="text"
-                    value={newListing.title}
-                    onChange={(e) => setNewListing({ ...newListing, title: e.target.value })}
-                    style={inputStyle}
-                    placeholder="e.g. Solar Panel Cleaning Kit"
-                  />
-                </div>
-
-                <div>
-                  <p style={{ color: '#A0A0A0', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 4px 0' }}>
-                    {current.postCategory}
-                  </p>
-                  <select
-                    value={newListing.category}
-                    onChange={(e) => setNewListing({ ...newListing, category: e.target.value })}
-                    style={inputStyle}
-                  >
-                    {categories.filter(c => c !== 'All').map((cat) => (
-                      <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <p style={{ color: '#A0A0A0', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 4px 0' }}>
-                    {current.postCondition}
-                  </p>
-                  <select
-                    value={newListing.condition}
-                    onChange={(e) => setNewListing({ ...newListing, condition: e.target.value })}
-                    style={inputStyle}
-                  >
-                    {conditions.map((c) => (
-                      <option key={c} value={c}>{c}</option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <p style={{ color: '#A0A0A0', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 4px 0' }}>
-                    {current.postZip}
-                  </p>
-                  <input
-                    type="number"
-                    value={newListing.zip}
-                    onChange={(e) => setNewListing({ ...newListing, zip: e.target.value })}
-                    style={inputStyle}
-                    placeholder="e.g. 45202"
-                  />
-                </div>
-
-                <div>
-                  <p style={{ color: '#A0A0A0', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 4px 0' }}>
-                    {current.postDesc}
-                  </p>
-                  <textarea
-                    value={newListing.description}
-                    onChange={(e) => setNewListing({ ...newListing, description: e.target.value })}
-                    style={{ ...inputStyle, height: '100px', resize: 'vertical' }}
-                    placeholder="Describe the tool, availability, any conditions..."
-                  />
-                </div>
-
-                <button
-                  onClick={handlePost}
-                  disabled={!newListing.title || !newListing.description}
-                  style={{
-                    width: '100%',
-                    backgroundColor: newListing.title && newListing.description ? '#D4956A' : '#E8E0D5',
-                    color: newListing.title && newListing.description ? 'white' : '#A0A0A0',
-                    border: 'none',
-                    padding: '16px',
-                    borderRadius: '30px',
-                    fontSize: '16px',
-                    cursor: newListing.title && newListing.description ? 'pointer' : 'not-allowed',
-                    transition: 'all 0.3s ease',
-                  }}
-                >
-                  🌱 {current.postButton}
-                </button>
-              </div>
-            </div>
-          )}
-
           {/* Saved Section */}
           {activeSection === 'saved' && (
             <>
@@ -637,12 +667,7 @@ function Community({ language, userZip, onTabChange }) {
                       </div>
                       <button
                         onClick={() => handleSave(listing.id)}
-                        style={{
-                          backgroundColor: 'transparent',
-                          border: 'none',
-                          fontSize: '20px',
-                          cursor: 'pointer',
-                        }}
+                        style={{ backgroundColor: 'transparent', border: 'none', fontSize: '20px', cursor: 'pointer' }}
                       >
                         ⭐
                       </button>
@@ -663,53 +688,32 @@ function Community({ language, userZip, onTabChange }) {
               <p style={{ color: '#666', fontSize: '14px', marginBottom: '24px' }}>
                 {current.recycleSubtitle}
               </p>
-
               <div style={{ ...sectionStyle, textAlign: 'center' }}>
                 <button
                   onClick={() => window.open(`https://search.earth911.com/?where=${userZip || ''}&radius=25`, '_blank')}
                   style={{
-                    width: '100%',
-                    backgroundColor: '#4F8C6F',
-                    color: 'white',
-                    border: 'none',
-                    padding: '16px',
-                    borderRadius: '16px',
-                    fontSize: '16px',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    marginBottom: '8px',
+                    width: '100%', backgroundColor: '#4F8C6F', color: 'white', border: 'none',
+                    padding: '16px', borderRadius: '16px', fontSize: '16px', fontWeight: '600',
+                    cursor: 'pointer', marginBottom: '8px',
                   }}
                 >
                   {current.findRecycling}
                 </button>
-                <p style={{ color: '#A0A0A0', fontSize: '12px', margin: 0 }}>
-                  {current.earth911Note}
-                </p>
+                <p style={{ color: '#A0A0A0', fontSize: '12px', margin: 0 }}>{current.earth911Note}</p>
               </div>
-
               <div style={{ ...sectionStyle, textAlign: 'center' }}>
                 <button
                   onClick={() => window.open('https://www.findtap.com', '_blank')}
                   style={{
-                    width: '100%',
-                    backgroundColor: '#4F8C6F',
-                    color: 'white',
-                    border: 'none',
-                    padding: '16px',
-                    borderRadius: '16px',
-                    fontSize: '16px',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    marginBottom: '8px',
+                    width: '100%', backgroundColor: '#4F8C6F', color: 'white', border: 'none',
+                    padding: '16px', borderRadius: '16px', fontSize: '16px', fontWeight: '600',
+                    cursor: 'pointer', marginBottom: '8px',
                   }}
                 >
                   {current.findWater}
                 </button>
-                <p style={{ color: '#A0A0A0', fontSize: '12px', margin: 0 }}>
-                  {current.tapNote}
-                </p>
+                <p style={{ color: '#A0A0A0', fontSize: '12px', margin: 0 }}>{current.tapNote}</p>
               </div>
-
               <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
@@ -721,13 +725,9 @@ function Community({ language, userZip, onTabChange }) {
                     key={index}
                     onClick={() => handleEarth911(cat.earth911Material)}
                     style={{
-                      backgroundColor: 'white',
-                      borderRadius: '16px',
-                      padding: '16px',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      border: '2px solid transparent',
+                      backgroundColor: 'white', borderRadius: '16px', padding: '16px',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.06)', cursor: 'pointer',
+                      transition: 'all 0.2s ease', border: '2px solid transparent',
                     }}
                     onMouseEnter={(e) => e.currentTarget.style.borderColor = '#4F8C6F'}
                     onMouseLeave={(e) => e.currentTarget.style.borderColor = 'transparent'}
@@ -757,12 +757,8 @@ function Community({ language, userZip, onTabChange }) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {current.safetyTips.map((tip, index) => (
                   <div key={index} style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '16px',
-                    padding: '12px',
-                    backgroundColor: '#FAF7F2',
-                    borderRadius: '12px',
+                    display: 'flex', alignItems: 'flex-start', gap: '16px',
+                    padding: '12px', backgroundColor: '#FAF7F2', borderRadius: '12px',
                   }}>
                     <span style={{ fontSize: '24px' }}>{tip.icon}</span>
                     <p style={{ color: '#2C2C2C', fontSize: '14px', margin: 0 }}>{tip.tip}</p>
