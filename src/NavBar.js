@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 function NavBar({ activeTab, onTabChange, language }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const labels = {
     EN: { home: 'Home', shop: 'Shop', community: 'Community', goFurther: 'Go Further', profile: 'Profile' },
     ES: { home: 'Inicio', shop: 'Tienda', community: 'Comunidad', goFurther: 'Ir Más Lejos', profile: 'Perfil' },
@@ -25,47 +34,70 @@ function NavBar({ activeTab, onTabChange, language }) {
     { id: 'profile', icon: '👤', label: current.profile },
   ];
 
+  const isVisible = scrolled || hovered;
+
   return (
-    <nav style={{
-      position: 'fixed',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      backgroundColor: 'white',
-      borderTop: '1px solid #E8E0D5',
-      display: 'flex',
-      justifyContent: 'space-around',
-      padding: '8px 0 12px',
-      zIndex: 1000,
-      boxShadow: '0 -2px 12px rgba(0,0,0,0.06)',
-    }}>
-      {tabs.map((tab) => (
-        <button
-          key={tab.id}
-          onClick={() => onTabChange(tab.id)}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '2px',
-            backgroundColor: 'transparent',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '4px 8px',
-            flex: 1,
-          }}
-        >
-          <span style={{ fontSize: '20px' }}>{tab.icon}</span>
-          <span style={{
-            fontSize: '10px',
-            color: activeTab === tab.id ? '#4F8C6F' : '#A0A0A0',
-            fontWeight: activeTab === tab.id ? '600' : '400',
-            fontFamily: 'Poppins, sans-serif',
-          }}>
-            {tab.label}
-          </span>
-        </button>
-      ))}
+    <nav
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        backgroundColor: isVisible ? '#1B5E3B' : 'transparent',
+        transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
+        boxShadow: isVisible ? '0 2px 20px rgba(0,0,0,0.2)' : 'none',
+        padding: '0 16px',
+      }}
+    >
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        maxWidth: '900px',
+        margin: '0 auto',
+        padding: '10px 0',
+        gap: '4px',
+        overflowX: 'auto',
+      }}>
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => onTabChange(tab.id)}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '3px',
+              backgroundColor: activeTab === tab.id
+                ? 'rgba(255,255,255,0.15)'
+                : 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '8px 12px',
+              borderRadius: '12px',
+              transition: 'all 0.2s ease',
+              flex: 1,
+              minWidth: '60px',
+            }}
+          >
+            <span style={{ fontSize: '18px' }}>{tab.icon}</span>
+            <span style={{
+              fontSize: '10px',
+              color: activeTab === tab.id
+                ? 'white'
+                : 'rgba(255,255,255,0.65)',
+              fontWeight: activeTab === tab.id ? '600' : '400',
+              fontFamily: 'Poppins, sans-serif',
+              whiteSpace: 'nowrap',
+            }}>
+              {tab.label}
+            </span>
+          </button>
+        ))}
+      </div>
     </nav>
   );
 }
