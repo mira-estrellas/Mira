@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import Onboarding from './Onboarding';
 import ComingSoon from './ComingSoon';
 import Dashboard from './Dashboard';
+import ZeroWasteGuide from './ZeroWasteGuide';
 
 const languages = {
   EN: {
@@ -116,28 +118,12 @@ const languages = {
   },
 };
 
-function App() {
-  const [language, setLanguage] = useState('EN');
-  const [screen, setScreen] = useState('landing');
+function LandingPage({ language, setLanguage, onGetStarted }) {
   const [visible, setVisible] = useState(false);
-  const [savedProfile, setSavedProfile] = useState(null);
-  const current = languages[language];
-  const isPreview = new URLSearchParams(window.location.search).get('preview') === 'true';
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 100);
     return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    try {
-      const profile = localStorage.getItem('mira_profile');
-      if (profile) {
-        setSavedProfile(JSON.parse(profile));
-      }
-    } catch {
-      console.log('localStorage not available');
-    }
   }, []);
 
   const fadeIn = (delay) => ({
@@ -146,25 +132,7 @@ function App() {
     transition: `opacity 0.8s ease ${delay}s, transform 0.8s ease ${delay}s`,
   });
 
-  if (screen === 'onboarding') {
-    if (process.env.NODE_ENV === 'development' || isPreview) {
-      return <Onboarding language={language} onBack={() => setScreen('landing')} />;
-    }
-    return <ComingSoon language={language} onBack={() => setScreen('landing')} />;
-  }
-
-  if (screen === 'landing' && savedProfile && (process.env.NODE_ENV === 'development' || isPreview)) {
-    return (
-      <Dashboard
-        language={savedProfile.language || language}
-        zipCode={savedProfile.zipCode}
-        housingType={savedProfile.housingType}
-        budget={savedProfile.budget}
-        householdSize={savedProfile.householdSize}
-        householdIncome={savedProfile.householdIncome}
-      />
-    );
-  }
+  const current = languages[language];
 
   return (
     <>
@@ -181,8 +149,6 @@ function App() {
         alignItems: 'center',
         fontFamily: 'Poppins, sans-serif',
       }}>
-
-        {/* Language Selector */}
         <div style={{
           width: '100%',
           display: 'flex',
@@ -211,7 +177,6 @@ function App() {
           </select>
         </div>
 
-        {/* Hero Section */}
         <div style={{
           display: 'flex',
           flexDirection: 'column',
@@ -222,8 +187,6 @@ function App() {
           maxWidth: '860px',
           flex: 1,
         }}>
-
-          {/* Mira logo */}
           <h1 style={{
             color: '#2D6A4F',
             fontSize: '80px',
@@ -236,7 +199,6 @@ function App() {
             Mira
           </h1>
 
-          {/* Urgency */}
           <p style={{
             color: '#2C2C2C',
             fontSize: '18px',
@@ -254,7 +216,6 @@ function App() {
             ))}
           </p>
 
-          {/* Mission */}
           <p style={{
             color: '#2C2C2C',
             fontSize: '20px',
@@ -266,7 +227,6 @@ function App() {
             {current.mission}
           </p>
 
-          {/* Missing piece */}
           <p style={{
             color: '#4F8C6F',
             fontSize: '24px',
@@ -278,7 +238,6 @@ function App() {
             {current.missing}
           </p>
 
-          {/* Stat number */}
           <p style={{
             color: '#2C2C2C',
             fontSize: '60px',
@@ -291,7 +250,6 @@ function App() {
             {current.stat}
           </p>
 
-          {/* Stat description */}
           <p style={{
             color: '#2C2C2C',
             fontSize: '18px',
@@ -307,7 +265,6 @@ function App() {
             }
           </p>
 
-          {/* CTA text */}
           <p style={{
             color: '#2C2C2C',
             fontSize: '18px',
@@ -318,10 +275,9 @@ function App() {
             {current.cta}
           </p>
 
-          {/* Button */}
           <div style={fadeIn(1.8)}>
             <button
-              onClick={() => setScreen('onboarding')}
+              onClick={onGetStarted}
               style={{
                 backgroundColor: '#D4956A',
                 color: 'white',
@@ -348,10 +304,76 @@ function App() {
               {current.button}
             </button>
           </div>
-
         </div>
       </div>
     </>
+  );
+}
+
+function AppContent() {
+  const [language, setLanguage] = useState('EN');
+  const [screen, setScreen] = useState('landing');
+  const [savedProfile, setSavedProfile] = useState(null);
+  const navigate = useNavigate();
+  const isPreview = new URLSearchParams(window.location.search).get('preview') === 'true';
+
+  useEffect(() => {
+    try {
+      const profile = localStorage.getItem('mira_profile');
+      if (profile) {
+        setSavedProfile(JSON.parse(profile));
+      }
+    } catch {
+      console.log('localStorage not available');
+    }
+  }, []);
+
+  const handleGetStarted = () => {
+    if (process.env.NODE_ENV === 'development' || isPreview) {
+      setScreen('onboarding');
+    } else {
+      setScreen('comingSoon');
+    }
+  };
+
+  if (screen === 'comingSoon') {
+    return <ComingSoon language={language} onBack={() => setScreen('landing')} />;
+  }
+
+  if (screen === 'onboarding') {
+    return <Onboarding language={language} onBack={() => setScreen('landing')} />;
+  }
+
+  if (screen === 'landing' && savedProfile && (process.env.NODE_ENV === 'development' || isPreview)) {
+    return (
+      <Dashboard
+        language={savedProfile.language || language}
+        zipCode={savedProfile.zipCode}
+        housingType={savedProfile.housingType}
+        budget={savedProfile.budget}
+        householdSize={savedProfile.householdSize}
+        householdIncome={savedProfile.householdIncome}
+      />
+    );
+  }
+
+  return (
+    <LandingPage
+      language={language}
+      setLanguage={setLanguage}
+      onGetStarted={handleGetStarted}
+    />
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/guide" element={<ZeroWasteGuide />} />
+        <Route path="/*" element={<AppContent />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
