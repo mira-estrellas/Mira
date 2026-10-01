@@ -1,6 +1,7 @@
 import React from 'react';
 
 function ZeroWasteGuide() {
+
   const sections = [
     {
       id: 'kitchen',
@@ -17,7 +18,7 @@ function ZeroWasteGuide() {
         },
         {
           name: 'Beeswax wraps',
-          tip: 'A natural alternative to plastic wrap. Wash with cool water and mild soap — never hot water, it melts the wax.',
+          tip: 'A natural alternative to plastic wrap. Wash with cool water and mild soap. Never use hot water as it melts the wax.',
         },
         {
           name: 'Silicone food storage bags',
@@ -49,10 +50,10 @@ function ZeroWasteGuide() {
         },
       ],
       foodWasteTips: [
-        'Save vegetable skins and ends in a bag in the freezer — simmer them with water to make a rich, free broth.',
+        'Save vegetable skins and ends in a bag in the freezer. Simmer them with water to make a rich, free broth.',
         'Stale bread? Cut into cubes and bake, microwave or air fry to make croutons for soups and salads.',
         'Save potato peels, season them, drizzle with olive oil and bake for crispy chips.',
-        'Apple peels make a delicious light tea — just simmer in water with a cinnamon stick.',
+        'Apple peels make a delicious light tea. Just simmer in water with a cinnamon stick.',
         'Leftover fruit peels, vegetable ends and herbs can often be regrown on a sunny windowsill.',
       ],
     },
@@ -67,7 +68,7 @@ function ZeroWasteGuide() {
         },
         {
           name: 'Organic cotton, hemp or jute rags',
-          tip: 'Or make your own by cutting up clean old cotton shirts, sheets or towels.',
+          tip: 'Make your own by cutting up clean old cotton shirts, sheets or towels.',
         },
         {
           name: 'Plant bristle brushes',
@@ -98,21 +99,21 @@ function ZeroWasteGuide() {
           variants: [
             {
               title: 'If you only have castile soap',
-              ingredients: ['1–2 tablespoons Dr. Bronner\'s Liquid Castile Soap', '1 quart warm distilled water'],
+              ingredients: ['1 to 2 tablespoons Dr. Bronner\'s Liquid Castile Soap', '1 quart warm distilled water'],
               note: 'Gently swirl before each use. The soap and water may slightly separate if left sitting.',
-              shelfLife: '3–6 months.',
+              shelfLife: '3 to 6 months.',
             },
             {
               title: 'If you only have tap water',
-              ingredients: ['2 cups tap water', '2–2½ teaspoons Dr. Bronner\'s Sal Suds'],
-              note: 'Only mix what you\'ll use within 2–3 weeks. Tap water contains microscopic bacteria that can cause the mix to spoil or grow mold if left sitting too long. Wipe surfaces immediately and completely dry.',
-              shelfLife: '2–3 weeks. Cut recipe in half if you won\'t finish it in time.',
+              ingredients: ['2 cups tap water', '2 to 2½ teaspoons Dr. Bronner\'s Sal Suds'],
+              note: 'Only mix what you\'ll use within 2 to 3 weeks. Tap water contains microscopic bacteria that can cause the mix to spoil or grow mold if left sitting too long. Wipe surfaces immediately and completely dry.',
+              shelfLife: '2 to 3 weeks. Cut recipe in half if you won\'t finish it in time.',
             },
           ],
           tips: [
             'Always pour water into the bottle first to avoid excessive bubbles.',
             'Always wipe surfaces completely dry.',
-            'For the tap water version, only mix what you\'ll use within 2–3 weeks.',
+            'For the tap water version, only mix what you\'ll use within 2 to 3 weeks.',
           ],
         },
       ],
@@ -124,15 +125,15 @@ function ZeroWasteGuide() {
       items: [
         {
           name: 'Bamboo toothbrushes',
-          tip: 'The handle is compostable. Remove the bristles before composting — most are still nylon.',
+          tip: 'The handle is compostable. Remove the bristles before composting as most are still nylon.',
         },
         {
           name: 'Bar soap',
-          tip: 'Lasts longer than liquid soap and uses no plastic packaging.',
+          tip: 'Lasts longer than liquid soap and uses no plastic packaging. Dr. Bronner\'s works as body wash, shampoo and shaving soap.',
         },
         {
           name: 'Natural loofah sponges',
-          tip: 'Loofahs are actually a plant — fully compostable at end of life.',
+          tip: 'Loofahs are actually a plant and are fully compostable at end of life.',
         },
         {
           name: 'Unbleached bamboo toilet paper',
@@ -140,7 +141,7 @@ function ZeroWasteGuide() {
         },
         {
           name: 'Reusable razors',
-          tip: 'Razors with replaceable blades/cartridges produce a fraction of the plastic waste of disposable razors.',
+          tip: 'A safety razor with replaceable blades produces a fraction of the plastic waste of disposable razors.',
         },
       ],
     },
@@ -151,11 +152,11 @@ function ZeroWasteGuide() {
       items: [
         {
           name: 'Wool dryer balls',
-          tip: 'Replace dryer sheets entirely. Add a few drops of essential oil for scent. Lasts for hundreds of loads!',
+          tip: 'Replace dryer sheets entirely. Add a few drops of essential oil for scent. Lasts for hundreds of loads.',
         },
         {
           name: 'Wash full loads only',
-          tip: 'Washing full loads uses the same amount of water as a half load. If possible, wait until you have a full machine.',
+          tip: 'Washing full loads uses the same amount of water as a half load. Always wait until you have a full machine.',
         },
         {
           name: 'Wash in cold water',
@@ -201,12 +202,12 @@ function ZeroWasteGuide() {
         padding: '40px 24px 32px',
         textAlign: 'center',
       }}>
-        <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', margin: '0 0 8px 0' }}>
+        <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '16px', margin: '0 0 8px 0' }}>
           A Mira Guide
         </p>
         <h1 style={{
           color: 'white',
-          fontSize: '40px',
+          fontSize: '32px',
           fontWeight: '700',
           margin: '0 0 12px 0',
           lineHeight: '1.2',
@@ -215,7 +216,7 @@ function ZeroWasteGuide() {
         </h1>
         <p style={{
           color: 'rgba(255,255,255,0.85)',
-          fontSize: '18px',
+          fontSize: '16px',
           maxWidth: '560px',
           margin: '0 auto',
           lineHeight: '1.7',
@@ -248,7 +249,7 @@ function ZeroWasteGuide() {
       }}>
 
         {sections.map((section) => (
-          <div key={section.id} style={{ marginBottom: '48px' }}>
+          <div key={section.id} style={{ marginBottom: '56px' }}>
 
             {/* Section Header */}
             <h2 style={{
@@ -264,19 +265,19 @@ function ZeroWasteGuide() {
 
             {/* Items */}
             {section.items.map((item, index) => (
-              <div key={index} style={{ marginBottom: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                  <span style={{ color: '#4F8C6F', fontSize: '16px', marginTop: '2px', flexShrink: 0 }}>•</span>
+              <div key={index} style={{ marginBottom: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                  <span style={{ color: '#4F8C6F', fontSize: '18px', marginTop: '2px', flexShrink: 0 }}>•</span>
                   <div style={{ flex: 1 }}>
-                    <p style={{ color: '#2C2C2C', fontSize: '15px', fontWeight: '500', margin: 0 }}>
+                    <p style={{ color: '#2C2C2C', fontSize: '17px', fontWeight: '500', margin: 0, lineHeight: '1.5' }}>
                       {item.name}
                     </p>
                     {item.tip && (
                       <p style={{
                         color: '#666',
-                        fontSize: '14px',
-                        margin: '4px 0 0 0',
-                        lineHeight: '1.6',
+                        fontSize: '15px',
+                        margin: '6px 0 0 0',
+                        lineHeight: '1.7',
                         fontStyle: 'italic',
                       }}>
                         💡 {item.tip}
@@ -292,16 +293,16 @@ function ZeroWasteGuide() {
               <div style={{
                 backgroundColor: '#EBF3EE',
                 borderRadius: '16px',
-                padding: '20px',
-                marginTop: '24px',
+                padding: '22px',
+                marginTop: '28px',
               }}>
-                <h3 style={{ color: '#2C2C2C', fontSize: '16px', fontWeight: '600', margin: '0 0 14px 0' }}>
-                  🥦 Don't throw that away — tips to use what you have
+                <h3 style={{ color: '#2C2C2C', fontSize: '18px', fontWeight: '600', margin: '0 0 16px 0' }}>
+                  🥦 Don't throw that away
                 </h3>
                 {section.foodWasteTips.map((tip, index) => (
-                  <div key={index} style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-                    <span style={{ color: '#4F8C6F', flexShrink: 0 }}>•</span>
-                    <p style={{ color: '#2C2C2C', fontSize: '14px', margin: 0, lineHeight: '1.6' }}>{tip}</p>
+                  <div key={index} style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
+                    <span style={{ color: '#4F8C6F', flexShrink: 0, fontSize: '16px' }}>•</span>
+                    <p style={{ color: '#2C2C2C', fontSize: '15px', margin: 0, lineHeight: '1.7' }}>{tip}</p>
                   </div>
                 ))}
               </div>
@@ -312,47 +313,47 @@ function ZeroWasteGuide() {
               <div key={rIndex} style={{
                 backgroundColor: '#FDF0E8',
                 borderRadius: '16px',
-                padding: '20px',
-                marginTop: '24px',
+                padding: '22px',
+                marginTop: '28px',
               }}>
-                <h3 style={{ color: '#2C2C2C', fontSize: '16px', fontWeight: '600', margin: '0 0 14px 0' }}>
+                <h3 style={{ color: '#2C2C2C', fontSize: '18px', fontWeight: '600', margin: '0 0 16px 0' }}>
                   🧪 {recipe.title}
                 </h3>
-                <p style={{ color: '#666', fontSize: '13px', fontWeight: '600', margin: '0 0 6px 0', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                <p style={{ color: '#666', fontSize: '14px', fontWeight: '600', margin: '0 0 8px 0', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                   Ingredients
                 </p>
                 {recipe.ingredients.map((ing, i) => (
-                  <div key={i} style={{ display: 'flex', gap: '8px', marginBottom: '4px' }}>
-                    <span style={{ color: '#D4956A' }}>•</span>
-                    <p style={{ color: '#2C2C2C', fontSize: '14px', margin: 0 }}>{ing}</p>
+                  <div key={i} style={{ display: 'flex', gap: '10px', marginBottom: '6px' }}>
+                    <span style={{ color: '#D4956A', fontSize: '16px' }}>•</span>
+                    <p style={{ color: '#2C2C2C', fontSize: '16px', margin: 0 }}>{ing}</p>
                   </div>
                 ))}
-                <p style={{ color: '#2C2C2C', fontSize: '14px', margin: '12px 0 8px 0', lineHeight: '1.6' }}>
+                <p style={{ color: '#2C2C2C', fontSize: '16px', margin: '14px 0 10px 0', lineHeight: '1.7' }}>
                   {recipe.instructions}
                 </p>
-                <p style={{ color: '#D4956A', fontSize: '13px', margin: '0 0 16px 0' }}>
+                <p style={{ color: '#D4956A', fontSize: '15px', margin: '0 0 20px 0' }}>
                   ⏱ Shelf life: {recipe.shelfLife}
                 </p>
 
                 {recipe.variants && recipe.variants.map((variant, vIndex) => (
                   <div key={vIndex} style={{
-                    borderTop: '1px solid rgba(212,149,106,0.2)',
-                    paddingTop: '14px',
-                    marginTop: '14px',
+                    borderTop: '1px solid rgba(212,149,106,0.3)',
+                    paddingTop: '16px',
+                    marginTop: '16px',
                   }}>
-                    <p style={{ color: '#D4956A', fontSize: '13px', fontWeight: '600', margin: '0 0 8px 0' }}>
+                    <p style={{ color: '#D4956A', fontSize: '15px', fontWeight: '600', margin: '0 0 10px 0' }}>
                       {variant.title}
                     </p>
                     {variant.ingredients.map((ing, i) => (
-                      <div key={i} style={{ display: 'flex', gap: '8px', marginBottom: '4px' }}>
-                        <span style={{ color: '#D4956A' }}>•</span>
-                        <p style={{ color: '#2C2C2C', fontSize: '14px', margin: 0 }}>{ing}</p>
+                      <div key={i} style={{ display: 'flex', gap: '10px', marginBottom: '6px' }}>
+                        <span style={{ color: '#D4956A', fontSize: '16px' }}>•</span>
+                        <p style={{ color: '#2C2C2C', fontSize: '16px', margin: 0 }}>{ing}</p>
                       </div>
                     ))}
-                    <p style={{ color: '#666', fontSize: '13px', margin: '8px 0 4px 0', lineHeight: '1.6', fontStyle: 'italic' }}>
+                    <p style={{ color: '#666', fontSize: '15px', margin: '10px 0 6px 0', lineHeight: '1.7', fontStyle: 'italic' }}>
                       {variant.note}
                     </p>
-                    <p style={{ color: '#D4956A', fontSize: '13px', margin: 0 }}>
+                    <p style={{ color: '#D4956A', fontSize: '15px', margin: 0 }}>
                       ⏱ Shelf life: {variant.shelfLife}
                     </p>
                   </div>
@@ -362,16 +363,16 @@ function ZeroWasteGuide() {
                   <div style={{
                     backgroundColor: 'white',
                     borderRadius: '10px',
-                    padding: '12px 16px',
-                    marginTop: '16px',
+                    padding: '16px',
+                    marginTop: '20px',
                   }}>
-                    <p style={{ color: '#D4956A', fontSize: '13px', fontWeight: '600', margin: '0 0 8px 0' }}>
+                    <p style={{ color: '#D4956A', fontSize: '15px', fontWeight: '600', margin: '0 0 10px 0' }}>
                       ⚠️ Tips
                     </p>
                     {recipe.tips.map((tip, i) => (
-                      <div key={i} style={{ display: 'flex', gap: '8px', marginBottom: '4px' }}>
-                        <span style={{ color: '#D4956A' }}>•</span>
-                        <p style={{ color: '#2C2C2C', fontSize: '13px', margin: 0, lineHeight: '1.5' }}>{tip}</p>
+                      <div key={i} style={{ display: 'flex', gap: '10px', marginBottom: '6px' }}>
+                        <span style={{ color: '#D4956A', fontSize: '16px' }}>•</span>
+                        <p style={{ color: '#2C2C2C', fontSize: '15px', margin: 0, lineHeight: '1.6' }}>{tip}</p>
                       </div>
                     ))}
                   </div>
@@ -388,8 +389,8 @@ function ZeroWasteGuide() {
           padding: '24px',
           textAlign: 'center',
         }}>
-          <p style={{ color: '#666', fontSize: '13px', margin: '0 0 16px 0', lineHeight: '1.6' }}>
-            Mira is a free platform built to make clean living accessible to everyone — regardless of income, housing or language.
+          <p style={{ color: '#666', fontSize: '15px', margin: '0 0 16px 0', lineHeight: '1.7' }}>
+            Mira is a free platform built to make clean living accessible to everyone, regardless of income, housing or language.
           </p>
           <button
             onClick={() => window.history.back()}
@@ -397,9 +398,9 @@ function ZeroWasteGuide() {
               backgroundColor: '#4F8C6F',
               color: 'white',
               border: 'none',
-              padding: '12px 32px',
+              padding: '14px 32px',
               borderRadius: '30px',
-              fontSize: '14px',
+              fontSize: '16px',
               cursor: 'pointer',
               fontFamily: 'Poppins, sans-serif',
             }}
