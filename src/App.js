@@ -367,13 +367,11 @@ function AppContent() {
   }, [screen]);
 
   const transitionTo = (newScreen) => {
-    setTransitioning(true);
     setVisible(false);
     setTimeout(() => {
       setScreen(newScreen);
-      setVisible(true);
-      setTransitioning(false);
-    }, 500);
+      setTimeout(() => setVisible(true), 50);
+    }, 600);
   };
 
   useEffect(() => {
@@ -397,7 +395,7 @@ function AppContent() {
 
   if (screen === 'comingSoon') {
     return (
-      <div style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+      <div style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.6s ease' }}>
         <ComingSoon language={language} onBack={() => transitionTo('landing')} />
       </div>
     );
@@ -405,7 +403,7 @@ function AppContent() {
 
   if (screen === 'onboarding') {
     return (
-      <div style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+      <div style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.6s ease' }}>
         <Onboarding language={language} onBack={() => transitionTo('landing')} />
       </div>
     );
@@ -425,7 +423,7 @@ function AppContent() {
   }
 
   return (
-    <div style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+    <div style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.6s ease' }}>
       <LandingPage
         language={language}
         setLanguage={setLanguage}
