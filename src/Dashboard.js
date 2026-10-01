@@ -527,6 +527,27 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
             ))}
           </div>
 
+          {/* Link to Zero Waste Guide */}
+          <a
+            href="/guide"
+            style={{
+              display: 'block',
+              textAlign: 'center',
+              color: '#4F8C6F',
+              fontSize: '14px',
+              fontWeight: '600',
+              textDecoration: 'none',
+              padding: '14px',
+              backgroundColor: 'white',
+              borderRadius: '12px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+              marginBottom: '16px',
+              border: '2px solid #EBF3EE',
+            }}
+          >
+            🌱 Want more ideas? Read the Zero Waste Guide →
+          </a>
+
           {/* Impact Section */}
           <div style={sectionHeaderStyle}>
             <h2 style={{ color: '#2C2C2C', fontSize: '20px', margin: '0 0 6px 0' }}>
