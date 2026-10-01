@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dashboard from './Dashboard';
 import HousingType from './HousingType';
 import Budget from './Budget';
@@ -12,6 +12,104 @@ function Onboarding({ language, onBack }) {
   const [budget, setBudget] = useState(null);
   const [householdSize, setHouseholdSize] = useState(null);
   const [householdIncome, setHouseholdIncome] = useState(null);
+  const [loadingStep, setLoadingStep] = useState(0);
+  const [fadeIn, setFadeIn] = useState(true);
+
+  const loadingMessages = {
+    EN: [
+      '🌍 Finding incentives in your area...',
+      '💰 Calculating your potential savings...',
+      '🔄 Matching swaps to your budget...',
+      '🌱 Building your personalized plan...',
+    ],
+    ES: [
+      '🌍 Encontrando incentivos en tu área...',
+      '💰 Calculando tus ahorros potenciales...',
+      '🔄 Combinando cambios con tu presupuesto...',
+      '🌱 Construyendo tu plan personalizado...',
+    ],
+    ZH: [
+      '🌍 正在查找您所在地区的激励措施...',
+      '💰 计算您的潜在节省...',
+      '🔄 根据您的预算匹配方案...',
+      '🌱 建立您的个性化计划...',
+    ],
+    AR: [
+      '🌍 البحث عن الحوافز في منطقتك...',
+      '💰 حساب مدخراتك المحتملة...',
+      '🔄 مطابقة التغييرات مع ميزانيتك...',
+      '🌱 بناء خطتك الشخصية...',
+    ],
+    FR: [
+      '🌍 Recherche des aides dans votre région...',
+      '💰 Calcul de vos économies potentielles...',
+      '🔄 Adaptation des changements à votre budget...',
+      '🌱 Construction de votre plan personnalisé...',
+    ],
+    PT: [
+      '🌍 Encontrando incentivos na sua área...',
+      '💰 Calculando suas economias potenciais...',
+      '🔄 Combinando trocas com seu orçamento...',
+      '🌱 Construindo seu plano personalizado...',
+    ],
+    KO: [
+      '🌍 해당 지역의 인센티브 찾는 중...',
+      '💰 잠재적 절감액 계산 중...',
+      '🔄 예산에 맞는 스왑 매칭 중...',
+      '🌱 맞춤형 계획 구성 중...',
+    ],
+    VI: [
+      '🌍 Tìm kiếm ưu đãi trong khu vực của bạn...',
+      '💰 Tính toán khoản tiết kiệm tiềm năng...',
+      '🔄 Kết hợp các thay đổi với ngân sách...',
+      '🌱 Xây dựng kế hoạch cá nhân hóa...',
+    ],
+    TL: [
+      '🌍 Naghahanap ng mga insentibo sa iyong lugar...',
+      '💰 Kinakalkula ang iyong potensyal na ipon...',
+      '🔄 Itutugma ang mga pagbabago sa iyong badyet...',
+      '🌱 Binubuo ang iyong personalisadong plano...',
+    ],
+    RU: [
+      '🌍 Поиск льгот в вашем регионе...',
+      '💰 Расчёт потенциальной экономии...',
+      '🔄 Подбор изменений под ваш бюджет...',
+      '🌱 Создание вашего персонального плана...',
+    ],
+    HT: [
+      '🌍 Ap chèche ensentif nan zòn ou...',
+      '💰 Ap kalkile ekonomi potansyèl ou...',
+      '🔄 Ap adapte chanjman yo ak bidjè ou...',
+      '🌱 Ap bati plan pèsonalize ou...',
+    ],
+  };
+
+  const messages = loadingMessages[language] || loadingMessages.EN;
+
+  useEffect(() => {
+    if (screen !== 'loading') return;
+
+    const interval = setInterval(() => {
+      setFadeIn(false);
+      setTimeout(() => {
+        setLoadingStep(prev => {
+          if (prev >= messages.length - 1) return prev;
+          return prev + 1;
+        });
+        setFadeIn(true);
+      }, 400);
+    }, 1200);
+
+    const timer = setTimeout(() => {
+      clearInterval(interval);
+      setScreen('dashboard');
+    }, messages.length * 1200 + 400);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timer);
+    };
+  }, [screen, messages.length]);
 
   const content = {
     EN: {
@@ -51,7 +149,7 @@ function Onboarding({ language, onBack }) {
       placeholder: 'Entrez le code postal',
       next: 'Suivant',
       back: '← Retour',
-      privacy: '🔒 Nous ne stockons ni ne partageons jamais votre localisation. Elle est uniquement utilisée pour trouver des aides dans votre région.',
+      privacy: '🔒 Nous ne stockons ni ne partageons jamais votre localisation.',
       skip: 'Passer — je préfère ne pas partager ma localisation',
     },
     PT: {
@@ -59,7 +157,7 @@ function Onboarding({ language, onBack }) {
       placeholder: 'Digite o código postal',
       next: 'Próximo',
       back: '← Voltar',
-      privacy: '🔒 Nunca armazenamos ou compartilhamos sua localização. É usada apenas para encontrar incentivos na sua área.',
+      privacy: '🔒 Nunca armazenamos ou compartilhamos sua localização.',
       skip: 'Pular — prefiro não compartilhar minha localização',
     },
     KO: {
@@ -67,7 +165,7 @@ function Onboarding({ language, onBack }) {
       placeholder: '우편번호 입력',
       next: '다음',
       back: '← 뒤로',
-      privacy: '🔒 귀하의 위치는 저장되거나 공유되지 않습니다. 해당 지역의 혜택을 찾는 데만 사용됩니다.',
+      privacy: '🔒 귀하의 위치는 저장되거나 공유되지 않습니다.',
       skip: '건너뛰기 — 위치를 공유하고 싶지 않습니다',
     },
     VI: {
@@ -75,7 +173,7 @@ function Onboarding({ language, onBack }) {
       placeholder: 'Nhập mã bưu chính',
       next: 'Tiếp theo',
       back: '← Quay lại',
-      privacy: '🔒 Chúng tôi không bao giờ lưu trữ hoặc chia sẻ vị trí của bạn. Chỉ dùng để tìm ưu đãi trong khu vực của bạn.',
+      privacy: '🔒 Chúng tôi không bao giờ lưu trữ hoặc chia sẻ vị trí của bạn.',
       skip: 'Bỏ qua — Tôi không muốn chia sẻ vị trí',
     },
     TL: {
@@ -83,7 +181,7 @@ function Onboarding({ language, onBack }) {
       placeholder: 'Ilagay ang zip code',
       next: 'Susunod',
       back: '← Bumalik',
-      privacy: '🔒 Hindi namin kailanman ini-imbak o ibinabahagi ang iyong lokasyon. Ginagamit lamang ito para mahanap ang mga insentibo sa iyong lugar.',
+      privacy: '🔒 Hindi namin kailanman ini-imbak o ibinabahagi ang iyong lokasyon.',
       skip: 'Laktawan — Ayaw kong ibahagi ang aking lokasyon',
     },
     RU: {
@@ -91,7 +189,7 @@ function Onboarding({ language, onBack }) {
       placeholder: 'Введите почтовый индекс',
       next: 'Далее',
       back: '← Назад',
-      privacy: '🔒 Мы никогда не храним и не передаём ваше местоположение. Оно используется только для поиска льгот в вашем регионе.',
+      privacy: '🔒 Мы никогда не храним и не передаём ваше местоположение.',
       skip: 'Пропустить — я не хочу делиться своим местоположением',
     },
     HT: {
@@ -99,23 +197,12 @@ function Onboarding({ language, onBack }) {
       placeholder: 'Antre kòd postal',
       next: 'Pwochen',
       back: '← Retounen',
-      privacy: '🔒 Nou pa janm estoke oswa pataje kote ou ye. Sa a sèlman itilize pou jwenn ensentif nan zòn ou an.',
+      privacy: '🔒 Nou pa janm estoke oswa pataje kote ou ye.',
       skip: 'Sote — Mwen prefere pa pataje kote mwen ye',
     },
   };
 
   const current = content[language] || content.EN;
-
-  const backButtonStyle = {
-    backgroundColor: 'transparent',
-    color: '#4F8C6F',
-    border: 'none',
-    fontSize: '16px',
-    cursor: 'pointer',
-    padding: '8px 0',
-    marginBottom: '24px',
-    alignSelf: 'flex-start',
-  };
 
   if (screen === 'housing') {
     return <HousingType language={language}
@@ -154,7 +241,6 @@ function Onboarding({ language, onBack }) {
   }
 
   if (screen === 'loading') {
-    setTimeout(() => setScreen('dashboard'), 2000);
     return (
       <div style={{
         display: 'flex',
@@ -163,9 +249,62 @@ function Onboarding({ language, onBack }) {
         justifyContent: 'center',
         height: '100vh',
         backgroundColor: '#FAF7F2',
+        fontFamily: 'Poppins, sans-serif',
+        padding: '24px',
+        textAlign: 'center',
       }}>
-        <h2 style={{ color: '#4F8C6F', fontSize: '24px' }}>Finding your options...</h2>
-        <p style={{ color: '#2C2C2C', fontSize: '16px', marginTop: '16px' }}>🌱 Building your personalized plan</p>
+        {/* Animated leaf */}
+        <div style={{
+          fontSize: '64px',
+          marginBottom: '32px',
+          animation: 'spin 3s linear infinite',
+        }}>
+          🌱
+        </div>
+
+        {/* Animated message */}
+        <p style={{
+          color: '#2C2C2C',
+          fontSize: '22px',
+          fontWeight: '500',
+          maxWidth: '320px',
+          lineHeight: '1.6',
+          opacity: fadeIn ? 1 : 0,
+          transform: fadeIn ? 'translateY(0)' : 'translateY(10px)',
+          transition: 'opacity 0.4s ease, transform 0.4s ease',
+        }}>
+          {messages[loadingStep]}
+        </p>
+
+        {/* Progress dots */}
+        <div style={{
+          display: 'flex',
+          gap: '10px',
+          marginTop: '40px',
+        }}>
+          {messages.map((_, index) => (
+            <div
+              key={index}
+              style={{
+                width: '10px',
+                height: '10px',
+                borderRadius: '50%',
+                backgroundColor: index <= loadingStep ? '#4F8C6F' : '#E8E0D5',
+                transition: 'background-color 0.4s ease',
+              }}
+            />
+          ))}
+        </div>
+
+        <style>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(10deg) scale(1.1); }
+            50% { transform: rotate(0deg) scale(1); }
+            75% { transform: rotate(-10deg) scale(1.1); }
+            100% { transform: rotate(0deg) scale(1); }
+          }
+        `}</style>
       </div>
     );
   }
@@ -225,7 +364,16 @@ function Onboarding({ language, onBack }) {
           }}/>
         </div>
 
-        <button onClick={onBack} style={backButtonStyle}>
+        <button onClick={onBack} style={{
+          backgroundColor: 'transparent',
+          color: '#4F8C6F',
+          border: 'none',
+          fontSize: '16px',
+          cursor: 'pointer',
+          padding: '8px 0',
+          marginBottom: '24px',
+          alignSelf: 'flex-start',
+        }}>
           {current.back}
         </button>
 
