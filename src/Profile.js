@@ -408,7 +408,7 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
               <div>
                 <p style={{ ...labelStyle, marginBottom: '4px' }}><BellIcon /> {current.notifications}</p>
-                <p style={{ color: '#5C6B5E', fontSize: '13px', margin: '4px 0 0 0' }}>
+                <p style={{ color: '#5C6B5E', fontSize: '13px', margin: '8px 0 4px 0' }}>
                   {current.notificationsDesc}
                 </p>
               </div>
