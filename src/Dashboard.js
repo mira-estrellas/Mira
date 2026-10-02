@@ -685,7 +685,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
         </div>
       )}
 
-      <NavBar activeTab={activeTab} onTabChange={setActiveTab} language={language} />
+      <NavBar activeTab={activeTab} onTabChange={setActiveTab} language={language} transparentAtTop={true} />
     </>
   );
 }
