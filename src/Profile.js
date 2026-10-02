@@ -405,10 +405,10 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
 
           {/* Notifications */}
           <div style={sectionStyle}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-              <div>
-                <p style={{ ...labelStyle, marginBottom: '4px' }}><BellIcon /> {current.notifications}</p>
-                <p style={{ color: '#5C6B5E', fontSize: '13px', margin: '12px 0 4px 0' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ flex: 1 }}>
+                <p style={{ ...labelStyle, marginBottom: '12px' }}><BellIcon /> {current.notifications}</p>
+                <p style={{ color: '#5C6B5E', fontSize: '14px', margin: 0, lineHeight: '1.6' }}>
                   {current.notificationsDesc}
                 </p>
               </div>
@@ -424,6 +424,8 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
                   position: 'relative',
                   transition: 'all 0.3s ease',
                   flexShrink: 0,
+                  marginLeft: '16px',
+                  alignSelf: 'center',
                 }}
               >
                 <div style={{
