@@ -106,7 +106,7 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
   const sectionStyle = {
     backgroundColor: 'white',
     borderRadius: '16px',
-    padding: '20px',
+    padding: '14px 20px',
     marginBottom: '12px',
     boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
   };
