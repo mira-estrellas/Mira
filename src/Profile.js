@@ -9,6 +9,7 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
   const [newIncome, setNewIncome] = useState(householdIncome || 80000);
   const [newBudget, setNewBudget] = useState(budget || '');
   const [notifications, setNotifications] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   const content = {
     EN: {
@@ -92,12 +93,14 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
   };
 
   const handleReset = () => {
-    if (window.confirm(current.resetConfirm)) {
-      try {
-        localStorage.clear();
-      } catch {}
-      window.location.reload();
-    }
+    setShowResetConfirm(true);
+  };
+
+  const confirmReset = () => {
+    try {
+      localStorage.clear();
+    } catch {}
+    window.location.reload();
   };
 
   const sectionStyle = {
@@ -189,8 +192,8 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
     </svg>
   );
 
-  const TrashIcon = () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+  const TrashIcon = ({ color = 'currentColor', size = 14 }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="3 6 5 6 21 6"/>
       <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
       <path d="M10 11v6M14 11v6"/>
@@ -479,8 +482,8 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
             style={{
               width: '100%',
               backgroundColor: 'transparent',
-              color: '#A0A0A0',
-              border: '2px solid #E8E0D5',
+              color: '#C0392B',
+              border: '2px solid #C0392B',
               padding: '14px',
               borderRadius: '30px',
               fontSize: '14px',
@@ -499,6 +502,85 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
 
         </div>
       </div>
+
+          {/* Reset Confirmation Modal */}
+          {showResetConfirm && (
+            <div style={{
+              position: 'fixed',
+              inset: 0,
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 2000,
+              padding: '24px',
+            }}>
+              <div style={{
+                backgroundColor: 'white',
+                borderRadius: '20px',
+                padding: '28px 24px',
+                maxWidth: '340px',
+                width: '100%',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+                textAlign: 'center',
+              }}>
+                <div style={{
+                  width: '48px',
+                  height: '48px',
+                  backgroundColor: '#FEE2E2',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 16px',
+                }}>
+                  <TrashIcon color="#C0392B" size={22} />
+                </div>
+                <h3 style={{ color: '#1A1A1A', fontSize: '18px', margin: '0 0 10px 0', fontWeight: '600' }}>
+                  Reset Mira?
+                </h3>
+                <p style={{ color: '#5C6B5E', fontSize: '14px', margin: '0 0 24px 0', lineHeight: '1.6' }}>
+                  {current.resetConfirm}
+                </p>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <button
+                    onClick={() => setShowResetConfirm(false)}
+                    style={{
+                      flex: 1,
+                      backgroundColor: 'transparent',
+                      color: '#5C6B5E',
+                      border: '2px solid #E8E0D5',
+                      padding: '12px',
+                      borderRadius: '30px',
+                      fontSize: '15px',
+                      cursor: 'pointer',
+                      fontFamily: 'Poppins, sans-serif',
+                    }}
+                  >
+                    {current.cancel}
+                  </button>
+                  <button
+                    onClick={confirmReset}
+                    style={{
+                      flex: 1,
+                      backgroundColor: '#C0392B',
+                      color: 'white',
+                      border: 'none',
+                      padding: '12px',
+                      borderRadius: '30px',
+                      fontSize: '15px',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      fontFamily: 'Poppins, sans-serif',
+                    }}
+                  >
+                    {current.reset}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
     </>
   );
 }
