@@ -295,7 +295,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
         {/* Hero header */}
         <div style={{
           background: `linear-gradient(135deg, ${colors.forestDeep} 0%, ${colors.canopy} 100%)`,
-          padding: '80px 24px 48px',
+          padding: '100px 24px 48px',
           position: 'relative',
           overflow: 'hidden',
           textAlign: 'center',
