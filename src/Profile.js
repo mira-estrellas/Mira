@@ -405,8 +405,13 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
 
           {/* Notifications */}
           <div style={sectionStyle}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-              <p style={labelStyle}><BellIcon /> {current.notifications}</p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <div>
+                <p style={{ ...labelStyle, marginBottom: '4px' }}><BellIcon /> {current.notifications}</p>
+                <p style={{ color: '#5C6B5E', fontSize: '13px', margin: 0 }}>
+                  {current.notificationsDesc}
+                </p>
+              </div>
               <button
                 onClick={() => setNotifications(!notifications)}
                 style={{
@@ -434,14 +439,11 @@ function Profile({ language, zipCode, housingType, budget, householdSize, househ
                 }}/>
               </button>
             </div>
-            <p style={{ color: '#5C6B5E', fontSize: '13px', margin: 0 }}>
-              {current.notificationsDesc}
-            </p>
           </div>
 
           {/* Saved Incentives */}
           <div style={sectionStyle}>
-            <p style={{ ...labelStyle, marginBottom: '16px' }}><StarIcon /> {current.savedIncentives}</p>
+            <p style={{ ...labelStyle, marginBottom: '12px' }}><StarIcon /> {current.savedIncentives}</p>
             {savedIncentives && savedIncentives.length > 0 ? (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {savedIncentives.map((item, index) => (
