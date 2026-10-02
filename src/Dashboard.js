@@ -351,7 +351,15 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
               justifyContent: 'center',
             }}>
               {[
-                currentZip && `📍 ${currentZip}`,
+                currentZip && (
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/>
+                      <circle cx="12" cy="9" r="2.5"/>
+                    </svg>
+                    {currentZip}
+                  </span>
+                ),
                 current.profileHousing[currentHousing] || current.profileHousing.rent,
                 currentBudget ? `$${currentBudget}/mo budget` : 'Budget flexible',
               ].filter(Boolean).map((item, index) => (
