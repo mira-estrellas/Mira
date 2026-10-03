@@ -8,6 +8,7 @@ import useIncentives from './useIncentives';
 import CarbonTracker from './CarbonTracker';
 import WaterTracker from './WaterTracker';
 import GoFurther from './GoFurther';
+import AnimatedSection from './AnimatedSection';
 
 function Dashboard({ language, zipCode, housingType, budget, householdSize, householdIncome }) {
   const [isWide, setIsWide] = useState(window.innerWidth > 600);
@@ -219,12 +220,10 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
 
   const current = content[language] || content.EN;
 
-  // Te Fiti palette
   const colors = {
     forestDeep: '#1B5E3B',
     canopy: '#2D7D52',
     newGrowth: '#4CAF7D',
-    bark: '#8B4513',
     clay: '#C4874A',
     parchment: '#F5F0E8',
     morningDew: '#E8F0E9',
@@ -300,23 +299,14 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
           overflow: 'hidden',
           textAlign: 'center',
         }}>
-          {/* Decorative circles */}
           <div style={{
-            position: 'absolute',
-            top: '-40px',
-            right: '-40px',
-            width: '200px',
-            height: '200px',
-            borderRadius: '50%',
+            position: 'absolute', top: '-40px', right: '-40px',
+            width: '200px', height: '200px', borderRadius: '50%',
             backgroundColor: 'rgba(255,255,255,0.04)',
           }} />
           <div style={{
-            position: 'absolute',
-            bottom: '-60px',
-            left: '-20px',
-            width: '150px',
-            height: '150px',
-            borderRadius: '50%',
+            position: 'absolute', bottom: '-60px', left: '-20px',
+            width: '150px', height: '150px', borderRadius: '50%',
             backgroundColor: 'rgba(255,255,255,0.03)',
           }} />
 
@@ -334,22 +324,14 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
             <p style={{
               color: 'rgba(255,255,255,0.85)',
               fontSize: '17px',
-              margin: '0 0 28px 0',
+              margin: '0 auto 28px',
               lineHeight: '1.7',
               maxWidth: '560px',
-              marginLeft: 'auto',
-              marginRight: 'auto',
             }}>
               {current.subtitle}
             </p>
 
-            {/* Profile pills */}
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '8px',
-              justifyContent: 'center',
-            }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
               {[
                 currentZip && (
                   <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -370,6 +352,9 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
                   borderRadius: '20px',
                   fontSize: '13px',
                   backdropFilter: 'blur(4px)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
                 }}>
                   {item}
                 </span>
@@ -379,18 +364,13 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
         </div>
 
         {/* Main content */}
-        <div style={{
-          maxWidth: '900px',
-          margin: '0 auto',
-          padding: '0 24px 60px',
-        }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 24px 60px' }}>
 
           {loading && (
             <p style={{ color: colors.canopy, fontSize: '15px', margin: '24px 0 0 0' }}>
               Finding money available to you...
             </p>
           )}
-
           {error && (
             <p style={{ color: colors.clay, fontSize: '15px', margin: '24px 0 0 0' }}>
               Couldn't load live incentives right now. Showing general programs below.
@@ -398,134 +378,30 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
           )}
 
           {/* Money Available Section */}
-          <div style={sectionStyle}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              marginBottom: '6px',
-            }}>
-              <div style={{
-                width: '4px',
-                height: '28px',
-                backgroundColor: colors.canopy,
-                borderRadius: '4px',
-              }} />
-              <h2 style={{
-                color: colors.almostBlack,
-                fontSize: '22px',
-                fontWeight: '700',
-                margin: 0,
-                letterSpacing: '-0.3px',
-              }}>
-                {current.incentivesTitle}
-              </h2>
-            </div>
-            <p style={{
-              color: colors.mossy,
-              fontSize: '14px',
-              margin: '0 0 20px 0',
-              lineHeight: '1.6',
-              paddingLeft: '14px',
-            }}>
-              {current.incentivesDesc}
-            </p>
-          </div>
-
-          {incentives.length > 0 ? (
-            <div style={gridStyle}>
-              {incentives.filter(item => !item.paused).map((item, index) => {
-                const isSaved = savedIncentives.some(s => s.program === item.program);
-                return (
-                  <div key={index} style={cardStyle}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                      <h3 style={{ color: colors.almostBlack, fontSize: '15px', margin: 0, flex: 1, lineHeight: '1.4' }}>
-                        {item.program}
-                      </h3>
-                      <span style={{
-                        backgroundColor: colors.morningDew,
-                        color: colors.forestDeep,
-                        borderRadius: '20px',
-                        padding: '4px 12px',
-                        fontSize: '13px',
-                        fontWeight: '700',
-                        marginLeft: '10px',
-                        whiteSpace: 'nowrap',
-                      }}>
-                        {item.amount.type === 'dollar_amount' ? `$${item.amount.number.toLocaleString()}` :
-                         item.amount.type === 'percent' ? `${item.amount.number}%` : 'Varies'}
-                      </span>
-                    </div>
-                    <p style={{ color: colors.mossy, fontSize: '13px', margin: '0 0 12px 0', lineHeight: '1.6' }}>
-                      {item.short_description}
-                    </p>
-                    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '12px' }}>
-                      <span style={{ backgroundColor: colors.morningDew, color: colors.canopy, borderRadius: '8px', padding: '3px 8px', fontSize: '11px', fontWeight: '600' }}>
-                        {item.authority_type === 'federal' ? 'Federal' :
-                         item.authority_type === 'state' ? 'State' :
-                         item.authority_type === 'utility' ? 'Utility' : 'Local'}
-                      </span>
-                      <span style={{ backgroundColor: colors.morningDew, color: colors.canopy, borderRadius: '8px', padding: '3px 8px', fontSize: '11px', fontWeight: '600' }}>
-                        {item.payment_methods[0] === 'tax_credit' ? 'Tax Credit' :
-                         item.payment_methods[0] === 'pos_rebate' ? 'Instant Rebate' :
-                         item.payment_methods[0] === 'rebate' ? 'Rebate' : 'Discount'}
-                      </span>
-                    </div>
-                    <div style={{ display: 'flex', gap: '8px', marginTop: 'auto' }}>
-                      {item.program_url && (
-                        <button
-                          onClick={() => window.open(item.program_url, '_blank')}
-                          style={{
-                            flex: 1, backgroundColor: colors.canopy, color: 'white',
-                            border: 'none', padding: '10px', borderRadius: '12px',
-                            fontSize: '13px', cursor: 'pointer', fontWeight: '600',
-                            fontFamily: 'Poppins, sans-serif',
-                          }}
-                        >
-                          Learn More
-                        </button>
-                      )}
-                      <button
-                        onClick={() => handleSaveIncentive(item)}
-                        style={{
-                          flex: 1,
-                          backgroundColor: isSaved ? colors.morningDew : 'transparent',
-                          color: isSaved ? colors.forestDeep : colors.mossy,
-                          border: `2px solid ${isSaved ? colors.newGrowth : colors.morningDew}`,
-                          padding: '10px', borderRadius: '12px',
-                          fontSize: '13px', cursor: 'pointer',
-                          fontFamily: 'Poppins, sans-serif',
-                        }}
-                      >
-                        {isSaved ? current.savedIncentive : current.saveIncentive}
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <div>
-              <div style={{
-                backgroundColor: colors.softWhite,
-                borderRadius: '16px',
-                padding: '16px 20px',
-                marginBottom: '16px',
-                fontSize: '14px',
-                color: colors.mossy,
-                lineHeight: '1.7',
-                borderLeft: `4px solid ${colors.clay}`,
-              }}>
-                {current.fallbackNote}
+          <AnimatedSection delay={0}>
+            <div style={sectionStyle}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                <div style={{ width: '4px', height: '28px', backgroundColor: colors.canopy, borderRadius: '4px' }} />
+                <h2 style={{ color: colors.almostBlack, fontSize: '22px', fontWeight: '700', margin: 0, letterSpacing: '-0.3px' }}>
+                  {current.incentivesTitle}
+                </h2>
               </div>
+              <p style={{ color: colors.mossy, fontSize: '14px', margin: '0 0 20px 0', lineHeight: '1.6', paddingLeft: '14px' }}>
+                {current.incentivesDesc}
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.15}>
+            {incentives.length > 0 ? (
               <div style={gridStyle}>
-                {current.incentiveItems.map((item, index) => {
-                  const isSaved = savedIncentives.some(s => s.title === item.title);
+                {incentives.filter(item => !item.paused).map((item, index) => {
+                  const isSaved = savedIncentives.some(s => s.program === item.program);
                   return (
                     <div key={index} style={cardStyle}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                        <h3 style={{ color: colors.almostBlack, fontSize: '15px', margin: 0, flex: 1 }}>
-                          {item.title}
+                        <h3 style={{ color: colors.almostBlack, fontSize: '15px', margin: 0, flex: 1, lineHeight: '1.4' }}>
+                          {item.program}
                         </h3>
                         <span style={{
                           backgroundColor: colors.morningDew, color: colors.forestDeep,
@@ -533,141 +409,238 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
                           fontSize: '13px', fontWeight: '700',
                           marginLeft: '10px', whiteSpace: 'nowrap',
                         }}>
-                          {item.amount}
+                          {item.amount.type === 'dollar_amount' ? `$${item.amount.number.toLocaleString()}` :
+                           item.amount.type === 'percent' ? `${item.amount.number}%` : 'Varies'}
                         </span>
                       </div>
                       <p style={{ color: colors.mossy, fontSize: '13px', margin: '0 0 12px 0', lineHeight: '1.6' }}>
-                        {item.description}
+                        {item.short_description}
                       </p>
-                      <button
-                        onClick={() => handleSaveFallbackIncentive(item)}
-                        style={{
-                          width: '100%',
-                          backgroundColor: isSaved ? colors.morningDew : 'transparent',
-                          color: isSaved ? colors.forestDeep : colors.mossy,
-                          border: `2px solid ${isSaved ? colors.newGrowth : colors.morningDew}`,
-                          padding: '10px', borderRadius: '12px',
-                          fontSize: '13px', cursor: 'pointer', marginTop: 'auto',
-                          fontFamily: 'Poppins, sans-serif',
-                        }}
-                      >
-                        {isSaved ? current.savedIncentive : current.saveIncentive}
-                      </button>
+                      <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '12px' }}>
+                        <span style={{ backgroundColor: colors.morningDew, color: colors.canopy, borderRadius: '8px', padding: '3px 8px', fontSize: '11px', fontWeight: '600' }}>
+                          {item.authority_type === 'federal' ? 'Federal' :
+                           item.authority_type === 'state' ? 'State' :
+                           item.authority_type === 'utility' ? 'Utility' : 'Local'}
+                        </span>
+                        <span style={{ backgroundColor: colors.morningDew, color: colors.canopy, borderRadius: '8px', padding: '3px 8px', fontSize: '11px', fontWeight: '600' }}>
+                          {item.payment_methods[0] === 'tax_credit' ? 'Tax Credit' :
+                           item.payment_methods[0] === 'pos_rebate' ? 'Instant Rebate' :
+                           item.payment_methods[0] === 'rebate' ? 'Rebate' : 'Discount'}
+                        </span>
+                      </div>
+                      <div style={{ display: 'flex', gap: '8px', marginTop: 'auto' }}>
+                        {item.program_url && (
+                          <button
+                            onClick={() => window.open(item.program_url, '_blank')}
+                            style={{
+                              flex: 1, backgroundColor: colors.canopy, color: 'white',
+                              border: 'none', padding: '10px', borderRadius: '12px',
+                              fontSize: '13px', cursor: 'pointer', fontWeight: '600',
+                              fontFamily: 'Poppins, sans-serif',
+                            }}
+                          >
+                            Learn More
+                          </button>
+                        )}
+                        <button
+                          onClick={() => handleSaveIncentive(item)}
+                          style={{
+                            flex: 1,
+                            backgroundColor: isSaved ? colors.morningDew : 'transparent',
+                            color: isSaved ? colors.forestDeep : colors.mossy,
+                            border: `2px solid ${isSaved ? colors.newGrowth : colors.morningDew}`,
+                            padding: '10px', borderRadius: '12px',
+                            fontSize: '13px', cursor: 'pointer',
+                            fontFamily: 'Poppins, sans-serif',
+                          }}
+                        >
+                          {isSaved ? current.savedIncentive : current.saveIncentive}
+                        </button>
+                      </div>
                     </div>
                   );
                 })}
               </div>
-            </div>
-          )}
+            ) : (
+              <div>
+                <div style={{
+                  backgroundColor: colors.softWhite,
+                  borderRadius: '16px',
+                  padding: '16px 20px',
+                  marginBottom: '16px',
+                  fontSize: '14px',
+                  color: colors.mossy,
+                  lineHeight: '1.7',
+                  borderLeft: `4px solid ${colors.clay}`,
+                }}>
+                  {current.fallbackNote}
+                </div>
+                <div style={gridStyle}>
+                  {current.incentiveItems.map((item, index) => {
+                    const isSaved = savedIncentives.some(s => s.title === item.title);
+                    return (
+                      <div key={index} style={cardStyle}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                          <h3 style={{ color: colors.almostBlack, fontSize: '15px', margin: 0, flex: 1 }}>
+                            {item.title}
+                          </h3>
+                          <span style={{
+                            backgroundColor: colors.morningDew, color: colors.forestDeep,
+                            borderRadius: '20px', padding: '4px 12px',
+                            fontSize: '13px', fontWeight: '700',
+                            marginLeft: '10px', whiteSpace: 'nowrap',
+                          }}>
+                            {item.amount}
+                          </span>
+                        </div>
+                        <p style={{ color: colors.mossy, fontSize: '13px', margin: '0 0 12px 0', lineHeight: '1.6' }}>
+                          {item.description}
+                        </p>
+                        <button
+                          onClick={() => handleSaveFallbackIncentive(item)}
+                          style={{
+                            width: '100%',
+                            backgroundColor: isSaved ? colors.morningDew : 'transparent',
+                            color: isSaved ? colors.forestDeep : colors.mossy,
+                            border: `2px solid ${isSaved ? colors.newGrowth : colors.morningDew}`,
+                            padding: '10px', borderRadius: '12px',
+                            fontSize: '13px', cursor: 'pointer', marginTop: 'auto',
+                            fontFamily: 'Poppins, sans-serif',
+                          }}
+                        >
+                          {isSaved ? current.savedIncentive : current.saveIncentive}
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </AnimatedSection>
 
           {/* Easy Changes Section */}
-          <div style={sectionStyle}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-              <div style={{ width: '4px', height: '28px', backgroundColor: colors.clay, borderRadius: '4px' }} />
-              <h2 style={{ color: colors.almostBlack, fontSize: '22px', fontWeight: '700', margin: 0, letterSpacing: '-0.3px' }}>
-                {current.swapsTitle}
-              </h2>
-            </div>
-            <p style={{ color: colors.mossy, fontSize: '14px', margin: '0 0 6px 0', lineHeight: '1.6', paddingLeft: '14px' }}>
-              {current.swapsDesc}
-            </p>
-            <p style={{ color: colors.canopy, fontSize: '13px', margin: '0 0 20px 0', paddingLeft: '14px', fontWeight: '500' }}>
-              {current.budgetNote}
-            </p>
-          </div>
-
-          <div style={gridStyle}>
-            {swapItems.map((item, index) => (
-              <div key={index} style={cardStyle}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                  <h3 style={{ color: colors.almostBlack, fontSize: '15px', margin: 0, flex: 1 }}>
-                    {item.title}
-                  </h3>
-                  <span style={{
-                    backgroundColor: '#FDF0E8',
-                    color: colors.clay,
-                    borderRadius: '20px', padding: '4px 12px',
-                    fontSize: '13px', fontWeight: '700',
-                    marginLeft: '10px', whiteSpace: 'nowrap',
-                  }}>
-                    {item.cost}
-                  </span>
-                </div>
-                <p style={{ color: colors.mossy, fontSize: '13px', margin: 0, lineHeight: '1.6' }}>
-                  {item.description}
-                </p>
+          <AnimatedSection delay={0}>
+            <div style={sectionStyle}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                <div style={{ width: '4px', height: '28px', backgroundColor: colors.clay, borderRadius: '4px' }} />
+                <h2 style={{ color: colors.almostBlack, fontSize: '22px', fontWeight: '700', margin: 0, letterSpacing: '-0.3px' }}>
+                  {current.swapsTitle}
+                </h2>
               </div>
-            ))}
-          </div>
+              <p style={{ color: colors.mossy, fontSize: '14px', margin: '0 0 6px 0', lineHeight: '1.6', paddingLeft: '14px' }}>
+                {current.swapsDesc}
+              </p>
+              <p style={{ color: colors.canopy, fontSize: '13px', margin: '0 0 20px 0', paddingLeft: '14px', fontWeight: '500' }}>
+                {current.budgetNote}
+              </p>
+            </div>
+          </AnimatedSection>
 
-          {/* Zero Waste Guide Link */}
-          <a
-            href="/guide"
-            style={{
-              display: 'block',
-              textAlign: 'center',
-              color: colors.canopy,
-              fontSize: '14px',
-              fontWeight: '600',
-              textDecoration: 'none',
-              padding: '14px',
-              backgroundColor: colors.softWhite,
-              borderRadius: '12px',
-              border: `2px solid ${colors.morningDew}`,
-              marginBottom: '16px',
-            }}
-          >
-            {current.guideLink}
-          </a>
+          <AnimatedSection delay={0.15}>
+            <div style={gridStyle}>
+              {swapItems.map((item, index) => (
+                <div key={index} style={cardStyle}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                    <h3 style={{ color: colors.almostBlack, fontSize: '15px', margin: 0, flex: 1 }}>
+                      {item.title}
+                    </h3>
+                    <span style={{
+                      backgroundColor: '#FDF0E8', color: colors.clay,
+                      borderRadius: '20px', padding: '4px 12px',
+                      fontSize: '13px', fontWeight: '700',
+                      marginLeft: '10px', whiteSpace: 'nowrap',
+                    }}>
+                      {item.cost}
+                    </span>
+                  </div>
+                  <p style={{ color: colors.mossy, fontSize: '13px', margin: 0, lineHeight: '1.6' }}>
+                    {item.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.2}>
+            <a
+              href="/guide"
+              style={{
+                display: 'block',
+                textAlign: 'center',
+                color: colors.canopy,
+                fontSize: '14px',
+                fontWeight: '600',
+                textDecoration: 'none',
+                padding: '14px',
+                backgroundColor: colors.softWhite,
+                borderRadius: '12px',
+                border: `2px solid ${colors.morningDew}`,
+                marginBottom: '16px',
+              }}
+            >
+              {current.guideLink}
+            </a>
+          </AnimatedSection>
 
           {/* Impact Section */}
-          <div style={sectionStyle}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-              <div style={{ width: '4px', height: '28px', backgroundColor: colors.newGrowth, borderRadius: '4px' }} />
-              <h2 style={{ color: colors.almostBlack, fontSize: '22px', fontWeight: '700', margin: 0, letterSpacing: '-0.3px' }}>
-                {current.impactTitle}
-              </h2>
-            </div>
-            <p style={{ color: colors.mossy, fontSize: '14px', margin: '0 0 20px 0', lineHeight: '1.6', paddingLeft: '14px' }}>
-              {current.impactDesc}
-            </p>
-          </div>
-
-          <div style={impactGridStyle}>
-            {impactStats.map((item, index) => (
-              <div key={index} style={{
-                background: `linear-gradient(135deg, ${colors.forestDeep} 0%, ${colors.canopy} 100%)`,
-                borderRadius: '20px',
-                padding: '24px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '8px',
-              }}>
-                <span style={{ color: 'white', fontSize: '28px', fontWeight: '800', letterSpacing: '-1px' }}>
-                  {item.stat}
-                </span>
-                <span style={{ color: 'rgba(255,255,255,0.9)', fontSize: '15px', lineHeight: '1.5' }}>
-                  {item.description}
-                </span>
+          <AnimatedSection delay={0}>
+            <div style={sectionStyle}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                <div style={{ width: '4px', height: '28px', backgroundColor: colors.newGrowth, borderRadius: '4px' }} />
+                <h2 style={{ color: colors.almostBlack, fontSize: '22px', fontWeight: '700', margin: 0, letterSpacing: '-0.3px' }}>
+                  {current.impactTitle}
+                </h2>
               </div>
-            ))}
-          </div>
+              <p style={{ color: colors.mossy, fontSize: '14px', margin: '0 0 20px 0', lineHeight: '1.6', paddingLeft: '14px' }}>
+                {current.impactDesc}
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.15}>
+            <div style={impactGridStyle}>
+              {impactStats.map((item, index) => (
+                <div key={index} style={{
+                  background: `linear-gradient(135deg, ${colors.forestDeep} 0%, ${colors.canopy} 100%)`,
+                  borderRadius: '20px',
+                  padding: '24px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '8px',
+                }}>
+                  <span style={{ color: 'white', fontSize: '28px', fontWeight: '800', letterSpacing: '-1px' }}>
+                    {item.stat}
+                  </span>
+                  <span style={{ color: 'rgba(255,255,255,0.9)', fontSize: '15px', lineHeight: '1.5' }}>
+                    {item.description}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </AnimatedSection>
 
           {/* Track Your Footprint Section */}
-          <div style={sectionStyle}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-              <div style={{ width: '4px', height: '28px', backgroundColor: colors.canopy, borderRadius: '4px' }} />
-              <h2 style={{ color: colors.almostBlack, fontSize: '22px', fontWeight: '700', margin: 0, letterSpacing: '-0.3px' }}>
-                {current.trackTitle}
-              </h2>
+          <AnimatedSection delay={0}>
+            <div style={sectionStyle}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                <div style={{ width: '4px', height: '28px', backgroundColor: colors.canopy, borderRadius: '4px' }} />
+                <h2 style={{ color: colors.almostBlack, fontSize: '22px', fontWeight: '700', margin: 0, letterSpacing: '-0.3px' }}>
+                  {current.trackTitle}
+                </h2>
+              </div>
+              <p style={{ color: colors.mossy, fontSize: '14px', margin: '0 0 20px 0', lineHeight: '1.6', paddingLeft: '14px' }}>
+                {current.trackDesc}
+              </p>
             </div>
-            <p style={{ color: colors.mossy, fontSize: '14px', margin: '0 0 20px 0', lineHeight: '1.6', paddingLeft: '14px' }}>
-              {current.trackDesc}
-            </p>
-          </div>
+          </AnimatedSection>
 
-          <CarbonTracker language={language} />
-          <WaterTracker language={language} />
+          <AnimatedSection delay={0.15}>
+            <CarbonTracker language={language} />
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.25}>
+            <WaterTracker language={language} />
+          </AnimatedSection>
 
         </div>
       </div>
@@ -675,7 +648,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
       {showScrollHint && (
         <div style={{
           position: 'fixed',
-          bottom: '90px',
+          bottom: '32px',
           zIndex: 999,
           left: '50%',
           transform: 'translateX(-50%)',
@@ -687,7 +660,6 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
           pointerEvents: 'none',
           whiteSpace: 'nowrap',
           boxShadow: '0 4px 16px rgba(27,94,59,0.3)',
-          animation: 'bounce 1.5s infinite',
         }}>
           {current.scrollHint}
         </div>
