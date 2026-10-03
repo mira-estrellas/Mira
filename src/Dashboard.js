@@ -96,36 +96,6 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
 
   const budgetNum = parseFloat(currentBudget) || null;
 
-  const getStateFromZip = (zip) => {
-    if (!zip) return null;
-    const ZIP_TO_STATE = {
-      '06': 'Connecticut', '07': 'New Jersey', '08': 'New Jersey',
-      '10': 'New York', '11': 'New York', '12': 'New York', '13': 'New York', '14': 'New York',
-      '15': 'Pennsylvania', '16': 'Pennsylvania', '17': 'Pennsylvania', '18': 'Pennsylvania', '19': 'Pennsylvania',
-      '20': 'Washington D.C.', '21': 'Maryland', '22': 'Virginia', '23': 'Virginia', '24': 'Virginia',
-      '25': 'West Virginia', '26': 'West Virginia', '27': 'North Carolina', '28': 'North Carolina',
-      '29': 'South Carolina', '30': 'Georgia', '31': 'Georgia', '32': 'Florida', '33': 'Florida', '34': 'Florida',
-      '35': 'Alabama', '36': 'Alabama', '37': 'Tennessee', '38': 'Tennessee', '39': 'Mississippi',
-      '40': 'Kentucky', '41': 'Kentucky', '42': 'Kentucky', '43': 'Ohio', '44': 'Ohio', '45': 'Ohio',
-      '46': 'Indiana', '47': 'Indiana', '48': 'Michigan', '49': 'Michigan',
-      '50': 'Iowa', '51': 'Iowa', '52': 'Iowa', '53': 'Wisconsin', '54': 'Wisconsin',
-      '55': 'Minnesota', '56': 'Minnesota', '57': 'South Dakota', '58': 'North Dakota', '59': 'Montana',
-      '60': 'Illinois', '61': 'Illinois', '62': 'Illinois', '63': 'Missouri', '64': 'Missouri', '65': 'Missouri',
-      '66': 'Kansas', '67': 'Kansas', '68': 'Nebraska', '69': 'Nebraska',
-      '70': 'Louisiana', '71': 'Louisiana', '72': 'Arkansas', '73': 'Oklahoma', '74': 'Oklahoma',
-      '75': 'Texas', '76': 'Texas', '77': 'Texas', '78': 'Texas', '79': 'Texas',
-      '80': 'Colorado', '81': 'Colorado', '82': 'Wyoming', '83': 'Idaho', '84': 'Utah',
-      '85': 'Arizona', '86': 'Arizona', '87': 'New Mexico', '88': 'New Mexico', '89': 'Nevada',
-      '90': 'California', '91': 'California', '92': 'California', '93': 'California',
-      '94': 'California', '95': 'California', '96': 'California', '97': 'Oregon', '98': 'Washington', '99': 'Alaska',
-    };
-    const prefix2 = zip.substring(0, 2);
-    const prefix1 = zip.substring(0, 1);
-    return ZIP_TO_STATE[prefix2] || ZIP_TO_STATE[prefix1] || null;
-  };
-
-  const stateName = getStateFromZip(currentZip);
-
   const allSwapItems = {
     renter: {
       EN: [
