@@ -351,22 +351,27 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
             ))}
           </div>
         </div>
-      </div>
-
-      {/* Wave divider */}
-      <div style={{ marginTop: '-1px', lineHeight: 0 }}>
-        <svg
-          viewBox="0 0 1440 60"
-          xmlns="http://www.w3.org/2000/svg"
-          style={{ display: 'block', width: '100%' }}
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,0 C360,60 1080,0 1440,60 L1440,0 L0,0 Z"
-            fill="#2D7D52"
-          />
-        </svg>
-      </div>
+          {/* Wave built into hero */}
+          <div style={{
+            position: 'absolute',
+            bottom: '-1px',
+            left: 0,
+            right: 0,
+            lineHeight: 0,
+          }}>
+            <svg
+              viewBox="0 0 1440 60"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ display: 'block', width: '100%' }}
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M0,0 C360,60 1080,0 1440,60 L1440,60 L0,60 Z"
+                fill="#F5F0E8"
+              />
+            </svg>
+          </div>
+        </div>
 
       {/* Main content */}
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 24px 60px' }}>
