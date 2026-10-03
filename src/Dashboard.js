@@ -78,7 +78,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
     let frame;
     let t = 0;
     const animate = () => {
-      t += 0.008;
+      t += 0.02;
       const points = [];
       for (let x = 0; x <= 1440; x += 10) {
         const y = 40 + Math.sin((x / 720) * Math.PI + t) * 12;
