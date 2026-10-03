@@ -301,7 +301,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
 
       {/* Hero header */}
       <div style={{
-        background: `linear-gradient(160deg, ${colors.forestDeep} 0%, ${colors.canopy} 100%)`,
+        background: `linear-gradient(135deg, ${colors.forestDeep} 0%, ${colors.canopy} 100%)`,
         padding: '100px 24px 48px',
         position: 'relative',
         textAlign: 'center',
@@ -368,27 +368,30 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
             ))}
           </div>
         </div>
-          {/* Animated wave built into hero */}
-          <div style={{
-            position: 'absolute',
-            bottom: '-1px',
-            left: 0,
-            right: 0,
-            lineHeight: 0,
-          }}>
-            <svg
-              viewBox="0 0 1440 60"
-              xmlns="http://www.w3.org/2000/svg"
-              style={{ display: 'block', width: '100%' }}
-              preserveAspectRatio="none"
-            >
-              <path
-                id="mira-wave"
-                d="M0,60 C360,20 1080,20 1440,60 L1440,60 L0,60 Z"
-                fill="#F5F0E8"
-              />
-            </svg>
-          </div>
+
+        {/* Animated wave inside hero */}
+        <div style={{
+          position: 'absolute',
+          bottom: '-1px',
+          left: 0,
+          right: 0,
+          lineHeight: 0,
+        }}>
+          <svg
+            viewBox="0 0 1440 60"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ display: 'block', width: '100%' }}
+            preserveAspectRatio="none"
+          >
+            <path
+              id="mira-wave"
+              d="M0,60 C360,20 1080,20 1440,60 L1440,60 L0,60 Z"
+              fill="#F5F0E8"
+            />
+          </svg>
+        </div>
+
+      </div>
 
       {/* Main content */}
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 24px 60px' }}>
