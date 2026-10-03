@@ -284,7 +284,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
 
       {/* Hero header */}
       <div style={{
-        background: `linear-gradient(135deg, ${colors.forestDeep} 0%, ${colors.canopy} 100%)`,
+        background: `linear-gradient(160deg, ${colors.forestDeep} 0%, ${colors.canopy} 100%)`,
         padding: '100px 24px 48px',
         position: 'relative',
         textAlign: 'center',
@@ -354,21 +354,16 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
       </div>
 
       {/* Wave divider */}
-      <div style={{ marginTop: '-4px', lineHeight: 0, overflow: 'hidden' }}>
+      <div style={{ marginTop: '-1px', lineHeight: 0 }}>
         <svg
-          viewBox="0 0 1440 80"
+          viewBox="0 0 1440 60"
           xmlns="http://www.w3.org/2000/svg"
           style={{ display: 'block', width: '100%' }}
           preserveAspectRatio="none"
         >
           <path
-            d="M0,0 L1440,0 L1440,40 C1260,80 1080,0 900,40 C720,80 540,0 360,40 C180,80 0,20 0,40 Z"
-            fill="#1B5E3B"
-          />
-          <path
-            d="M0,0 L1440,0 L1440,30 C1200,70 960,10 720,50 C480,90 240,10 0,50 Z"
+            d="M0,0 C360,60 1080,0 1440,60 L1440,0 L0,0 Z"
             fill="#2D7D52"
-            opacity="0.8"
           />
         </svg>
       </div>
