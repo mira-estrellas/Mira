@@ -366,7 +366,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
               preserveAspectRatio="none"
             >
               <path
-                d="M0,0 C360,60 1080,0 1440,60 L1440,60 L0,60 Z"
+                d="M0,60 C240,0 480,60 720,30 C960,0 1200,60 1440,30 L1440,60 L0,60 Z"
                 fill="#F5F0E8"
               />
             </svg>
