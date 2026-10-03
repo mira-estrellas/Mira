@@ -81,7 +81,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
       t += 0.008;
       const points = [];
       for (let x = 0; x <= 1440; x += 10) {
-        const y = 40 + Math.sin((x / 1440) * Math.PI * 2 + t) * 15 + Math.sin((x / 1440) * Math.PI * 4 + t * 1.3) * 8;
+        const y = 40 + Math.sin((x / 720) * Math.PI + t) * 12;
         points.push(`${x},${y}`);
       }
       const path = document.getElementById('mira-wave');
