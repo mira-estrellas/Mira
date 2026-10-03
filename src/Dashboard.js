@@ -378,15 +378,15 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
             preserveAspectRatio="none"
           >
             <path
+              className="wave-1"
               d="M0,40 C180,80 360,0 540,40 C720,80 900,0 1080,40 C1260,80 1440,20 1440,40 L1440,0 L0,0 Z"
               fill="#2D7D52"
-              style={{ animation: 'waveMove 6s ease-in-out infinite' }}
             />
             <path
+              className="wave-2"
               d="M0,50 C200,90 400,10 600,50 C800,90 1000,10 1200,50 C1350,80 1440,30 1440,50 L1440,0 L0,0 Z"
               fill="#1B5E3B"
               opacity="0.7"
-              style={{ animation: 'waveMove 8s ease-in-out infinite reverse' }}
             />
           </svg>
         </div>
