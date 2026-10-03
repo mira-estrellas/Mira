@@ -74,6 +74,23 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    let frame;
+    let t = 0;
+    const animate = () => {
+      t += 0.01;
+      const p1 = 20 + Math.sin(t) * 15;
+      const p2 = 20 + Math.sin(t + Math.PI) * 15;
+      const path = document.getElementById('mira-wave');
+      if (path) {
+        path.setAttribute('d', `M0,60 C360,${p1} 1080,${p2} 1440,60 L1440,60 L0,60 Z`);
+      }
+      frame = requestAnimationFrame(animate);
+    };
+    animate();
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
   const budgetNum = parseFloat(currentBudget) || null;
 
   const getStateFromZip = (zip) => {
@@ -351,7 +368,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
             ))}
           </div>
         </div>
-          {/* Wave built into hero */}
+          {/* Animated wave built into hero */}
           <div style={{
             position: 'absolute',
             bottom: '-1px',
@@ -366,12 +383,12 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
               preserveAspectRatio="none"
             >
               <path
+                id="mira-wave"
                 d="M0,60 C360,20 1080,20 1440,60 L1440,60 L0,60 Z"
                 fill="#F5F0E8"
               />
             </svg>
           </div>
-        </div>
 
       {/* Main content */}
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 24px 60px' }}>
