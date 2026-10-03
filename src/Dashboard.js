@@ -181,8 +181,8 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
 
   const content = {
     EN: {
-      greeting: stateName ? `Here's what Mira found for you in ${stateName}` : 'Here\'s what Mira found for you',
-      subtitle: 'Your personalized roadmap to saving money and reducing your environmental impact — based on where you live and what you can afford.',
+      greeting: 'Here\'s what we found for you!',
+      subtitle: 'Personalized to your location, home and budget.',
       incentivesTitle: 'Money Available to You',
       incentivesDesc: 'Programs that help cover the cost of going green — from your government and utility company.',
       swapsTitle: 'Easy Changes You Can Make',
@@ -205,8 +205,8 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
       guideLink: 'Want more ideas? Read the Zero Waste Guide →',
     },
     ES: {
-      greeting: stateName ? `Esto es lo que Mira encontró para ti en ${stateName}` : 'Esto es lo que Mira encontró para ti',
-      subtitle: 'Tu hoja de ruta personalizada para ahorrar dinero y reducir tu impacto ambiental.',
+      greeting: '¡Esto es lo que encontramos para ti!',
+      subtitle: 'Personalizado según tu ubicación, hogar y presupuesto.',
       incentivesTitle: 'Dinero Disponible para Ti',
       incentivesDesc: 'Programas que ayudan a cubrir el costo de volverse verde.',
       swapsTitle: 'Cambios Fáciles que Puedes Hacer',
@@ -323,11 +323,12 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <h1 style={{
             color: 'white',
-            fontSize: isWide ? '34px' : '28px',
+            fontSize: isWide ? '38px' : '30px',
             fontWeight: '700',
-            margin: '0 0 14px 0',
+            margin: '0 0 10px 0',
             lineHeight: '1.3',
             letterSpacing: '-0.5px',
+            fontFamily: 'Klee One, sans-serif',
           }}>
             {current.greeting}
           </h1>
