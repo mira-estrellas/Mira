@@ -55,15 +55,17 @@ body {
   background-color: #000;
 }
 
-@keyframes waveMove {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(-25px); }
+@keyframes waveScale {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.85); }
 }
 
 .wave-1 {
-  animation: waveMove 6s ease-in-out infinite;
+  animation: waveScale 6s ease-in-out infinite;
+  transform-origin: bottom;
 }
 
 .wave-2 {
-  animation: waveMove 8s ease-in-out infinite reverse;
+  animation: waveScale 8s ease-in-out infinite reverse;
+  transform-origin: bottom;
 }
