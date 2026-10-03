@@ -78,13 +78,15 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
     let frame;
     let t = 0;
     const animate = () => {
-      t += 0.02;
-      const p1 = 50 + Math.sin(t) * 40;
-      const p2 = 10 + Math.sin(t + Math.PI) * 40;
-      const p3 = 50 + Math.sin(t + Math.PI / 2) * 30;
+      t += 0.015;
+      const a = 35 + Math.sin(t) * 20;
+      const b = 35 + Math.sin(t + Math.PI * 0.66) * 20;
+      const c = 35 + Math.sin(t + Math.PI * 1.33) * 20;
       const path = document.getElementById('mira-wave');
       if (path) {
-        path.setAttribute('d', `M0,60 C240,${p1} 480,${p2} 720,${p3} C960,${p2} 1200,${p1} 1440,60 L1440,60 L0,60 Z`);
+        path.setAttribute('d',
+          `M0,60 C180,${60 - a} 360,${60 - b} 540,${60 - c} C720,${60 - a} 900,${60 - b} 1080,${60 - c} C1260,${60 - a} 1440,${60 - b} 1440,60 L1440,60 L0,60 Z`
+        );
       }
       frame = requestAnimationFrame(animate);
     };
