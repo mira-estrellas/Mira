@@ -54,23 +54,3 @@ html, body {
 body {
   background-color: #000;
 }
-
-@keyframes waveRise1 {
-  0%, 100% { transform: scaleX(1.05) translateY(0); }
-  50% { transform: scaleX(1.05) translateY(4px); }
-}
-
-@keyframes waveRise2 {
-  0%, 100% { transform: scaleX(1.05) translateY(0); }
-  50% { transform: scaleX(1.05) translateY(-4px); }
-}
-
-.wave-1 {
-  animation: waveRise1 6s ease-in-out infinite;
-  transform-origin: top;
-}
-
-.wave-2 {
-  animation: waveRise2 8s ease-in-out infinite;
-  transform-origin: top;
-}
