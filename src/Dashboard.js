@@ -363,6 +363,42 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
           </div>
         </div>
 
+        </div>
+
+        {/* Wave divider */}
+        <div style={{
+          backgroundColor: colors.parchment,
+          marginTop: '-2px',
+          lineHeight: 0,
+        }}>
+          <svg
+            viewBox="0 0 1440 80"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ display: 'block', width: '100%' }}
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,40 C180,80 360,0 540,40 C720,80 900,0 1080,40 C1260,80 1440,20 1440,40 L1440,0 L0,0 Z"
+              fill="#2D7D52"
+              style={{ animation: 'waveMove 6s ease-in-out infinite' }}
+            />
+            <path
+              d="M0,50 C200,90 400,10 600,50 C800,90 1000,10 1200,50 C1350,80 1440,30 1440,50 L1440,0 L0,0 Z"
+              fill="#1B5E3B"
+              opacity="0.7"
+              style={{ animation: 'waveMove 8s ease-in-out infinite reverse' }}
+            />
+          </svg>
+        </div>
+
+        <style>{`
+          @keyframes waveMove {
+            0% { d: path("M0,40 C180,80 360,0 540,40 C720,80 900,0 1080,40 C1260,80 1440,20 1440,40 L1440,0 L0,0 Z"); }
+            50% { d: path("M0,20 C180,60 360,20 540,20 C720,20 900,60 1080,20 C1260,20 1440,40 1440,20 L1440,0 L0,0 Z"); }
+            100% { d: path("M0,40 C180,80 360,0 540,40 C720,80 900,0 1080,40 C1260,80 1440,20 1440,40 L1440,0 L0,0 Z"); }
+          }
+        `}</style>
+
         {/* Main content */}
         <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 24px 60px' }}>
 
