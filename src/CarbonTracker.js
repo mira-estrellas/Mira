@@ -168,8 +168,13 @@ function CarbonTracker({ language, dark = false }) {
             </p>
           )}
         </div>
-        <span style={{ color: textSecondary, fontSize: '20px', marginLeft: '12px' }}>
-          {expanded ? '−' : '+'}
+        <span style={{ color: textSecondary, marginLeft: '12px', display: 'flex', alignItems: 'center' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            {expanded
+              ? <polyline points="18 15 12 9 6 15"/>
+              : <polyline points="6 9 12 15 18 9"/>
+            }
+          </svg>
         </span>
       </div>
 
