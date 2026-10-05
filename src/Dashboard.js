@@ -344,8 +344,8 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
             ))}
           </div>
           <p style={{
-            color: 'rgba(255,255,255,0.6)',
-            fontSize: '14px',
+            color: 'rgba(255,255,255,0.7)',
+            fontSize: '15px',
             margin: '12px 0 0 0',
             fontFamily: 'Poppins, sans-serif',
           }}>
