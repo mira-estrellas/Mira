@@ -59,7 +59,6 @@ function WaterTracker({ language, dark = false }) {
         high: { label: 'High water use', color: '#E07070', message: 'There\'s a lot of room to reduce. Start with diet and shower habits for the biggest impact.' },
       },
       gallonsPerMonth: 'gallons/month',
-      reset: 'Start Over',
       expand: 'Track My Water Footprint',
       collapse: 'Close',
     },
