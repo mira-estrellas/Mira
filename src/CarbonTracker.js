@@ -217,9 +217,9 @@ function CarbonTracker({ language, dark = false }) {
                 disabled={!allAnswered}
                 style={{
                   width: '100%',
-                  backgroundColor: allAnswered ? '#4CAF7D' : 'rgba(255,255,255,0.25)',
-                  color: allAnswered ? 'white' : 'rgba(255,255,255,0.7)',
-                  border: 'none',
+                  backgroundColor: allAnswered ? '#4CAF7D' : 'transparent',
+                  color: allAnswered ? 'white' : 'white',
+                  border: allAnswered ? 'none' : '2px solid rgba(255,255,255,0.6)',
                   padding: '14px',
                   borderRadius: '30px',
                   fontSize: '15px',
