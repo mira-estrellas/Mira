@@ -633,29 +633,49 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
           </div>
         </AnimatedSection>
 
-        {/* Track Your Footprint Section */}
-        <AnimatedSection delay={0}>
-          <div style={sectionStyle}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-              <div style={{ width: '4px', height: '28px', backgroundColor: colors.canopy, borderRadius: '4px' }} />
-              <h2 style={{ color: colors.almostBlack, fontSize: '22px', fontWeight: '700', margin: 0, letterSpacing: '-0.3px' }}>
+        {/* Track Your Footprint Section — full width dark band */}
+      </div>
+
+      <div style={{
+        background: `linear-gradient(135deg, ${colors.forestDeep} 0%, ${colors.canopy} 100%)`,
+        padding: '48px 24px 64px',
+        marginTop: '48px',
+      }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <AnimatedSection delay={0}>
+            <div style={{ marginBottom: '32px', textAlign: 'center' }}>
+              <h2 style={{
+                color: 'white',
+                fontSize: '26px',
+                fontWeight: '700',
+                margin: '0 0 10px 0',
+                fontFamily: 'Klee One, sans-serif',
+                letterSpacing: '-0.3px',
+              }}>
                 {current.trackTitle}
               </h2>
+              <p style={{
+                color: 'rgba(255,255,255,0.75)',
+                fontSize: '15px',
+                margin: 0,
+                lineHeight: '1.7',
+                maxWidth: '500px',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+              }}>
+                {current.trackDesc}
+              </p>
             </div>
-            <p style={{ color: colors.mossy, fontSize: '14px', margin: '0 0 20px 0', lineHeight: '1.6', paddingLeft: '14px' }}>
-              {current.trackDesc}
-            </p>
-          </div>
-        </AnimatedSection>
+          </AnimatedSection>
 
-        <AnimatedSection delay={0.15}>
-          <CarbonTracker language={language} />
-        </AnimatedSection>
+          <AnimatedSection delay={0.15}>
+            <CarbonTracker language={language} dark={true} />
+          </AnimatedSection>
 
-        <AnimatedSection delay={0.25}>
-          <WaterTracker language={language} />
-        </AnimatedSection>
-
+          <AnimatedSection delay={0.25}>
+            <WaterTracker language={language} dark={true} />
+          </AnimatedSection>
+        </div>
       </div>
 
       {showScrollHint && (

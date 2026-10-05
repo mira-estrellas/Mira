@@ -1,267 +1,211 @@
 import React, { useState } from 'react';
 
-const QUESTIONS = {
-  EN: [
-    {
-      id: 'transport',
-      icon: '🚗',
-      question: 'How do you mainly get around?',
-      options: [
-        { label: '🚶 Walk or bike mostly', value: 0.5 },
-        { label: '🚌 Public transit', value: 1.5 },
-        { label: '⚡ Electric or hybrid vehicle', value: 2.5 },
-        { label: '⛽ Gas vehicle', value: 4.5 },
-      ],
-      tip: (answer) => answer.value >= 4 ? 'Transportation is your biggest impact area. Even carpooling once a week makes a real difference.' : 'Great choice for transportation! 🌱',
-    },
-    {
-      id: 'diet',
-      icon: '🥩',
-      question: 'How would you describe your diet?',
-      options: [
-        { label: '🌱 Vegan', value: 1.5 },
-        { label: '🥗 Vegetarian', value: 2.0 },
-        { label: '🍗 Some meat (a few times a week)', value: 2.8 },
-        { label: '🥩 Meat with most meals', value: 3.8 },
-      ],
-      tip: (answer) => answer.value >= 3.5 ? 'Food is your biggest impact area. Swapping one meat meal a day for a plant-based one saves about 0.5 tons of CO₂ a year.' : 'Your diet has a lower carbon impact. Keep it up! 🌱',
-    },
-    {
-      id: 'flights',
-      icon: '✈️',
-      question: 'How often do you fly per year?',
-      options: [
-        { label: '🚫 Never', value: 0 },
-        { label: '✈️ 1-2 flights', value: 1.0 },
-        { label: '✈️✈️ 3-5 flights', value: 2.5 },
-        { label: '🌍 6+ flights', value: 5.0 },
-      ],
-      tip: (answer) => answer.value >= 2.5 ? 'Air travel is your biggest impact area. One transatlantic flight emits more CO₂ than a month of driving.' : answer.value === 0 ? 'Flying never — that\'s one of the biggest single things you can do. 🌱' : 'Moderate air travel. Consider offsetting your flights when you do fly. 🌱',
-    },
-    {
-      id: 'shopping',
-      icon: '🛍️',
-      question: 'How often do you buy new things?',
-      options: [
-        { label: '✅ Only when necessary', value: 0.5 },
-        { label: '🛒 Occasionally', value: 1.2 },
-        { label: '🛍️ Regularly', value: 2.0 },
-        { label: '📦 Frequently', value: 3.0 },
-      ],
-      tip: (answer) => answer.value >= 2.5 ? 'Shopping habits are your biggest impact area. Buying secondhand or borrowing from your community (like Mira\'s Community tab!) can cut this significantly.' : 'Mindful shopping. Every item not bought is carbon not spent. 🌱',
-    },
-    {
-      id: 'recycling',
-      icon: '♻️',
-      question: 'Do you recycle regularly?',
-      options: [
-        { label: '✅ Always', value: -0.3 },
-        { label: '🔄 Sometimes', value: -0.1 },
-        { label: '❌ Rarely', value: 0 },
-        { label: '🚫 Never', value: 0.2 },
-      ],
-      tip: (answer) => answer.value >= 0 ? 'Recycling more consistently could reduce your footprint. Check Mira\'s Recycle tab to find drop-off locations near you!' : 'Consistent recycler! Every item recycled keeps it out of the landfill. 🌱',
-    },
-  ],
-  ES: [
-    {
-      id: 'transport',
-      icon: '🚗',
-      question: '¿Cómo te desplazas principalmente?',
-      options: [
-        { label: '🚶 Camino o uso bicicleta', value: 0.5 },
-        { label: '🚌 Transporte público', value: 1.5 },
-        { label: '⚡ Vehículo eléctrico o híbrido', value: 2.5 },
-        { label: '⛽ Vehículo de gasolina', value: 4.5 },
-      ],
-      tip: (answer) => answer.value >= 4 ? 'El transporte es tu mayor área de impacto. Incluso compartir el auto una vez a la semana hace una gran diferencia.' : '¡Gran elección de transporte! 🌱',
-    },
-    {
-      id: 'diet',
-      icon: '🥩',
-      question: '¿Cómo describirías tu dieta?',
-      options: [
-        { label: '🌱 Vegana', value: 1.5 },
-        { label: '🥗 Vegetariana', value: 2.0 },
-        { label: '🍗 Algo de carne (pocas veces a la semana)', value: 2.8 },
-        { label: '🥩 Carne en la mayoría de las comidas', value: 3.8 },
-      ],
-      tip: (answer) => answer.value >= 3.5 ? 'La alimentación es tu mayor área de impacto. Cambiar una comida con carne al día por una basada en plantas ahorra unas 0.5 toneladas de CO₂ al año.' : '¡Tu dieta tiene un impacto de carbono más bajo. Sigue así! 🌱',
-    },
-    {
-      id: 'flights',
-      icon: '✈️',
-      question: '¿Con qué frecuencia vuelas al año?',
-      options: [
-        { label: '🚫 Nunca', value: 0 },
-        { label: '✈️ 1-2 vuelos', value: 1.0 },
-        { label: '✈️✈️ 3-5 vuelos', value: 2.5 },
-        { label: '🌍 6+ vuelos', value: 5.0 },
-      ],
-      tip: (answer) => answer.value >= 2.5 ? 'Los vuelos son tu mayor área de impacto. Un vuelo transatlántico emite más CO₂ que un mes de conducción.' : answer.value === 0 ? 'No volar es una de las cosas más grandes que puedes hacer. 🌱' : 'Viajes aéreos moderados. Considera compensar tus vuelos cuando vueles. 🌱',
-    },
-    {
-      id: 'shopping',
-      icon: '🛍️',
-      question: '¿Con qué frecuencia compras cosas nuevas?',
-      options: [
-        { label: '✅ Solo cuando es necesario', value: 0.5 },
-        { label: '🛒 Ocasionalmente', value: 1.2 },
-        { label: '🛍️ Regularmente', value: 2.0 },
-        { label: '📦 Con frecuencia', value: 3.0 },
-      ],
-      tip: (answer) => answer.value >= 2.5 ? 'Los hábitos de compra son tu mayor área de impacto. Comprar de segunda mano o pedir prestado puede reducir esto significativamente.' : 'Compras conscientes. Cada artículo no comprado es carbono no gastado. 🌱',
-    },
-    {
-      id: 'recycling',
-      icon: '♻️',
-      question: '¿Reciclas regularmente?',
-      options: [
-        { label: '✅ Siempre', value: -0.3 },
-        { label: '🔄 A veces', value: -0.1 },
-        { label: '❌ Raramente', value: 0 },
-        { label: '🚫 Nunca', value: 0.2 },
-      ],
-      tip: (answer) => answer.value >= 0 ? 'Reciclar más consistentemente podría reducir tu huella. ¡Revisa la pestaña de Reciclaje de Mira para encontrar lugares cercanos!' : '¡Reciclador consistente! Cada artículo reciclado lo mantiene fuera del vertedero. 🌱',
-    },
-  ],
-};
-
-const US_AVERAGE = 16;
-
-function CarbonTracker({ language }) {
+function CarbonTracker({ language, dark = false }) {
   const [expanded, setExpanded] = useState(false);
   const [answers, setAnswers] = useState({});
-  const [submitted, setSubmitted] = useState(false);
-
-  const questions = QUESTIONS[language] || QUESTIONS.EN;
+  const [result, setResult] = useState(null);
 
   const content = {
     EN: {
-      title: 'Track My Carbon Footprint',
-      subtitle: 'Answer 5 quick questions to estimate your annual carbon footprint.',
+      title: '🌿 Track Your Carbon Footprint',
+      subtitle: 'Answer a few questions to estimate your monthly carbon output.',
       calculate: 'Calculate My Footprint',
-      recalculate: 'Recalculate',
-      yourFootprint: 'Your estimated annual footprint',
-      usAverage: 'US average: 16 tons',
-      tons: 'tons of CO₂',
-      belowAverage: 'Below US average 🌱',
-      aboveAverage: 'Above US average',
-      atAverage: 'At US average',
-      topTips: 'Your top areas to improve:',
-      collapse: '▲ Collapse',
-      expand: '🌍 Track My Carbon Footprint',
+      reset: 'Start Over',
+      questions: [
+        {
+          id: 'transport',
+          question: 'How do you mainly get around?',
+          options: [
+            { label: 'Car (gas)', value: 4.6 },
+            { label: 'Car (hybrid)', value: 2.4 },
+            { label: 'Electric vehicle', value: 0.9 },
+            { label: 'Public transit', value: 0.6 },
+            { label: 'Walk or bike', value: 0 },
+          ],
+        },
+        {
+          id: 'diet',
+          question: 'What best describes your diet?',
+          options: [
+            { label: 'Meat with every meal', value: 3.3 },
+            { label: 'Meat a few times a week', value: 2.1 },
+            { label: 'Mostly plant-based', value: 1.1 },
+            { label: 'Fully vegan', value: 0.7 },
+          ],
+        },
+        {
+          id: 'home',
+          question: 'How is your home heated?',
+          options: [
+            { label: 'Natural gas', value: 2.1 },
+            { label: 'Electric (grid)', value: 1.5 },
+            { label: 'Electric (renewable)', value: 0.2 },
+            { label: 'I don\'t control my heating', value: 1.0 },
+          ],
+        },
+        {
+          id: 'shopping',
+          question: 'How often do you buy new clothes or electronics?',
+          options: [
+            { label: 'Frequently', value: 1.8 },
+            { label: 'Occasionally', value: 1.0 },
+            { label: 'Rarely', value: 0.4 },
+            { label: 'Mostly secondhand', value: 0.1 },
+          ],
+        },
+      ],
+      results: {
+        low: { label: 'Low footprint', color: '#4CAF7D', message: 'You\'re already doing great. Keep it up and explore the swaps above to go even further.' },
+        medium: { label: 'Average footprint', color: '#F4A261', message: 'There\'s real room to reduce. The swaps and tools above can make a meaningful difference.' },
+        high: { label: 'High footprint', color: '#E07070', message: 'Small changes add up fast. Start with one swap from above and build from there.' },
+      },
+      tonsPerMonth: 'tons CO₂/month',
+      expand: 'Track My Carbon Footprint',
+      collapse: 'Close',
     },
     ES: {
-      title: 'Rastrear Mi Huella de Carbono',
-      subtitle: 'Responde 5 preguntas rápidas para estimar tu huella de carbono anual.',
+      title: '🌿 Rastrea Tu Huella de Carbono',
+      subtitle: 'Responde algunas preguntas para estimar tu huella de carbono mensual.',
       calculate: 'Calcular Mi Huella',
-      recalculate: 'Recalcular',
-      yourFootprint: 'Tu huella anual estimada',
-      usAverage: 'Promedio EE.UU.: 16 toneladas',
-      tons: 'toneladas de CO₂',
-      belowAverage: 'Por debajo del promedio de EE.UU. 🌱',
-      aboveAverage: 'Por encima del promedio de EE.UU.',
-      atAverage: 'En el promedio de EE.UU.',
-      topTips: 'Tus principales áreas a mejorar:',
-      collapse: '▲ Colapsar',
-      expand: '🌍 Rastrear Mi Huella de Carbono',
+      reset: 'Empezar de Nuevo',
+      questions: [
+        {
+          id: 'transport',
+          question: '¿Cómo te transportas principalmente?',
+          options: [
+            { label: 'Auto (gasolina)', value: 4.6 },
+            { label: 'Auto (híbrido)', value: 2.4 },
+            { label: 'Vehículo eléctrico', value: 0.9 },
+            { label: 'Transporte público', value: 0.6 },
+            { label: 'Caminar o bicicleta', value: 0 },
+          ],
+        },
+        {
+          id: 'diet',
+          question: '¿Qué describe mejor tu dieta?',
+          options: [
+            { label: 'Carne en cada comida', value: 3.3 },
+            { label: 'Carne algunas veces por semana', value: 2.1 },
+            { label: 'Principalmente plantas', value: 1.1 },
+            { label: 'Completamente vegano', value: 0.7 },
+          ],
+        },
+        {
+          id: 'home',
+          question: '¿Cómo se calienta tu hogar?',
+          options: [
+            { label: 'Gas natural', value: 2.1 },
+            { label: 'Eléctrico (red)', value: 1.5 },
+            { label: 'Eléctrico (renovable)', value: 0.2 },
+            { label: 'No controlo mi calefacción', value: 1.0 },
+          ],
+        },
+        {
+          id: 'shopping',
+          question: '¿Con qué frecuencia compras ropa o electrónicos nuevos?',
+          options: [
+            { label: 'Frecuentemente', value: 1.8 },
+            { label: 'Ocasionalmente', value: 1.0 },
+            { label: 'Raramente', value: 0.4 },
+            { label: 'Principalmente de segunda mano', value: 0.1 },
+          ],
+        },
+      ],
+      results: {
+        low: { label: 'Huella baja', color: '#4CAF7D', message: 'Ya lo estás haciendo muy bien. Explora los cambios anteriores para ir aún más lejos.' },
+        medium: { label: 'Huella promedio', color: '#F4A261', message: 'Hay espacio real para reducir. Los cambios y herramientas anteriores pueden marcar una diferencia significativa.' },
+        high: { label: 'Huella alta', color: '#E07070', message: 'Los pequeños cambios suman rápido. Empieza con un cambio de los anteriores y construye desde ahí.' },
+      },
+      tonsPerMonth: 'toneladas CO₂/mes',
+      expand: 'Rastrear Mi Huella de Carbono',
+      collapse: 'Cerrar',
     },
   };
 
   const current = content[language] || content.EN;
 
-  const totalFootprint = Object.values(answers).reduce((sum, a) => sum + a.value, 0) + 3.5; // 3.5 base for housing/utilities
-
-  const allAnswered = questions.every(q => answers[q.id]);
-
-  const getComparison = () => {
-    if (totalFootprint < US_AVERAGE - 2) return current.belowAverage;
-    if (totalFootprint > US_AVERAGE + 2) return current.aboveAverage;
-    return current.atAverage;
+  const handleAnswer = (questionId, value) => {
+    setAnswers(prev => ({ ...prev, [questionId]: value }));
   };
 
-  const getColor = () => {
-    if (totalFootprint < US_AVERAGE - 2) return '#4F8C6F';
-    if (totalFootprint > US_AVERAGE + 2) return '#D4956A';
-    return '#2C2C2C';
+  const handleCalculate = () => {
+    const total = Object.values(answers).reduce((sum, val) => sum + val, 0);
+    const level = total < 4 ? 'low' : total < 7 ? 'medium' : 'high';
+    setResult({ total: total.toFixed(1), level });
   };
 
-  const topTips = questions
-    .filter(q => answers[q.id])
-    .map(q => ({ question: q, tip: q.tip(answers[q.id]) }))
-    .filter(item => answers[item.question.id]?.value >= 2.5)
-    .slice(0, 2);
+  const allAnswered = current.questions.every(q => answers[q.id] !== undefined);
+
+  const bg = dark ? 'rgba(255,255,255,0.08)' : 'white';
+  const border = dark ? '1px solid rgba(255,255,255,0.15)' : '1px solid #E8F0E9';
+  const textPrimary = dark ? 'white' : '#1A1A1A';
+  const textSecondary = dark ? 'rgba(255,255,255,0.7)' : '#5C6B5E';
+  const optionBg = dark ? 'rgba(255,255,255,0.08)' : '#FAF7F2';
+  const optionBorder = dark ? 'rgba(255,255,255,0.2)' : '#E8E0D5';
+  const optionActiveBg = dark ? 'rgba(76,175,125,0.3)' : '#EBF3EE';
+  const optionActiveBorder = dark ? '#4CAF7D' : '#4CAF7D';
 
   return (
     <div style={{
-      backgroundColor: 'white',
-      borderRadius: '16px',
+      backgroundColor: bg,
+      borderRadius: '20px',
       padding: '20px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-      marginTop: '32px',
+      marginBottom: '16px',
+      border,
     }}>
-      <button
+      <div
         onClick={() => setExpanded(!expanded)}
         style={{
-          width: '100%',
-          backgroundColor: 'transparent',
-          border: 'none',
-          cursor: 'pointer',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: 0,
+          cursor: 'pointer',
         }}
       >
-        <div style={{ textAlign: 'left' }}>
-          <h2 style={{ color: '#2C2C2C', fontSize: '18px', margin: 0 }}>
-            🌍 {current.title}
-          </h2>
+        <div>
+          <h3 style={{ color: textPrimary, fontSize: '17px', margin: '0 0 4px 0', fontWeight: '600' }}>
+            {current.title}
+          </h3>
           {!expanded && (
-            <p style={{ color: '#A0A0A0', fontSize: '13px', margin: '4px 0 0 0' }}>
+            <p style={{ color: textSecondary, fontSize: '13px', margin: 0 }}>
               {current.subtitle}
             </p>
           )}
         </div>
-        <span style={{ color: '#4F8C6F', fontSize: '20px' }}>
-          {expanded ? '▲' : '▼'}
+        <span style={{ color: textSecondary, fontSize: '20px', marginLeft: '12px' }}>
+          {expanded ? '−' : '+'}
         </span>
-      </button>
+      </div>
 
       {expanded && (
-        <div style={{ marginTop: '24px' }}>
-
-          {!submitted ? (
+        <div style={{ marginTop: '20px' }}>
+          {!result ? (
             <>
-              {questions.map((q) => (
+              {current.questions.map((q) => (
                 <div key={q.id} style={{ marginBottom: '24px' }}>
-                  <p style={{
-                    color: '#2C2C2C',
-                    fontSize: '15px',
-                    fontWeight: '500',
-                    marginBottom: '12px',
-                  }}>
-                    {q.icon} {q.question}
+                  <p style={{ color: textPrimary, fontSize: '15px', fontWeight: '500', margin: '0 0 12px 0' }}>
+                    {q.question}
                   </p>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {q.options.map((option, index) => (
+                    {q.options.map((opt) => (
                       <button
-                        key={index}
-                        onClick={() => setAnswers({ ...answers, [q.id]: option })}
+                        key={opt.label}
+                        onClick={() => handleAnswer(q.id, opt.value)}
                         style={{
                           padding: '12px 16px',
                           borderRadius: '12px',
-                          border: `2px solid ${answers[q.id]?.label === option.label ? '#4F8C6F' : '#E8E0D5'}`,
-                          backgroundColor: answers[q.id]?.label === option.label ? '#EBF3EE' : '#FAF7F2',
-                          color: '#2C2C2C',
+                          border: `2px solid ${answers[q.id] === opt.value ? optionActiveBorder : optionBorder}`,
+                          backgroundColor: answers[q.id] === opt.value ? optionActiveBg : optionBg,
+                          color: answers[q.id] === opt.value ? '#4CAF7D' : textPrimary,
                           fontSize: '14px',
                           cursor: 'pointer',
                           textAlign: 'left',
                           transition: 'all 0.2s ease',
+                          fontFamily: 'Poppins, sans-serif',
+                          fontWeight: answers[q.id] === opt.value ? '600' : '400',
                         }}
                       >
-                        {option.label}
+                        {opt.label}
                       </button>
                     ))}
                   </div>
@@ -269,127 +213,67 @@ function CarbonTracker({ language }) {
               ))}
 
               <button
+                onClick={handleCalculate}
                 disabled={!allAnswered}
-                onClick={() => setSubmitted(true)}
                 style={{
                   width: '100%',
-                  backgroundColor: allAnswered ? '#D4956A' : '#E8E0D5',
-                  color: allAnswered ? 'white' : '#A0A0A0',
+                  backgroundColor: allAnswered ? '#4CAF7D' : 'rgba(255,255,255,0.15)',
+                  color: allAnswered ? 'white' : textSecondary,
                   border: 'none',
-                  padding: '16px',
+                  padding: '14px',
                   borderRadius: '30px',
-                  fontSize: '16px',
+                  fontSize: '15px',
+                  fontWeight: '600',
                   cursor: allAnswered ? 'pointer' : 'not-allowed',
                   transition: 'all 0.3s ease',
-                  marginTop: '8px',
+                  fontFamily: 'Poppins, sans-serif',
                 }}
               >
                 {current.calculate}
               </button>
             </>
           ) : (
-            <div>
-              {/* Result */}
+            <div style={{ textAlign: 'center' }}>
               <div style={{
-                backgroundColor: '#FAF7F2',
+                backgroundColor: dark ? 'rgba(255,255,255,0.1)' : '#F5F0E8',
                 borderRadius: '16px',
                 padding: '24px',
-                textAlign: 'center',
-                marginBottom: '24px',
+                marginBottom: '16px',
               }}>
-                <p style={{ color: '#A0A0A0', fontSize: '14px', margin: '0 0 8px 0' }}>
-                  {current.yourFootprint}
+                <p style={{ color: current.results[result.level].color, fontSize: '48px', fontWeight: '800', margin: '0 0 4px 0' }}>
+                  {result.total}
                 </p>
-                <p style={{
-                  color: getColor(),
-                  fontSize: '56px',
-                  fontWeight: '700',
-                  margin: '0 0 4px 0',
-                  letterSpacing: '-2px',
-                }}>
-                  {totalFootprint.toFixed(1)}
+                <p style={{ color: textSecondary, fontSize: '14px', margin: '0 0 12px 0' }}>
+                  {current.tonsPerMonth}
                 </p>
-                <p style={{ color: '#2C2C2C', fontSize: '16px', margin: '0 0 12px 0' }}>
-                  {current.tons}
-                </p>
-                <div style={{
-                  backgroundColor: getColor() === '#4F8C6F' ? '#EBF3EE' : '#FDF0E8',
+                <span style={{
+                  backgroundColor: current.results[result.level].color,
+                  color: 'white',
+                  padding: '4px 16px',
                   borderRadius: '20px',
-                  padding: '6px 16px',
-                  display: 'inline-block',
-                  marginBottom: '8px',
+                  fontSize: '13px',
+                  fontWeight: '600',
                 }}>
-                  <p style={{ color: getColor(), fontSize: '14px', fontWeight: '600', margin: 0 }}>
-                    {getComparison()}
-                  </p>
-                </div>
-                <p style={{ color: '#A0A0A0', fontSize: '12px', margin: 0 }}>
-                  {current.usAverage}
+                  {current.results[result.level].label}
+                </span>
+                <p style={{ color: textSecondary, fontSize: '14px', margin: '16px 0 0 0', lineHeight: '1.6' }}>
+                  {current.results[result.level].message}
                 </p>
               </div>
-
-              {/* Visual bar */}
-              <div style={{ marginBottom: '24px' }}>
-                <div style={{
-                  width: '100%',
-                  height: '12px',
-                  backgroundColor: '#E8E0D5',
-                  borderRadius: '10px',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}>
-                  <div style={{
-                    width: `${Math.min((totalFootprint / 20) * 100, 100)}%`,
-                    height: '100%',
-                    backgroundColor: getColor(),
-                    borderRadius: '10px',
-                    transition: 'width 1s ease',
-                  }}/>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px' }}>
-                  <span style={{ color: '#A0A0A0', fontSize: '11px' }}>0 tons</span>
-                  <span style={{ color: '#A0A0A0', fontSize: '11px' }}>20 tons</span>
-                </div>
-              </div>
-
-              {/* Tips */}
-              {topTips.length > 0 && (
-                <div style={{ marginBottom: '24px' }}>
-                  <p style={{ color: '#2C2C2C', fontSize: '15px', fontWeight: '500', marginBottom: '12px' }}>
-                    {current.topTips}
-                  </p>
-                  {topTips.map((item, index) => (
-                    <div key={index} style={{
-                      backgroundColor: '#FDF0E8',
-                      borderRadius: '12px',
-                      padding: '12px 16px',
-                      marginBottom: '8px',
-                    }}>
-                      <p style={{ color: '#2C2C2C', fontSize: '13px', margin: 0, lineHeight: '1.5' }}>
-                        {item.question.icon} {item.tip}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-
               <button
-                onClick={() => {
-                  setSubmitted(false);
-                  setAnswers({});
-                }}
+                onClick={() => { setResult(null); setAnswers({}); }}
                 style={{
-                  width: '100%',
                   backgroundColor: 'transparent',
-                  color: '#4F8C6F',
-                  border: '2px solid #4F8C6F',
-                  padding: '14px',
+                  color: textSecondary,
+                  border: `2px solid ${dark ? 'rgba(255,255,255,0.3)' : '#E8E0D5'}`,
+                  padding: '10px 24px',
                   borderRadius: '30px',
-                  fontSize: '15px',
+                  fontSize: '14px',
                   cursor: 'pointer',
+                  fontFamily: 'Poppins, sans-serif',
                 }}
               >
-                {current.recalculate}
+                {current.reset}
               </button>
             </div>
           )}
