@@ -136,14 +136,14 @@ function CarbonTracker({ language, dark = false }) {
 
   const allAnswered = current.questions.every(q => answers[q.id] !== undefined);
 
-  const bg = dark ? 'rgba(255,255,255,0.08)' : 'white';
-  const border = dark ? '1px solid rgba(255,255,255,0.15)' : '1px solid #E8F0E9';
+  const bg = dark ? 'rgba(255,255,255,0.12)' : 'white';
+  const border = dark ? '1px solid rgba(255,255,255,0.3)' : '1px solid #E8F0E9';
   const textPrimary = dark ? 'white' : '#1A1A1A';
-  const textSecondary = dark ? 'rgba(255,255,255,0.7)' : '#5C6B5E';
-  const optionBg = dark ? 'rgba(255,255,255,0.08)' : '#FAF7F2';
-  const optionBorder = dark ? 'rgba(255,255,255,0.2)' : '#E8E0D5';
-  const optionActiveBg = dark ? 'rgba(76,175,125,0.3)' : '#EBF3EE';
-  const optionActiveBorder = dark ? '#4CAF7D' : '#4CAF7D';
+  const textSecondary = dark ? 'rgba(255,255,255,0.9)' : '#5C6B5E';
+  const optionBg = dark ? 'rgba(255,255,255,0.12)' : '#FAF7F2';
+  const optionBorder = dark ? 'rgba(255,255,255,0.4)' : '#E8E0D5';
+  const optionActiveBg = dark ? 'rgba(76,175,125,0.4)' : '#EBF3EE';
+  const optionActiveBorder = '#4CAF7D';
 
   return (
     <div style={{
@@ -217,8 +217,8 @@ function CarbonTracker({ language, dark = false }) {
                 disabled={!allAnswered}
                 style={{
                   width: '100%',
-                  backgroundColor: allAnswered ? '#4CAF7D' : 'rgba(255,255,255,0.15)',
-                  color: allAnswered ? 'white' : textSecondary,
+                  backgroundColor: allAnswered ? '#4CAF7D' : 'rgba(255,255,255,0.25)',
+                  color: allAnswered ? 'white' : 'rgba(255,255,255,0.7)',
                   border: 'none',
                   padding: '14px',
                   borderRadius: '30px',
