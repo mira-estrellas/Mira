@@ -333,7 +333,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
                 color: 'rgba(255,255,255,0.9)',
                 padding: '6px 14px',
                 borderRadius: '20px',
-                fontSize: '13px',
+                fontSize: '16px',
                 backdropFilter: 'blur(4px)',
                 display: 'flex',
                 alignItems: 'center',
@@ -344,7 +344,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
             ))}
           </div>
           <p style={{
-            color: 'rgba(255,255,255,0.35)',
+            color: 'rgba(255,255,255,0.6)',
             fontSize: '14px',
             margin: '12px 0 0 0',
             fontFamily: 'Poppins, sans-serif',
