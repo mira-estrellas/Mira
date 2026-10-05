@@ -173,6 +173,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
       savedIncentive: 'Saved ⭐',
       profileHousing: { rent: 'Renter', own: 'Homeowner', guest: 'Living with Family' },
       guideLink: 'Want more ideas? Read the Zero Waste Guide →',
+      profileHint: 'Moving, new job, new budget? Update your profile anytime.',
     },
     ES: {
       greeting: '¡Esto es lo que encontramos para ti!',
@@ -197,6 +198,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
       savedIncentive: 'Guardado ⭐',
       profileHousing: { rent: 'Inquilino', own: 'Propietario', guest: 'Vivo con Familia' },
       guideLink: '¿Quieres más ideas? Lee la Guía Zero Residuos →',
+      profileHint: '¿Mudanza, nuevo trabajo, nuevo presupuesto? Actualiza tu perfil cuando quieras.',
     },
   };
 
@@ -341,6 +343,14 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
               </span>
             ))}
           </div>
+          <p style={{
+            color: 'rgba(255,255,255,0.5)',
+            fontSize: '12px',
+            margin: '12px 0 0 0',
+            fontFamily: 'Poppins, sans-serif',
+          }}>
+            {current.profileHint}
+          </p>
         </div>
 
         {/* Animated wave inside hero */}
