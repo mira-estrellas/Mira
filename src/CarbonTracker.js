@@ -140,10 +140,6 @@ function CarbonTracker({ language, dark = false }) {
   const border = dark ? '1px solid rgba(255,255,255,0.3)' : '1px solid #E8F0E9';
   const textPrimary = dark ? 'white' : '#1A1A1A';
   const textSecondary = dark ? 'rgba(255,255,255,0.9)' : '#5C6B5E';
-  const optionBg = dark ? 'rgba(255,255,255,0.12)' : '#FAF7F2';
-  const optionBorder = dark ? 'rgba(255,255,255,0.4)' : '#E8E0D5';
-  const optionActiveBg = dark ? 'rgba(76,175,125,0.4)' : '#EBF3EE';
-  const optionActiveBorder = '#4CAF7D';
 
   return (
     <div style={{
