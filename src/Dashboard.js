@@ -344,7 +344,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
             ))}
           </div>
           <p style={{
-            color: 'rgba(255,255,255,0.75)',
+            color: 'white',
             fontSize: '16px',
             margin: '12px 0 0 0',
             fontFamily: 'Poppins, sans-serif',
@@ -655,7 +655,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
                 {current.trackTitle}
               </h2>
               <p style={{
-                color: 'rgba(255,255,255,0.75)',
+                color: 'white',
                 fontSize: '15px',
                 margin: 0,
                 lineHeight: '1.7',

@@ -194,9 +194,9 @@ function CarbonTracker({ language, dark = false }) {
                         style={{
                           padding: '12px 16px',
                           borderRadius: '12px',
-                          border: `2px solid ${answers[q.id] === opt.value ? optionActiveBorder : optionBorder}`,
-                          backgroundColor: answers[q.id] === opt.value ? optionActiveBg : optionBg,
-                          color: answers[q.id] === opt.value ? '#4CAF7D' : textPrimary,
+                          border: `2px solid ${answers[q.id] === opt.value ? '#FFD166' : 'white'}`,
+                          backgroundColor: answers[q.id] === opt.value ? '#FFD166' : 'rgba(0,0,0,0.3)',
+                          color: answers[q.id] === opt.value ? '#1A1A1A' : 'white',
                           fontSize: '14px',
                           cursor: 'pointer',
                           textAlign: 'left',
@@ -217,9 +217,9 @@ function CarbonTracker({ language, dark = false }) {
                 disabled={!allAnswered}
                 style={{
                   width: '100%',
-                  backgroundColor: allAnswered ? '#4CAF7D' : 'transparent',
-                  color: allAnswered ? 'white' : 'white',
-                  border: allAnswered ? 'none' : '2px solid rgba(255,255,255,0.6)',
+                  backgroundColor: allAnswered ? '#FFD166' : 'transparent',
+                  color: allAnswered ? '#1A1A1A' : 'white',
+                  border: allAnswered ? 'none' : '2px solid white',
                   padding: '14px',
                   borderRadius: '30px',
                   fontSize: '15px',
