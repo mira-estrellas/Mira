@@ -148,7 +148,7 @@ function LandingPage({ language, setLanguage, onGetStarted }) {
         alignItems: 'center',
         fontFamily: 'Poppins, sans-serif',
         position: 'relative',
-        backgroundImage: 'url(/earth.jpg)',
+        backgroundImage: 'url(/earth2.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',

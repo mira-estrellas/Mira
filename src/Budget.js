@@ -129,7 +129,7 @@ function Budget({ language, onNext, onBack }) {
       padding: '24px 0',
       boxSizing: 'border-box',
       position: 'relative',
-      backgroundImage: 'url(/earth.jpg)',
+      backgroundImage: 'url(/earth2.jpg)',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }}>
