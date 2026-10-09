@@ -249,7 +249,7 @@ function Onboarding({ language, onBack }) {
         justifyContent: 'center',
         minHeight: '100vh',
         position: 'relative',
-        backgroundImage: 'url(/earth.jpg)',
+        backgroundImage: 'url(/earth2.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         fontFamily: 'Poppins, sans-serif',
