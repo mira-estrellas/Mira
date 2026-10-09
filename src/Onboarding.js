@@ -98,12 +98,12 @@ function Onboarding({ language, onBack }) {
         });
         setFadeIn(true);
       }, 400);
-    }, 1200);
+    }, 1800);
 
     const timer = setTimeout(() => {
       clearInterval(interval);
       setScreen('dashboard');
-    }, messages.length * 1200 + 400);
+    }, messages.length * 1800 + 400);
 
     return () => {
       clearInterval(interval);
