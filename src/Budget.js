@@ -133,11 +133,8 @@ function Budget({ language, onNext, onBack }) {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }}>
-
-      {/* Blurred overlay */}
       <div style={{
-        position: 'absolute',
-        inset: 0,
+        position: 'absolute', inset: 0,
         backdropFilter: 'blur(12px)',
         background: 'rgba(0,20,10,0.55)',
         zIndex: 0,
@@ -153,27 +150,19 @@ function Budget({ language, onNext, onBack }) {
         position: 'relative',
         zIndex: 1,
       }}>
-        {/* Progress bar */}
         <div style={{
-          width: '100%',
-          height: '6px',
+          width: '100%', height: '6px',
           backgroundColor: 'rgba(255,255,255,0.2)',
-          borderRadius: '10px',
-          marginBottom: '24px',
+          borderRadius: '10px', marginBottom: '24px',
         }}>
-          <div style={{
-            width: '83%',
-            height: '100%',
-            backgroundColor: '#4CAF7D',
-            borderRadius: '10px',
-          }}/>
+          <div style={{ width: '83%', height: '100%', backgroundColor: '#4CAF7D', borderRadius: '10px' }}/>
         </div>
 
         <button onClick={onBack} style={{
           backgroundColor: 'transparent',
           color: 'rgba(255,255,255,0.7)',
           border: 'none',
-          fontSize: '16px',
+          fontSize: '18px',
           cursor: 'pointer',
           padding: '8px 0',
           marginBottom: '24px',
@@ -185,7 +174,7 @@ function Budget({ language, onNext, onBack }) {
 
         <h2 style={{
           color: 'white',
-          fontSize: '24px',
+          fontSize: '28px',
           marginBottom: '8px',
           textAlign: 'center',
           textShadow: '0 1px 8px rgba(0,0,0,0.4)',
@@ -194,8 +183,8 @@ function Budget({ language, onNext, onBack }) {
         </h2>
 
         <p style={{
-          color: 'rgba(255,255,255,0.75)',
-          fontSize: '13px',
+          color: 'rgba(255,255,255,0.85)',
+          fontSize: '16px',
           textAlign: 'center',
           marginBottom: '32px',
           lineHeight: '1.6',
@@ -203,19 +192,11 @@ function Budget({ language, onNext, onBack }) {
           {current.hint}
         </p>
 
-        {/* Budget input */}
-        <div style={{
-          position: 'relative',
-          marginBottom: '8px',
-        }}>
+        <div style={{ position: 'relative', marginBottom: '8px' }}>
           <span style={{
-            position: 'absolute',
-            left: '16px',
-            top: '50%',
+            position: 'absolute', left: '16px', top: '50%',
             transform: 'translateY(-50%)',
-            color: 'rgba(255,255,255,0.7)',
-            fontSize: '20px',
-            fontWeight: '500',
+            color: 'rgba(255,255,255,0.7)', fontSize: '22px', fontWeight: '500',
           }}>
             {current.prefix}
           </span>
@@ -226,10 +207,10 @@ function Budget({ language, onNext, onBack }) {
             onChange={(e) => setBudget(e.target.value)}
             style={{
               width: '100%',
-              padding: '18px 60px',
+              padding: '20px 60px',
               borderRadius: '16px',
               border: `2px solid ${budget ? '#4CAF7D' : 'rgba(255,255,255,0.25)'}`,
-              fontSize: '22px',
+              fontSize: '24px',
               textAlign: 'center',
               backgroundColor: 'rgba(255,255,255,0.1)',
               color: 'white',
@@ -240,12 +221,9 @@ function Budget({ language, onNext, onBack }) {
             }}
           />
           <span style={{
-            position: 'absolute',
-            right: '16px',
-            top: '50%',
+            position: 'absolute', right: '16px', top: '50%',
             transform: 'translateY(-50%)',
-            color: 'rgba(255,255,255,0.7)',
-            fontSize: '16px',
+            color: 'rgba(255,255,255,0.7)', fontSize: '18px',
           }}>
             {current.suffix}
           </span>
@@ -259,9 +237,9 @@ function Budget({ language, onNext, onBack }) {
             backgroundColor: budget ? '#2D7D52' : 'rgba(255,255,255,0.15)',
             color: budget ? 'white' : 'rgba(255,255,255,0.4)',
             border: 'none',
-            padding: '16px',
+            padding: '18px',
             borderRadius: '30px',
-            fontSize: '18px',
+            fontSize: '20px',
             marginTop: '24px',
             cursor: budget ? 'pointer' : 'not-allowed',
             transition: 'all 0.3s ease',
@@ -276,10 +254,10 @@ function Budget({ language, onNext, onBack }) {
           style={{
             width: '100%',
             backgroundColor: 'transparent',
-            color: 'rgba(255,255,255,0.5)',
+            color: 'rgba(255,255,255,0.6)',
             border: 'none',
-            padding: '14px',
-            fontSize: '14px',
+            padding: '16px',
+            fontSize: '16px',
             marginTop: '8px',
             cursor: 'pointer',
             fontFamily: 'Poppins, sans-serif',

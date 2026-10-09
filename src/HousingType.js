@@ -34,11 +34,8 @@ function HousingType({ language, onNext, onBack }) {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }}>
-
-      {/* Blurred overlay */}
       <div style={{
-        position: 'absolute',
-        inset: 0,
+        position: 'absolute', inset: 0,
         backdropFilter: 'blur(12px)',
         background: 'rgba(0,20,10,0.55)',
         zIndex: 0,
@@ -54,27 +51,19 @@ function HousingType({ language, onNext, onBack }) {
         position: 'relative',
         zIndex: 1,
       }}>
-        {/* Progress bar */}
         <div style={{
-          width: '100%',
-          height: '6px',
+          width: '100%', height: '6px',
           backgroundColor: 'rgba(255,255,255,0.2)',
-          borderRadius: '10px',
-          marginBottom: '24px',
+          borderRadius: '10px', marginBottom: '24px',
         }}>
-          <div style={{
-            width: '33%',
-            height: '100%',
-            backgroundColor: '#4CAF7D',
-            borderRadius: '10px',
-          }}/>
+          <div style={{ width: '33%', height: '100%', backgroundColor: '#4CAF7D', borderRadius: '10px' }}/>
         </div>
 
         <button onClick={onBack} style={{
           backgroundColor: 'transparent',
           color: 'rgba(255,255,255,0.7)',
           border: 'none',
-          fontSize: '16px',
+          fontSize: '18px',
           cursor: 'pointer',
           padding: '8px 0',
           marginBottom: '24px',
@@ -86,7 +75,7 @@ function HousingType({ language, onNext, onBack }) {
 
         <h2 style={{
           color: 'white',
-          fontSize: '24px',
+          fontSize: '28px',
           marginBottom: '32px',
           textAlign: 'center',
           textShadow: '0 1px 8px rgba(0,0,0,0.4)',
@@ -94,23 +83,19 @@ function HousingType({ language, onNext, onBack }) {
           {current.question}
         </h2>
 
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px',
-        }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {['rent', 'own', 'guest'].map((option) => (
             <button
               key={option}
               onClick={() => setSelected(option)}
               style={{
                 width: '100%',
-                padding: '20px',
+                padding: '22px',
                 borderRadius: '16px',
                 border: `2px solid ${selected === option ? '#4CAF7D' : 'rgba(255,255,255,0.25)'}`,
                 backgroundColor: selected === option ? 'rgba(76,175,125,0.25)' : 'rgba(255,255,255,0.1)',
                 color: 'white',
-                fontSize: '17px',
+                fontSize: '19px',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 textAlign: 'center',
@@ -131,9 +116,9 @@ function HousingType({ language, onNext, onBack }) {
             backgroundColor: selected ? '#2D7D52' : 'rgba(255,255,255,0.15)',
             color: selected ? 'white' : 'rgba(255,255,255,0.4)',
             border: 'none',
-            padding: '16px',
+            padding: '18px',
             borderRadius: '30px',
-            fontSize: '18px',
+            fontSize: '20px',
             marginTop: '32px',
             cursor: selected ? 'pointer' : 'not-allowed',
             transition: 'all 0.3s ease',

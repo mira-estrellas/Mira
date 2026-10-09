@@ -53,11 +53,8 @@ function HouseholdIncome({ language, onNext, onBack }) {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }}>
-
-      {/* Blurred overlay */}
       <div style={{
-        position: 'absolute',
-        inset: 0,
+        position: 'absolute', inset: 0,
         backdropFilter: 'blur(12px)',
         background: 'rgba(0,20,10,0.55)',
         zIndex: 0,
@@ -73,27 +70,19 @@ function HouseholdIncome({ language, onNext, onBack }) {
         position: 'relative',
         zIndex: 1,
       }}>
-        {/* Progress bar */}
         <div style={{
-          width: '100%',
-          height: '6px',
+          width: '100%', height: '6px',
           backgroundColor: 'rgba(255,255,255,0.2)',
-          borderRadius: '10px',
-          marginBottom: '24px',
+          borderRadius: '10px', marginBottom: '24px',
         }}>
-          <div style={{
-            width: '66%',
-            height: '100%',
-            backgroundColor: '#4CAF7D',
-            borderRadius: '10px',
-          }}/>
+          <div style={{ width: '66%', height: '100%', backgroundColor: '#4CAF7D', borderRadius: '10px' }}/>
         </div>
 
         <button onClick={onBack} style={{
           backgroundColor: 'transparent',
           color: 'rgba(255,255,255,0.7)',
           border: 'none',
-          fontSize: '16px',
+          fontSize: '18px',
           cursor: 'pointer',
           padding: '8px 0',
           marginBottom: '24px',
@@ -105,7 +94,7 @@ function HouseholdIncome({ language, onNext, onBack }) {
 
         <h2 style={{
           color: 'white',
-          fontSize: '24px',
+          fontSize: '28px',
           marginBottom: '8px',
           textAlign: 'center',
           textShadow: '0 1px 8px rgba(0,0,0,0.4)',
@@ -114,8 +103,8 @@ function HouseholdIncome({ language, onNext, onBack }) {
         </h2>
 
         <p style={{
-          color: 'rgba(255,255,255,0.75)',
-          fontSize: '12px',
+          color: 'rgba(255,255,255,0.85)',
+          fontSize: '16px',
           textAlign: 'center',
           marginBottom: '24px',
           lineHeight: '1.5',
@@ -123,23 +112,19 @@ function HouseholdIncome({ language, onNext, onBack }) {
           🔒 {current.hint}
         </p>
 
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-        }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {currentBrackets.map((bracket, index) => (
             <button
               key={index}
               onClick={() => setSelected(bracket)}
               style={{
                 width: '100%',
-                padding: '16px',
+                padding: '18px',
                 borderRadius: '12px',
                 border: `2px solid ${selected?.value === bracket.value ? '#4CAF7D' : 'rgba(255,255,255,0.25)'}`,
                 backgroundColor: selected?.value === bracket.value ? 'rgba(76,175,125,0.25)' : 'rgba(255,255,255,0.1)',
                 color: 'white',
-                fontSize: '15px',
+                fontSize: '17px',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 textAlign: 'center',
@@ -160,9 +145,9 @@ function HouseholdIncome({ language, onNext, onBack }) {
             backgroundColor: selected ? '#2D7D52' : 'rgba(255,255,255,0.15)',
             color: selected ? 'white' : 'rgba(255,255,255,0.4)',
             border: 'none',
-            padding: '16px',
+            padding: '18px',
             borderRadius: '30px',
-            fontSize: '18px',
+            fontSize: '20px',
             marginTop: '20px',
             cursor: selected ? 'pointer' : 'not-allowed',
             transition: 'all 0.3s ease',
@@ -177,10 +162,10 @@ function HouseholdIncome({ language, onNext, onBack }) {
           style={{
             width: '100%',
             backgroundColor: 'transparent',
-            color: 'rgba(255,255,255,0.5)',
+            color: 'rgba(255,255,255,0.6)',
             border: 'none',
-            padding: '12px',
-            fontSize: '13px',
+            padding: '14px',
+            fontSize: '16px',
             marginTop: '8px',
             cursor: 'pointer',
             fontFamily: 'Poppins, sans-serif',

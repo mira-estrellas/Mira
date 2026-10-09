@@ -207,37 +207,25 @@ function Onboarding({ language, onBack }) {
   if (screen === 'housing') {
     return <HousingType language={language}
       onBack={() => setScreen('zip')}
-      onNext={(type) => {
-        setHousingType(type);
-        setScreen('size');
-      }} />;
+      onNext={(type) => { setHousingType(type); setScreen('size'); }} />;
   }
 
   if (screen === 'size') {
     return <HouseholdSize language={language}
       onBack={() => setScreen('housing')}
-      onNext={(size) => {
-        setHouseholdSize(size === '8+' ? 8 : size);
-        setScreen('income');
-      }} />;
+      onNext={(size) => { setHouseholdSize(size === '8+' ? 8 : size); setScreen('income'); }} />;
   }
 
   if (screen === 'income') {
     return <HouseholdIncome language={language}
       onBack={() => setScreen('size')}
-      onNext={(income) => {
-        setHouseholdIncome(income);
-        setScreen('budget');
-      }} />;
+      onNext={(income) => { setHouseholdIncome(income); setScreen('budget'); }} />;
   }
 
   if (screen === 'budget') {
     return <Budget language={language}
       onBack={() => setScreen('income')}
-      onNext={(budget) => {
-        setBudget(budget);
-        setScreen('loading');
-      }} />;
+      onNext={(budget) => { setBudget(budget); setScreen('loading'); }} />;
   }
 
   if (screen === 'loading') {
@@ -257,29 +245,23 @@ function Onboarding({ language, onBack }) {
         textAlign: 'center',
       }}>
         <div style={{
-          position: 'absolute',
-          inset: 0,
+          position: 'absolute', inset: 0,
           backdropFilter: 'blur(16px)',
           background: 'rgba(0,20,10,0.6)',
           zIndex: 0,
         }} />
-
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{
-            marginBottom: '40px',
-            animation: 'gentleSpin 3s linear infinite',
-          }}>
+          <div style={{ marginBottom: '40px', animation: 'gentleSpin 3s linear infinite' }}>
             <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
               <circle cx="50" cy="50" r="42" stroke="#4CAF7D" strokeWidth="8" fill="none" strokeDasharray="180 85" strokeLinecap="round" />
               <polygon points="50,4 42,18 58,18" fill="#4CAF7D" />
             </svg>
           </div>
-
           <p style={{
             color: 'white',
-            fontSize: '22px',
+            fontSize: '24px',
             fontWeight: '500',
-            maxWidth: '320px',
+            maxWidth: '360px',
             lineHeight: '1.6',
             opacity: fadeIn ? 1 : 0,
             transform: fadeIn ? 'translateY(0)' : 'translateY(10px)',
@@ -287,28 +269,16 @@ function Onboarding({ language, onBack }) {
           }}>
             {messages[loadingStep]}
           </p>
-
-          <div style={{
-            display: 'flex',
-            gap: '10px',
-            marginTop: '40px',
-            justifyContent: 'center',
-          }}>
+          <div style={{ display: 'flex', gap: '10px', marginTop: '40px', justifyContent: 'center' }}>
             {messages.map((_, index) => (
-              <div
-                key={index}
-                style={{
-                  width: '10px',
-                  height: '10px',
-                  borderRadius: '50%',
-                  backgroundColor: index <= loadingStep ? '#4CAF7D' : 'rgba(255,255,255,0.3)',
-                  transition: 'background-color 0.4s ease',
-                }}
-              />
+              <div key={index} style={{
+                width: '10px', height: '10px', borderRadius: '50%',
+                backgroundColor: index <= loadingStep ? '#4CAF7D' : 'rgba(255,255,255,0.3)',
+                transition: 'background-color 0.4s ease',
+              }} />
             ))}
           </div>
         </div>
-
         <style>{`
           @keyframes gentleSpin {
             from { transform: rotate(0deg); }
@@ -322,16 +292,9 @@ function Onboarding({ language, onBack }) {
   if (screen === 'dashboard') {
     try {
       localStorage.setItem('mira_profile', JSON.stringify({
-        language,
-        zipCode,
-        housingType,
-        budget,
-        householdSize,
-        householdIncome,
+        language, zipCode, housingType, budget, householdSize, householdIncome,
       }));
-    } catch {
-      console.log('localStorage not available');
-    }
+    } catch {}
     return <Dashboard
       language={language}
       zipCode={zipCode}
@@ -357,16 +320,12 @@ function Onboarding({ language, onBack }) {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }}>
-
-      {/* Blurred overlay */}
       <div style={{
-        position: 'absolute',
-        inset: 0,
+        position: 'absolute', inset: 0,
         backdropFilter: 'blur(12px)',
         background: 'rgba(0,20,10,0.55)',
         zIndex: 0,
       }} />
-
       <div style={{
         width: '100%',
         maxWidth: '520px',
@@ -378,25 +337,18 @@ function Onboarding({ language, onBack }) {
         zIndex: 1,
       }}>
         <div style={{
-          width: '100%',
-          height: '6px',
+          width: '100%', height: '6px',
           backgroundColor: 'rgba(255,255,255,0.2)',
-          borderRadius: '10px',
-          marginBottom: '24px',
+          borderRadius: '10px', marginBottom: '24px',
         }}>
-          <div style={{
-            width: '17%',
-            height: '100%',
-            backgroundColor: '#4CAF7D',
-            borderRadius: '10px',
-          }}/>
+          <div style={{ width: '17%', height: '100%', backgroundColor: '#4CAF7D', borderRadius: '10px' }}/>
         </div>
 
         <button onClick={onBack} style={{
           backgroundColor: 'transparent',
           color: 'rgba(255,255,255,0.7)',
           border: 'none',
-          fontSize: '16px',
+          fontSize: '18px',
           cursor: 'pointer',
           padding: '8px 0',
           marginBottom: '24px',
@@ -408,7 +360,7 @@ function Onboarding({ language, onBack }) {
 
         <h2 style={{
           color: 'white',
-          fontSize: '24px',
+          fontSize: '28px',
           marginBottom: '12px',
           textAlign: 'center',
           textShadow: '0 1px 8px rgba(0,0,0,0.4)',
@@ -417,10 +369,10 @@ function Onboarding({ language, onBack }) {
         </h2>
 
         <p style={{
-          color: 'rgba(255,255,255,0.75)',
-          fontSize: '14px',
+          color: 'rgba(255,255,255,0.85)',
+          fontSize: '16px',
           textAlign: 'center',
-          marginBottom: '24px',
+          marginBottom: '28px',
           lineHeight: '1.6',
         }}>
           {current.privacy}
@@ -434,10 +386,10 @@ function Onboarding({ language, onBack }) {
           maxLength={5}
           style={{
             width: '100%',
-            padding: '16px',
+            padding: '18px',
             borderRadius: '12px',
             border: `2px solid ${zipCode.length === 5 ? '#4CAF7D' : 'rgba(255,255,255,0.25)'}`,
-            fontSize: '20px',
+            fontSize: '22px',
             textAlign: 'center',
             backgroundColor: 'rgba(255,255,255,0.1)',
             color: 'white',
@@ -456,9 +408,9 @@ function Onboarding({ language, onBack }) {
             backgroundColor: zipCode.length === 5 ? '#2D7D52' : 'rgba(255,255,255,0.15)',
             color: zipCode.length === 5 ? 'white' : 'rgba(255,255,255,0.4)',
             border: 'none',
-            padding: '16px',
+            padding: '18px',
             borderRadius: '30px',
-            fontSize: '18px',
+            fontSize: '20px',
             marginTop: '32px',
             cursor: zipCode.length === 5 ? 'pointer' : 'not-allowed',
             transition: 'all 0.3s ease',
@@ -469,17 +421,14 @@ function Onboarding({ language, onBack }) {
         </button>
 
         <button
-          onClick={() => {
-            setZipCode('');
-            setScreen('housing');
-          }}
+          onClick={() => { setZipCode(''); setScreen('housing'); }}
           style={{
             width: '100%',
             backgroundColor: 'transparent',
-            color: 'rgba(255,255,255,0.5)',
+            color: 'rgba(255,255,255,0.6)',
             border: 'none',
             padding: '16px',
-            fontSize: '15px',
+            fontSize: '16px',
             marginTop: '8px',
             cursor: 'pointer',
             fontFamily: 'Poppins, sans-serif',
