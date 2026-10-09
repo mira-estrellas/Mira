@@ -65,7 +65,7 @@ function HouseholdIncome({ language, onNext, onBack }) {
 
       <div style={{
         width: '100%',
-        maxWidth: '400px',
+        maxWidth: '520px',
         padding: '0 24px',
         display: 'flex',
         flexDirection: 'column',
