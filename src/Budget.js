@@ -197,6 +197,7 @@ function Budget({ language, onNext, onBack }) {
             position: 'absolute', left: '16px', top: '50%',
             transform: 'translateY(-50%)',
             color: 'rgba(255,255,255,0.7)', fontSize: '22px', fontWeight: '500',
+            zIndex: 2,
           }}>
             {current.prefix}
           </span>
@@ -218,6 +219,7 @@ function Budget({ language, onNext, onBack }) {
               outline: 'none',
               backdropFilter: 'blur(4px)',
               fontFamily: 'Poppins, sans-serif',
+              zIndex: 1,
             }}
           />
           <span style={{
