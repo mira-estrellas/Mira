@@ -166,6 +166,7 @@ function HouseholdIncome({ language, onNext, onBack }) {
             border: 'none',
             padding: '14px',
             fontSize: '16px',
+            textDecoration: 'underline',
             marginTop: '8px',
             cursor: 'pointer',
             fontFamily: 'Poppins, sans-serif',
