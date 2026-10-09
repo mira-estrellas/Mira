@@ -266,6 +266,7 @@ function Onboarding({ language, onBack }) {
             opacity: fadeIn ? 1 : 0,
             transform: fadeIn ? 'translateY(0)' : 'translateY(10px)',
             transition: 'opacity 0.4s ease, transform 0.4s ease',
+            fontFamily: 'Poppins, sans-serif',
           }}>
             {messages[loadingStep]}
           </p>
