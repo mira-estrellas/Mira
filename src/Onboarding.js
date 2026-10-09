@@ -118,7 +118,7 @@ function Onboarding({ language, onBack }) {
       next: 'Next',
       back: '← Back',
       privacy: '🔒 We never store or share your location. This is only used to find incentives in your area.',
-      skip: 'Skip — I\'d rather not share my location',
+      skip: 'Skip - I\'d rather not share my location',
     },
     ES: {
       question: '¿Cuál es tu código postal?',
@@ -126,7 +126,7 @@ function Onboarding({ language, onBack }) {
       next: 'Siguiente',
       back: '← Atrás',
       privacy: '🔒 Nunca almacenamos ni compartimos tu ubicación. Solo se usa para encontrar incentivos en tu área.',
-      skip: 'Omitir — prefiero no compartir mi ubicación',
+      skip: 'Omitir - prefiero no compartir mi ubicación',
     },
     ZH: {
       question: '你的邮政编码是什么？',
@@ -134,7 +134,7 @@ function Onboarding({ language, onBack }) {
       next: '下一步',
       back: '← 返回',
       privacy: '🔒 我们从不存储或分享您的位置。仅用于查找您所在地区的激励措施。',
-      skip: '跳过 — 我不想分享我的位置',
+      skip: '跳过 - 我不想分享我的位置',
     },
     AR: {
       question: 'ما هو الرمز البريدي؟',
@@ -142,7 +142,7 @@ function Onboarding({ language, onBack }) {
       next: 'التالي',
       back: 'رجوع →',
       privacy: '🔒 نحن لا نخزن موقعك أو نشاركه أبدًا. يُستخدم فقط للعثور على الحوافز في منطقتك.',
-      skip: 'تخطي — أفضل عدم مشاركة موقعي',
+      skip: 'تخطي - أفضل عدم مشاركة موقعي',
     },
     FR: {
       question: 'Quel est votre code postal?',
@@ -150,7 +150,7 @@ function Onboarding({ language, onBack }) {
       next: 'Suivant',
       back: '← Retour',
       privacy: '🔒 Nous ne stockons ni ne partageons jamais votre localisation.',
-      skip: 'Passer — je préfère ne pas partager ma localisation',
+      skip: 'Passer - je préfère ne pas partager ma localisation',
     },
     PT: {
       question: 'Qual é o seu código postal?',
@@ -158,7 +158,7 @@ function Onboarding({ language, onBack }) {
       next: 'Próximo',
       back: '← Voltar',
       privacy: '🔒 Nunca armazenamos ou compartilhamos sua localização.',
-      skip: 'Pular — prefiro não compartilhar minha localização',
+      skip: 'Pular - prefiro não compartilhar minha localização',
     },
     KO: {
       question: '우편번호가 무엇인가요?',
@@ -166,7 +166,7 @@ function Onboarding({ language, onBack }) {
       next: '다음',
       back: '← 뒤로',
       privacy: '🔒 귀하의 위치는 저장되거나 공유되지 않습니다.',
-      skip: '건너뛰기 — 위치를 공유하고 싶지 않습니다',
+      skip: '건너뛰기 - 위치를 공유하고 싶지 않습니다',
     },
     VI: {
       question: 'Mã bưu chính của bạn là gì?',
@@ -174,7 +174,7 @@ function Onboarding({ language, onBack }) {
       next: 'Tiếp theo',
       back: '← Quay lại',
       privacy: '🔒 Chúng tôi không bao giờ lưu trữ hoặc chia sẻ vị trí của bạn.',
-      skip: 'Bỏ qua — Tôi không muốn chia sẻ vị trí',
+      skip: 'Bỏ qua - Tôi không muốn chia sẻ vị trí',
     },
     TL: {
       question: 'Ano ang iyong zip code?',
@@ -182,7 +182,7 @@ function Onboarding({ language, onBack }) {
       next: 'Susunod',
       back: '← Bumalik',
       privacy: '🔒 Hindi namin kailanman ini-imbak o ibinabahagi ang iyong lokasyon.',
-      skip: 'Laktawan — Ayaw kong ibahagi ang aking lokasyon',
+      skip: 'Laktawan - Ayaw kong ibahagi ang aking lokasyon',
     },
     RU: {
       question: 'Какой у вас почтовый индекс?',
@@ -190,7 +190,7 @@ function Onboarding({ language, onBack }) {
       next: 'Далее',
       back: '← Назад',
       privacy: '🔒 Мы никогда не храним и не передаём ваше местоположение.',
-      skip: 'Пропустить — я не хочу делиться своим местоположением',
+      skip: 'Пропустить - я не хочу делиться своим местоположением',
     },
     HT: {
       question: 'Ki kòd postal ou?',
@@ -198,7 +198,7 @@ function Onboarding({ language, onBack }) {
       next: 'Pwochen',
       back: '← Retounen',
       privacy: '🔒 Nou pa janm estoke oswa pataje kote ou ye.',
-      skip: 'Sote — Mwen prefere pa pataje kote mwen ye',
+      skip: 'Sote - Mwen prefere pa pataje kote mwen ye',
     },
   };
 
@@ -429,6 +429,7 @@ function Onboarding({ language, onBack }) {
             border: 'none',
             padding: '16px',
             fontSize: '16px',
+            textDecoration: 'underline',
             marginTop: '8px',
             cursor: 'pointer',
             fontFamily: 'Poppins, sans-serif',
