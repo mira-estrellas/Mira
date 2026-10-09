@@ -379,7 +379,7 @@ function Onboarding({ language, onBack }) {
         </p>
 
         <input
-          type="number"
+          type="tel"
           placeholder={current.placeholder}
           value={zipCode}
           onChange={(e) => setZipCode(e.target.value)}
