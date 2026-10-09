@@ -249,7 +249,7 @@ function Onboarding({ language, onBack }) {
         justifyContent: 'center',
         minHeight: '100vh',
         position: 'relative',
-        backgroundImage: 'url(/skyforest.jpg)',
+        backgroundImage: 'url(/earth.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         fontFamily: 'Poppins, sans-serif',
@@ -353,7 +353,7 @@ function Onboarding({ language, onBack }) {
       padding: '24px 0',
       boxSizing: 'border-box',
       position: 'relative',
-      backgroundImage: 'url(/skyforest.jpg)',
+      backgroundImage: 'url(/earth.jpg)',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }}>
