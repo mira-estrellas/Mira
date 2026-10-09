@@ -154,16 +154,16 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
       greeting: 'Here\'s what we found for you!',
       subtitle: 'Personalized to your location, home and budget.',
       incentivesTitle: 'Money Available to You',
-      incentivesDesc: 'Programs that help cover the cost of going green — from your government and utility company.',
+      incentivesDesc: 'Programs that help cover the cost of going green - from your government and utility company.',
       swapsTitle: 'Easy Changes You Can Make',
-      swapsDesc: 'Small swaps that reduce your energy use and save you money — filtered for your budget and living situation.',
+      swapsDesc: 'Small swaps that reduce your energy use and save you money - filtered for your budget and living situation.',
       impactTitle: 'What This Could Mean for You',
-      impactDesc: 'If you made these changes, here\'s the real difference it would make — for your wallet and the planet.',
+      impactDesc: 'If you made these changes, here\'s the real difference it would make - for your wallet and the planet.',
       trackTitle: 'Track Your Footprint',
-      trackDesc: 'Curious how your daily habits stack up? Answer a few quick questions to see your carbon and water footprint — and where you can reduce it most.',
+      trackDesc: 'Curious how your daily habits stack up? Answer a few quick questions to see your carbon and water footprint - and where you can reduce it most.',
       scrollHint: 'Scroll to see your full plan',
-      budgetNote: budgetNum ? `Filtered to fit your $${budgetNum}/mo budget — update anytime in your profile.` : 'Showing all available swaps for your situation.',
-      fallbackNote: 'Your state is not yet fully covered by our incentives database. These are federal programs available to everyone in the U.S. — personalized state data is coming soon.',
+      budgetNote: budgetNum ? `Filtered to fit your $${budgetNum}/mo budget - update anytime in your profile.` : 'Showing all available swaps for your situation.',
+      fallbackNote: 'Your state is not yet fully covered by our incentives database. These are federal programs available to everyone in the U.S. - personalized state data is coming soon.',
       incentiveItems: [
         { title: 'Federal Solar Tax Credit', description: 'Get 30% back on solar panel installation costs.', amount: 'Up to $7,500' },
         { title: 'Heat Pump Rebate', description: 'Federal rebate for switching to an electric heat pump.', amount: 'Up to $2,000' },
@@ -646,7 +646,7 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
           </div>
         </AnimatedSection>
 
-        {/* Track Your Footprint Section — full width dark band */}
+        {/* Track Your Footprint Section - full width dark band */}
       </div>
 
       <div style={{
