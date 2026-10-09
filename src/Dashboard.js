@@ -308,15 +308,15 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
           </h1>
           <p style={{
             color: 'rgba(255,255,255,0.85)',
-            fontSize: '17px',
-            margin: '0 auto 28px',
+            fontSize: '19px',
+            margin: '0 auto 16px',
             lineHeight: '1.7',
             maxWidth: '560px',
           }}>
             {current.subtitle}
           </p>
 
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center', marginBottom: '16px' }}>
             {[
               currentZip && (
                 <span key="zip" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -347,8 +347,8 @@ function Dashboard({ language, zipCode, housingType, budget, householdSize, hous
           </div>
           <p style={{
             color: 'white',
-            fontSize: '18px',
-            margin: '12px 0 0 0',
+            fontSize: '16px',
+            margin: '0',
             fontFamily: 'Poppins, sans-serif',
           }}>
             {current.profileHint}{' '}
