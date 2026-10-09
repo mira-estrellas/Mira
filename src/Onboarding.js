@@ -201,7 +201,7 @@ function Onboarding({ language, onBack }) {
       skip: 'Sote - Mwen prefere pa pataje kote mwen ye',
     },
   };
-
+  
   const current = content[language] || content.EN;
 
   if (screen === 'housing') {
