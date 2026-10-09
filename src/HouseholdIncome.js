@@ -49,7 +49,7 @@ function HouseholdIncome({ language, onNext, onBack }) {
       padding: '24px 0',
       boxSizing: 'border-box',
       position: 'relative',
-      backgroundImage: 'url(/skyforest.jpg)',
+      backgroundImage: 'url(/earth.jpg)',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }}>
