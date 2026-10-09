@@ -7,7 +7,7 @@ function Budget({ language, onNext, onBack }) {
     EN: {
       question: 'What\'s your monthly budget for clean energy swaps?',
       hint: 'This helps us show you options you can actually afford. You can always update this later.',
-      placeholder: 'e.g. 50',
+      placeholder: 'Example: 50',
       skip: 'Skip - I\'d rather not say',
       next: 'Next',
       back: '← Back',
@@ -17,7 +17,7 @@ function Budget({ language, onNext, onBack }) {
     ES: {
       question: '¿Cuál es tu presupuesto mensual para cambios de energía limpia?',
       hint: 'Esto nos ayuda a mostrarte opciones que realmente puedes pagar. Puedes actualizarlo más tarde.',
-      placeholder: 'ej. 50',
+      placeholder: 'Ejemplo: 50',
       skip: 'Omitir - prefiero no decir',
       next: 'Siguiente',
       back: '← Atrás',
@@ -47,7 +47,7 @@ function Budget({ language, onNext, onBack }) {
     FR: {
       question: 'Quel est votre budget mensuel pour les changements énergétiques?',
       hint: 'Cela nous aide à vous montrer des options que vous pouvez vraiment vous permettre.',
-      placeholder: 'ex. 50',
+      placeholder: 'Exemple: 50',
       skip: 'Passer',
       next: 'Suivant',
       back: '← Retour',
@@ -57,7 +57,7 @@ function Budget({ language, onNext, onBack }) {
     PT: {
       question: 'Qual é o seu orçamento mensal para trocas de energia limpa?',
       hint: 'Isso nos ajuda a mostrar opções que você realmente pode pagar.',
-      placeholder: 'ex. 50',
+      placeholder: 'Exemplo: 50',
       skip: 'Pular',
       next: 'Próximo',
       back: '← Voltar',
@@ -77,7 +77,7 @@ function Budget({ language, onNext, onBack }) {
     VI: {
       question: 'Ngân sách hàng tháng của bạn cho các thay đổi năng lượng sạch là bao nhiêu?',
       hint: 'Điều này giúp chúng tôi hiển thị các tùy chọn bạn thực sự có thể chi trả.',
-      placeholder: 'vd. 50',
+      placeholder: 'Ví dụ: 50',
       skip: 'Bỏ qua',
       next: 'Tiếp theo',
       back: '← Quay lại',
@@ -87,7 +87,7 @@ function Budget({ language, onNext, onBack }) {
     TL: {
       question: 'Ano ang iyong buwanang badyet para sa mga malinis na pagpapalit ng enerhiya?',
       hint: 'Nakakatulong ito sa amin na ipakita ang mga opsyong kayang-kaya mo.',
-      placeholder: 'hal. 50',
+      placeholder: 'Halimbawa: 50',
       skip: 'Laktawan',
       next: 'Susunod',
       back: '← Bumalik',
@@ -97,7 +97,7 @@ function Budget({ language, onNext, onBack }) {
     RU: {
       question: 'Каков ваш ежемесячный бюджет на экологичные замены?',
       hint: 'Это помогает нам показывать вам варианты, которые вы действительно можете себе позволить.',
-      placeholder: 'напр. 50',
+      placeholder: 'Например: 50',
       skip: 'Пропустить',
       next: 'Далее',
       back: '← Назад',
@@ -107,7 +107,7 @@ function Budget({ language, onNext, onBack }) {
     HT: {
       question: 'Ki bidjè mansyèl ou pou chanjman enèji pwòp?',
       hint: 'Sa ede nou montre ou opsyon ou ka reyèlman peye.',
-      placeholder: 'ex. 50',
+      placeholder: 'Egzanp: 50',
       skip: 'Sote',
       next: 'Pwochen',
       back: '← Retounen',
