@@ -253,8 +253,8 @@ function Onboarding({ language, onBack }) {
         <div style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ marginBottom: '40px', animation: 'gentleSpin 3s linear infinite' }}>
             <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="42" stroke="#4CAF7D" strokeWidth="8" fill="none" strokeDasharray="180 85" strokeLinecap="round" />
-              <polygon points="50,4 42,18 58,18" fill="#4CAF7D" />
+              <circle cx="50" cy="50" r="42" stroke="rgba(255,255,255,0.15)" strokeWidth="8" fill="none" />
+              <circle cx="50" cy="50" r="42" stroke="#4CAF7D" strokeWidth="8" fill="none" strokeDasharray="80 184" strokeLinecap="round" strokeDashoffset="0" />
             </svg>
           </div>
           <p style={{
